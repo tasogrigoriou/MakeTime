@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNextCondensed.ttc">
+            <string>AvenirNextCondensed-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TodayViewController">
+            <connections>
+                <outlet property="collectionView" destination="mOY-fJ-rlO" id="uwb-L1-BKp"/>
+                <outlet property="leftButton" destination="Ww0-g5-qtE" id="yKl-UF-PLW"/>
+                <outlet property="rightButton" destination="RsS-5Z-HU6" id="biV-yM-51v"/>
+                <outlet property="todayLabel" destination="MI8-N8-grj" id="Dse-zD-QTd"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="dh4-IC-GfD"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" text="Today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MI8-N8-grj">
+                    <rect key="frame" x="24" y="65" width="327" height="24"/>
+                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ww0-g5-qtE" userLabel="Left Button">
+                    <rect key="frame" x="0.0" y="65" width="24" height="24"/>
+                    <state key="normal" image="left">
+                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="leftButtonTouched:" destination="-1" eventType="touchUpInside" id="vXh-B0-glm"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RsS-5Z-HU6" userLabel="Right Button">
+                    <rect key="frame" x="351" y="65" width="24" height="24"/>
+                    <state key="normal" image="right"/>
+                    <connections>
+                        <action selector="rightButtonTouched:" destination="-1" eventType="touchUpInside" id="wFi-Cs-yfu"/>
+                    </connections>
+                </button>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="mOY-fJ-rlO">
+                    <rect key="frame" x="0.0" y="93" width="375" height="574"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="qo0-bh-vGw">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="kLH-cM-CNG"/>
+                        <outlet property="delegate" destination="-1" id="cFR-s0-8ks"/>
+                    </connections>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="mOY-fJ-rlO" secondAttribute="bottom" id="1kp-zg-6a3"/>
+                <constraint firstItem="mOY-fJ-rlO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3cs-GR-qHA"/>
+                <constraint firstItem="MI8-N8-grj" firstAttribute="leading" secondItem="Ww0-g5-qtE" secondAttribute="trailing" id="92Y-Pd-5Aq"/>
+                <constraint firstItem="mOY-fJ-rlO" firstAttribute="top" secondItem="RsS-5Z-HU6" secondAttribute="bottom" constant="4" id="Cwx-PM-dK1"/>
+                <constraint firstAttribute="trailing" secondItem="mOY-fJ-rlO" secondAttribute="trailing" id="JQR-xu-hIt"/>
+                <constraint firstItem="Ww0-g5-qtE" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="Pam-Xp-FMp"/>
+                <constraint firstAttribute="trailing" secondItem="RsS-5Z-HU6" secondAttribute="trailing" id="QRW-3M-JP0"/>
+                <constraint firstItem="RsS-5Z-HU6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="VH3-5G-2Kk"/>
+                <constraint firstItem="RsS-5Z-HU6" firstAttribute="leading" secondItem="MI8-N8-grj" secondAttribute="trailing" id="gep-iZ-CMF"/>
+                <constraint firstItem="Ww0-g5-qtE" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="hyo-Eb-jMk"/>
+                <constraint firstItem="MI8-N8-grj" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="qyi-gt-YGE"/>
+            </constraints>
+            <point key="canvasLocation" x="-316.5" y="52.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="left" width="24" height="24"/>
+        <image name="right" width="24" height="24"/>
+    </resources>
+</document>

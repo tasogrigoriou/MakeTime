@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNextCondensed.ttc">
+            <string>AvenirNextCondensed-Medium</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WeekViewController">
+            <connections>
+                <outlet property="collectionView" destination="zfk-65-v5o" id="Y6H-yg-dnv"/>
+                <outlet property="leftButton" destination="yFn-L9-YdU" id="fqj-wd-Psr"/>
+                <outlet property="rightButton" destination="KmB-SO-CJU" id="BfD-fi-nu6"/>
+                <outlet property="view" destination="qq1-QO-SnP" id="TUF-Hz-ZM4"/>
+                <outlet property="weekLabel" destination="GT0-Cl-vzh" id="Cvj-FB-C1d"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="qq1-QO-SnP">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Week" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GT0-Cl-vzh">
+                    <rect key="frame" x="170" y="65" width="35" height="24"/>
+                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yFn-L9-YdU">
+                    <rect key="frame" x="0.0" y="65" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="8PA-jm-DCK"/>
+                        <constraint firstAttribute="width" constant="24" id="wSM-9J-h64"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="left"/>
+                    <connections>
+                        <action selector="leftButtonTouched:" destination="-1" eventType="touchUpInside" id="q4e-UZ-UtR"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KmB-SO-CJU">
+                    <rect key="frame" x="351" y="65" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="JfV-pC-43J"/>
+                        <constraint firstAttribute="width" constant="24" id="phJ-17-eQA"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="right"/>
+                    <connections>
+                        <action selector="rightButtonTouched:" destination="-1" eventType="touchUpInside" id="ogp-yr-Gzi"/>
+                    </connections>
+                </button>
+                <collectionView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="zfk-65-v5o">
+                    <rect key="frame" x="0.0" y="93" width="375" height="574"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Bgj-89-dIk">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="XM9-fy-545"/>
+                        <outlet property="delegate" destination="-1" id="so6-8h-qAa"/>
+                    </connections>
+                </collectionView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="KmB-SO-CJU" secondAttribute="trailing" id="1Xm-ay-4KP"/>
+                <constraint firstAttribute="trailing" secondItem="zfk-65-v5o" secondAttribute="trailing" id="3Gd-ZZ-D5C"/>
+                <constraint firstAttribute="bottom" secondItem="zfk-65-v5o" secondAttribute="bottom" id="4GX-h1-m5m"/>
+                <constraint firstItem="zfk-65-v5o" firstAttribute="leading" secondItem="qq1-QO-SnP" secondAttribute="leading" id="HMI-Uc-JHy"/>
+                <constraint firstItem="GT0-Cl-vzh" firstAttribute="bottom" secondItem="KmB-SO-CJU" secondAttribute="bottom" id="Ovg-bS-MLl"/>
+                <constraint firstAttribute="bottom" secondItem="zfk-65-v5o" secondAttribute="bottom" id="RMZ-vk-t4j"/>
+                <constraint firstItem="yFn-L9-YdU" firstAttribute="top" secondItem="qq1-QO-SnP" secondAttribute="top" constant="65" id="Ryv-mu-Ab7"/>
+                <constraint firstItem="yFn-L9-YdU" firstAttribute="leading" secondItem="qq1-QO-SnP" secondAttribute="leading" id="VkX-sW-jnB"/>
+                <constraint firstItem="GT0-Cl-vzh" firstAttribute="top" secondItem="KmB-SO-CJU" secondAttribute="top" id="Zjk-fc-nnY"/>
+                <constraint firstItem="zfk-65-v5o" firstAttribute="top" secondItem="KmB-SO-CJU" secondAttribute="bottom" constant="4" id="fLm-di-sv0"/>
+                <constraint firstItem="KmB-SO-CJU" firstAttribute="top" secondItem="qq1-QO-SnP" secondAttribute="top" constant="65" id="fhu-LE-bUO"/>
+                <constraint firstItem="GT0-Cl-vzh" firstAttribute="centerX" secondItem="qq1-QO-SnP" secondAttribute="centerX" id="kE7-Qr-ecR"/>
+            </constraints>
+            <point key="canvasLocation" x="-50.5" y="-10.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="left" width="24" height="24"/>
+        <image name="right" width="24" height="24"/>
+    </resources>
+</document>

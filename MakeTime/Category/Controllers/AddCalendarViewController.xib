@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddCalendarViewController">
+            <connections>
+                <outlet property="addCalendarTableView" destination="Yfg-id-Vkr" id="nfl-3f-bkt"/>
+                <outlet property="categoryLabel" destination="lXX-1p-CjG" id="g4t-al-yjQ"/>
+                <outlet property="categoryTextField" destination="5XD-f9-do7" id="fDy-oB-Oq5"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Yfg-id-Vkr">
+                    <rect key="frame" x="0.0" y="136.5" width="375" height="530.5"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="zwb-U8-lEZ"/>
+                        <outlet property="delegate" destination="-1" id="zk4-y2-F2s"/>
+                    </connections>
+                </tableView>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter title..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5XD-f9-do7">
+                    <rect key="frame" x="16" y="106" width="343" height="24"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
+                    <textInputTraits key="textInputTraits"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="26Q-lc-cPd"/>
+                    </connections>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lXX-1p-CjG">
+                    <rect key="frame" x="12" y="74" width="359" height="20.5"/>
+                    <fontDescription key="fontDescription" name="AvenirNextCondensed-UltraLight" family="Avenir Next Condensed" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="lXX-1p-CjG" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="12" id="1Gy-Yy-3Vj"/>
+                <constraint firstItem="Yfg-id-Vkr" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1kM-xd-p2O"/>
+                <constraint firstItem="Yfg-id-Vkr" firstAttribute="top" secondItem="5XD-f9-do7" secondAttribute="bottom" constant="6.5" id="Eos-ke-RcO"/>
+                <constraint firstItem="5XD-f9-do7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="QDX-Wv-Zen"/>
+                <constraint firstItem="lXX-1p-CjG" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="74" id="S1u-uX-tEB"/>
+                <constraint firstAttribute="trailing" secondItem="5XD-f9-do7" secondAttribute="trailing" constant="16" id="Z3K-TO-P3y"/>
+                <constraint firstAttribute="trailing" secondItem="lXX-1p-CjG" secondAttribute="trailing" constant="4" id="bsO-Uy-Rqi"/>
+                <constraint firstAttribute="bottom" secondItem="Yfg-id-Vkr" secondAttribute="bottom" id="dLJ-7X-FjT"/>
+                <constraint firstAttribute="trailing" secondItem="Yfg-id-Vkr" secondAttribute="trailing" id="vVi-Kf-ce3"/>
+                <constraint firstItem="5XD-f9-do7" firstAttribute="top" secondItem="lXX-1p-CjG" secondAttribute="bottom" constant="11.5" id="vuq-Ew-48n"/>
+            </constraints>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
+        </view>
+    </objects>
+</document>

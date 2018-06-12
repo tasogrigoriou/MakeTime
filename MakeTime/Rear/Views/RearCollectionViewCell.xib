@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="RearCell" id="gTV-IL-0wX" customClass="RearCollectionViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="126" height="46"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="126" height="46"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uSO-Nd-eRM">
+                        <rect key="frame" x="44" y="0.0" width="82" height="46"/>
+                        <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="13"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="XVE-R9-Fpl">
+                        <rect key="frame" x="11" y="13" width="18" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="18" id="afS-NA-oip"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="uSO-Nd-eRM" secondAttribute="bottom" id="1vh-PR-eCI"/>
+                <constraint firstItem="uSO-Nd-eRM" firstAttribute="leading" secondItem="XVE-R9-Fpl" secondAttribute="trailing" constant="15" id="Apd-YN-Os5"/>
+                <constraint firstItem="XVE-R9-Fpl" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="11" id="E9r-oF-spZ"/>
+                <constraint firstItem="uSO-Nd-eRM" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="RLw-wp-1PZ"/>
+                <constraint firstItem="XVE-R9-Fpl" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="13" id="h8S-zh-bNi"/>
+                <constraint firstAttribute="bottom" secondItem="XVE-R9-Fpl" secondAttribute="bottom" constant="13" id="lcp-qx-eu6"/>
+                <constraint firstAttribute="trailing" secondItem="uSO-Nd-eRM" secondAttribute="trailing" id="sjf-DJ-H3C"/>
+            </constraints>
+            <connections>
+                <outlet property="cellImage" destination="XVE-R9-Fpl" id="Qim-t7-KGL"/>
+                <outlet property="cellLabel" destination="uSO-Nd-eRM" id="Ih8-Di-ZLw"/>
+            </connections>
+        </collectionViewCell>
+    </objects>
+</document>

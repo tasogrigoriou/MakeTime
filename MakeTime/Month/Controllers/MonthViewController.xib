@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MonthViewController">
+            <connections>
+                <outlet property="leftButton" destination="PIX-ty-Fc3" id="TW2-g6-Uhb"/>
+                <outlet property="monthLabel" destination="xsD-d2-iSf" id="RQ7-aH-qMG"/>
+                <outlet property="rightButton" destination="abH-hp-tz3" id="b13-ie-dCj"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="aRf-OG-7P2"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Month" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsD-d2-iSf">
+                    <rect key="frame" x="24" y="65" width="327" height="24"/>
+                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PIX-ty-Fc3">
+                    <rect key="frame" x="0.0" y="65" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="NeW-VB-Tws"/>
+                        <constraint firstAttribute="height" constant="24" id="Plb-fG-Dpc"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="left"/>
+                    <connections>
+                        <action selector="leftButtonTouched:" destination="-1" eventType="touchUpInside" id="5hF-dn-rIK"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="abH-hp-tz3">
+                    <rect key="frame" x="351" y="65" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="MmV-WS-Zrb"/>
+                        <constraint firstAttribute="width" constant="24" id="hh8-SM-dR9"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="right"/>
+                    <connections>
+                        <action selector="rightButtonTouched:" destination="-1" eventType="touchUpInside" id="mNQ-v2-gaZ"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="PIX-ty-Fc3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JXR-C2-NyG"/>
+                <constraint firstAttribute="trailing" secondItem="abH-hp-tz3" secondAttribute="trailing" id="KhD-aN-sB8"/>
+                <constraint firstItem="abH-hp-tz3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="P2Z-6U-su7"/>
+                <constraint firstItem="xsD-d2-iSf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="ScB-az-fYV"/>
+                <constraint firstItem="PIX-ty-Fc3" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="XNj-Kn-D3T"/>
+                <constraint firstItem="xsD-d2-iSf" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ca9-8z-6Qs"/>
+                <constraint firstItem="xsD-d2-iSf" firstAttribute="leading" secondItem="PIX-ty-Fc3" secondAttribute="trailing" id="uf5-1d-FA6"/>
+            </constraints>
+            <point key="canvasLocation" x="33.5" y="54.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="left" width="24" height="24"/>
+        <image name="right" width="24" height="24"/>
+    </resources>
+</document>
