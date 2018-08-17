@@ -147,10 +147,10 @@
 		9F14B8951DEBE45000ADBE0C /* MonthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MonthViewController.xib; sourceTree = "<group>"; };
 		9F14B89D1DEBF31000ADBE0C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		9F14B89E1DEBF31000ADBE0C /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
-		9F14B8A01DEBF54800ADBE0C /* RearViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RearViewController.h; path = RearViewController.h; sourceTree = "<group>"; };
-		9F14B8A11DEBF54800ADBE0C /* RearViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RearViewController.m; path = RearViewController.m; sourceTree = "<group>"; };
-		9F14B8A21DEBF54800ADBE0C /* RearViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RearViewController.xib; path = RearViewController.xib; sourceTree = "<group>"; };
-		9F17EC851E39B78700019CDC /* jadecolor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = jadecolor.jpg; path = jadecolor.jpg; sourceTree = "<group>"; };
+		9F14B8A01DEBF54800ADBE0C /* RearViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RearViewController.h; sourceTree = "<group>"; };
+		9F14B8A11DEBF54800ADBE0C /* RearViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RearViewController.m; sourceTree = "<group>"; };
+		9F14B8A21DEBF54800ADBE0C /* RearViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RearViewController.xib; sourceTree = "<group>"; };
+		9F17EC851E39B78700019CDC /* jadecolor.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jadecolor.jpg; sourceTree = "<group>"; };
 		9F1B5BBC1F4AB58F00F20370 /* WeekCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekCollectionViewCell.h; sourceTree = "<group>"; };
 		9F1B5BBD1F4AB58F00F20370 /* WeekCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekCollectionViewCell.m; sourceTree = "<group>"; };
 		9F1B5BBE1F4AB58F00F20370 /* WeekCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WeekCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -174,8 +174,8 @@
 		9F21FD081E188A3D00BBE626 /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
 		9F21FD0D1E1B4FD200BBE626 /* CustomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomViewController.h; sourceTree = "<group>"; };
 		9F21FD0E1E1B4FD200BBE626 /* CustomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomViewController.m; sourceTree = "<group>"; };
-		9F37B2621E468F5800C8443C /* CalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalendarView.h; path = CalendarView.h; sourceTree = "<group>"; };
-		9F37B2631E468F5800C8443C /* CalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CalendarView.m; path = CalendarView.m; sourceTree = "<group>"; };
+		9F37B2621E468F5800C8443C /* CalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarView.h; sourceTree = "<group>"; };
+		9F37B2631E468F5800C8443C /* CalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarView.m; sourceTree = "<group>"; };
 		9F37B2661E47046100C8443C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
 		9F4035AE1F11F4C200EA1B16 /* EditCategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditCategoriesViewController.h; sourceTree = "<group>"; };
 		9F4035AF1F11F4C200EA1B16 /* EditCategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditCategoriesViewController.m; sourceTree = "<group>"; };
@@ -183,11 +183,11 @@
 		9F4035B31F13577C00EA1B16 /* EditCategoriesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditCategoriesTableViewCell.h; sourceTree = "<group>"; };
 		9F4035B41F13577C00EA1B16 /* EditCategoriesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditCategoriesTableViewCell.m; sourceTree = "<group>"; };
 		9F4035B51F13577C00EA1B16 /* EditCategoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditCategoriesTableViewCell.xib; sourceTree = "<group>"; };
-		9F4035B81F1365A000EA1B16 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkmark.png; path = checkmark.png; sourceTree = "<group>"; };
+		9F4035B81F1365A000EA1B16 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		9F47B8351F44C8C00044700E /* EventComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventComponents.h; sourceTree = "<group>"; };
 		9F47B8361F44C8C00044700E /* EventComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventComponents.m; sourceTree = "<group>"; };
-		9F559B691EDC9521002FA48E /* CustomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CustomAnimationController.h; path = CustomAnimationController.h; sourceTree = "<group>"; };
-		9F559B6A1EDC9521002FA48E /* CustomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CustomAnimationController.m; path = CustomAnimationController.m; sourceTree = "<group>"; };
+		9F559B691EDC9521002FA48E /* CustomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnimationController.h; sourceTree = "<group>"; };
+		9F559B6A1EDC9521002FA48E /* CustomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnimationController.m; sourceTree = "<group>"; };
 		9F5617021E3D62AF00C92525 /* Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon.h; sourceTree = "<group>"; };
 		9F5617031E3D62AF00C92525 /* Chameleon_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon_.h; sourceTree = "<group>"; };
 		9F5617041E3D62AF00C92525 /* Chameleon_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chameleon_.m; sourceTree = "<group>"; };
@@ -218,9 +218,9 @@
 		9F71EF391E21A22C00CD23DA /* TodayCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayCollectionViewCell.h; sourceTree = "<group>"; };
 		9F71EF3A1E21A22C00CD23DA /* TodayCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayCollectionViewCell.m; sourceTree = "<group>"; };
 		9F71EF3B1E21A22C00CD23DA /* TodayCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodayCollectionViewCell.xib; sourceTree = "<group>"; };
-		9F71EF3E1E23784B00CD23DA /* RearCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RearCollectionViewCell.h; path = RearCollectionViewCell.h; sourceTree = "<group>"; };
-		9F71EF3F1E23784B00CD23DA /* RearCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RearCollectionViewCell.m; path = RearCollectionViewCell.m; sourceTree = "<group>"; };
-		9F71EF401E23784B00CD23DA /* RearCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = RearCollectionViewCell.xib; path = RearCollectionViewCell.xib; sourceTree = "<group>"; };
+		9F71EF3E1E23784B00CD23DA /* RearCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RearCollectionViewCell.h; sourceTree = "<group>"; };
+		9F71EF3F1E23784B00CD23DA /* RearCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RearCollectionViewCell.m; sourceTree = "<group>"; };
+		9F71EF401E23784B00CD23DA /* RearCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RearCollectionViewCell.xib; sourceTree = "<group>"; };
 		9F74EB551E36E14900DECF21 /* HeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		9F74EB561E36E14900DECF21 /* HeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		9F74EB571E36E14900DECF21 /* HeaderCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderCollectionReusableView.xib; sourceTree = "<group>"; };
@@ -257,10 +257,10 @@
 		9F76F46F1E5FCEB100641875 /* FSCalendarWeekdayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarWeekdayView.h; sourceTree = "<group>"; };
 		9F76F4701E5FCEB100641875 /* FSCalendarWeekdayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarWeekdayView.m; sourceTree = "<group>"; };
 		9F76F4711E5FCEB100641875 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		9F78CB261E48302D00D70867 /* CalendarViewMonthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalendarViewMonthCell.h; path = CalendarViewMonthCell.h; sourceTree = "<group>"; };
-		9F78CB271E48302D00D70867 /* CalendarViewMonthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CalendarViewMonthCell.m; path = CalendarViewMonthCell.m; sourceTree = "<group>"; };
-		9F9D2C571EDE1287006167EB /* EventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EventManager.h; path = EventManager.h; sourceTree = "<group>"; };
-		9F9D2C581EDE1287006167EB /* EventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EventManager.m; path = EventManager.m; sourceTree = "<group>"; };
+		9F78CB261E48302D00D70867 /* CalendarViewMonthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewMonthCell.h; sourceTree = "<group>"; };
+		9F78CB271E48302D00D70867 /* CalendarViewMonthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewMonthCell.m; sourceTree = "<group>"; };
+		9F9D2C571EDE1287006167EB /* EventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventManager.h; sourceTree = "<group>"; };
+		9F9D2C581EDE1287006167EB /* EventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventManager.m; sourceTree = "<group>"; };
 		9FAE9A711EE83F31002F247F /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
 		9FAE9A721EE83F31002F247F /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
 		9FAE9A731EE83F31002F247F /* CalendarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarViewController.xib; sourceTree = "<group>"; };
@@ -270,9 +270,9 @@
 		9FAE9A7E1EE9D224002F247F /* CalendarCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarCollectionViewCell.h; sourceTree = "<group>"; };
 		9FAE9A7F1EE9D224002F247F /* CalendarCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarCollectionViewCell.m; sourceTree = "<group>"; };
 		9FAE9A801EE9D224002F247F /* CalendarCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarCollectionViewCell.xib; sourceTree = "<group>"; };
-		9FB385871DE41D9700A6F1E4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		9FB609CF1E673E45007394EA /* CalendarViewWeekCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalendarViewWeekCell.h; path = CalendarViewWeekCell.h; sourceTree = "<group>"; };
-		9FB609D01E673E45007394EA /* CalendarViewWeekCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CalendarViewWeekCell.m; path = CalendarViewWeekCell.m; sourceTree = "<group>"; };
+		9FB385871DE41D9700A6F1E4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		9FB609CF1E673E45007394EA /* CalendarViewWeekCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewWeekCell.h; sourceTree = "<group>"; };
+		9FB609D01E673E45007394EA /* CalendarViewWeekCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewWeekCell.m; sourceTree = "<group>"; };
 		9FB96CFF1EF342CC00BDC3BA /* CategoriesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesViewController.h; sourceTree = "<group>"; };
 		9FB96D001EF342CC00BDC3BA /* CategoriesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesViewController.m; sourceTree = "<group>"; };
 		9FB96D011EF342CC00BDC3BA /* CategoriesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoriesViewController.xib; sourceTree = "<group>"; };
@@ -292,14 +292,14 @@
 		9FC695DD1F266B2600006F13 /* EventTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTextFieldTableViewCell.h; sourceTree = "<group>"; };
 		9FC695DE1F266B2600006F13 /* EventTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTextFieldTableViewCell.m; sourceTree = "<group>"; };
 		9FC695DF1F266B2600006F13 /* EventTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventTextFieldTableViewCell.xib; sourceTree = "<group>"; };
-		9FCA3EED1E48510B00A016FF /* CalendarViewDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalendarViewDayCell.h; path = CalendarViewDayCell.h; sourceTree = "<group>"; };
-		9FCA3EEE1E48510B00A016FF /* CalendarViewDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CalendarViewDayCell.m; path = CalendarViewDayCell.m; sourceTree = "<group>"; };
-		9FCA3EF01E4851E400A016FF /* CalendarHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalendarHeaderView.h; path = CalendarHeaderView.h; sourceTree = "<group>"; };
-		9FCA3EF11E4851E400A016FF /* CalendarHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CalendarHeaderView.m; path = CalendarHeaderView.m; sourceTree = "<group>"; };
-		9FCA3EF31E4858BC00A016FF /* CollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CollectionViewFlowLayout.h; path = CollectionViewFlowLayout.h; sourceTree = "<group>"; };
-		9FCA3EF41E4858BC00A016FF /* CollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CollectionViewFlowLayout.m; path = CollectionViewFlowLayout.m; sourceTree = "<group>"; };
-		9FCA3EF61E48594E00A016FF /* CalendarLineReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CalendarLineReusableView.h; path = CalendarLineReusableView.h; sourceTree = "<group>"; };
-		9FCA3EF71E48594E00A016FF /* CalendarLineReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CalendarLineReusableView.m; path = CalendarLineReusableView.m; sourceTree = "<group>"; };
+		9FCA3EED1E48510B00A016FF /* CalendarViewDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewDayCell.h; sourceTree = "<group>"; };
+		9FCA3EEE1E48510B00A016FF /* CalendarViewDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewDayCell.m; sourceTree = "<group>"; };
+		9FCA3EF01E4851E400A016FF /* CalendarHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarHeaderView.h; sourceTree = "<group>"; };
+		9FCA3EF11E4851E400A016FF /* CalendarHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarHeaderView.m; sourceTree = "<group>"; };
+		9FCA3EF31E4858BC00A016FF /* CollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		9FCA3EF41E4858BC00A016FF /* CollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		9FCA3EF61E48594E00A016FF /* CalendarLineReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarLineReusableView.h; sourceTree = "<group>"; };
+		9FCA3EF71E48594E00A016FF /* CalendarLineReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarLineReusableView.m; sourceTree = "<group>"; };
 		9FCB50461EEA0667001A7A3D /* SwipeBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeBack.h; sourceTree = "<group>"; };
 		9FCB50471EEA0667001A7A3D /* UINavigationController+SwipeBack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+SwipeBack.h"; sourceTree = "<group>"; };
 		9FCB50481EEA0667001A7A3D /* UINavigationController+SwipeBack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+SwipeBack.m"; sourceTree = "<group>"; };
@@ -341,7 +341,6 @@
 				9F32CF551ED482D500922048 /* Models */,
 				9F32CF561ED482DF00922048 /* Views */,
 			);
-			name = Rear;
 			path = Rear;
 			sourceTree = "<group>";
 		};
@@ -352,7 +351,6 @@
 				9F32CF581ED4832500922048 /* Models */,
 				9F32CF591ED4832900922048 /* Views */,
 			);
-			name = Calendar;
 			path = Calendar;
 			sourceTree = "<group>";
 		};
@@ -360,7 +358,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -374,7 +371,6 @@
 				9F71EF3F1E23784B00CD23DA /* RearCollectionViewCell.m */,
 				9F71EF401E23784B00CD23DA /* RearCollectionViewCell.xib */,
 			);
-			name = Views;
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -385,7 +381,6 @@
 				9F14B8A11DEBF54800ADBE0C /* RearViewController.m */,
 				9F14B8A21DEBF54800ADBE0C /* RearViewController.xib */,
 			);
-			name = Controllers;
 			path = Controllers;
 			sourceTree = "<group>";
 		};
@@ -393,7 +388,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -415,7 +409,6 @@
 				9FCA3EF31E4858BC00A016FF /* CollectionViewFlowLayout.h */,
 				9FCA3EF41E4858BC00A016FF /* CollectionViewFlowLayout.m */,
 			);
-			name = Views;
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -423,7 +416,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Controllers;
 			path = Controllers;
 			sourceTree = "<group>";
 		};
@@ -440,7 +432,6 @@
 				9FCB50451EEA0667001A7A3D /* SwipeBack */,
 				9FD9487B1F3115A100483302 /* UIColorConverter */,
 			);
-			name = Assets;
 			path = Assets;
 			sourceTree = "<group>";
 		};
@@ -449,7 +440,6 @@
 			children = (
 				9FBA793F1DCC5CF1000AE696 /* MakeTime.xcdatamodeld */,
 			);
-			name = Model;
 			path = Model;
 			sourceTree = "<group>";
 		};
@@ -458,7 +448,6 @@
 			children = (
 				9F37B2661E47046100C8443C /* EventKit.framework */,
 			);
-			name = Frameworks;
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
@@ -533,7 +522,6 @@
 				9F76F4701E5FCEB100641875 /* FSCalendarWeekdayView.m */,
 				9F76F4711E5FCEB100641875 /* Info.plist */,
 			);
-			name = FSCalendar;
 			path = FSCalendar;
 			sourceTree = "<group>";
 		};
@@ -543,7 +531,6 @@
 				9F47B8351F44C8C00044700E /* EventComponents.h */,
 				9F47B8361F44C8C00044700E /* EventComponents.m */,
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -561,7 +548,6 @@
 				9FFA42011E92015C00832C31 /* TodayCollectionViewLayout.h */,
 				9FFA42021E92015C00832C31 /* TodayCollectionViewLayout.m */,
 			);
-			name = Views;
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -574,7 +560,6 @@
 				9F14B88A1DEBE43700ADBE0C /* TodayViewController.m */,
 				9F14B88B1DEBE43700ADBE0C /* TodayViewController.xib */,
 			);
-			name = Controllers;
 			path = Controllers;
 			sourceTree = "<group>";
 		};
@@ -585,7 +570,6 @@
 				9F9D2C471EDE1018006167EB /* Models */,
 				9F9D2C481EDE1020006167EB /* Views */,
 			);
-			name = Day;
 			path = Day;
 			sourceTree = "<group>";
 		};
@@ -596,7 +580,6 @@
 				9F9D2C4F1EDE1126006167EB /* Models */,
 				9F9D2C4E1EDE1121006167EB /* Views */,
 			);
-			name = Week;
 			path = Week;
 			sourceTree = "<group>";
 		};
@@ -607,7 +590,6 @@
 				9F9D2C521EDE114A006167EB /* Models */,
 				9F9D2C511EDE1146006167EB /* Views */,
 			);
-			name = Month;
 			path = Month;
 			sourceTree = "<group>";
 		};
@@ -618,7 +600,6 @@
 				9F14B88F1DEBE44800ADBE0C /* WeekViewController.m */,
 				9F14B8901DEBE44800ADBE0C /* WeekViewController.xib */,
 			);
-			name = Controllers;
 			path = Controllers;
 			sourceTree = "<group>";
 		};
@@ -636,7 +617,6 @@
 				9FDF6CA71F6B78FE0026ED15 /* WeekCollectionViewWeekCell.h */,
 				9FDF6CA81F6B78FE0026ED15 /* WeekCollectionViewWeekCell.m */,
 			);
-			name = Views;
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -644,7 +624,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -655,7 +634,6 @@
 				9F14B8941DEBE45000ADBE0C /* MonthViewController.m */,
 				9F14B8951DEBE45000ADBE0C /* MonthViewController.xib */,
 			);
-			name = Controllers;
 			path = Controllers;
 			sourceTree = "<group>";
 		};
@@ -663,7 +641,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Views;
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -671,7 +648,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -688,7 +664,6 @@
 			children = (
 				9FBA79301DCC5CF1000AE696 /* MakeTime.app */,
 			);
-			name = Products;
 			path = Products;
 			sourceTree = "<group>";
 		};
@@ -733,7 +708,6 @@
 				9F0930751E1EF010007A33F6 /* watch2.png */,
 				9F09306B1E1CB787007A33F6 /* write.png */,
 			);
-			name = "Supporting Files";
 			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
@@ -755,7 +729,6 @@
 				9F1C8E591F16320800268023 /* UIColor+Converter.h */,
 				9F1C8E5A1F16320800268023 /* UIColor+Converter.m */,
 			);
-			name = UIColorConverter;
 			path = UIColorConverter;
 			sourceTree = "<group>";
 		};
@@ -767,7 +740,6 @@
 				9F14B89D1DEBF31000ADBE0C /* SWRevealViewController.h */,
 				9F14B89E1DEBF31000ADBE0C /* SWRevealViewController.m */,
 			);
-			name = SWReveal;
 			path = SWReveal;
 			sourceTree = "<group>";
 		};
@@ -778,7 +750,6 @@
 				9FD948801F31B76400483302 /* Models */,
 				9FD9487F1F31B75E00483302 /* Views */,
 			);
-			name = Category;
 			path = Category;
 			sourceTree = "<group>";
 		};
@@ -798,7 +769,6 @@
 				9F4035AF1F11F4C200EA1B16 /* EditCategoriesViewController.m */,
 				9F4035B01F11F4C200EA1B16 /* EditCategoriesViewController.xib */,
 			);
-			name = Controllers;
 			path = Controllers;
 			sourceTree = "<group>";
 		};
@@ -815,7 +785,6 @@
 				9F4035B41F13577C00EA1B16 /* EditCategoriesTableViewCell.m */,
 				9F4035B51F13577C00EA1B16 /* EditCategoriesTableViewCell.xib */,
 			);
-			name = Views;
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -823,7 +792,6 @@
 			isa = PBXGroup;
 			children = (
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -834,7 +802,6 @@
 				9FD948841F31B88D00483302 /* Models */,
 				9FD948831F31B88500483302 /* Views */,
 			);
-			name = Event;
 			path = Event;
 			sourceTree = "<group>";
 		};
@@ -851,7 +818,6 @@
 				9FD948771F2D4C1300483302 /* RepeatAlertViewController.m */,
 				9FD948781F2D4C1300483302 /* RepeatAlertViewController.xib */,
 			);
-			name = Controllers;
 			path = Controllers;
 			sourceTree = "<group>";
 		};
@@ -868,7 +834,6 @@
 				9FC695DE1F266B2600006F13 /* EventTextFieldTableViewCell.m */,
 				9FC695DF1F266B2600006F13 /* EventTextFieldTableViewCell.xib */,
 			);
-			name = Views;
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -878,7 +843,6 @@
 				9F9D2C571EDE1287006167EB /* EventManager.h */,
 				9F9D2C581EDE1287006167EB /* EventManager.m */,
 			);
-			name = Models;
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -1243,7 +1207,6 @@
 				9FBA79401DCC5CF1000AE696 /* MakeTime.xcdatamodel */,
 			);
 			currentVersion = 9FBA79401DCC5CF1000AE696 /* MakeTime.xcdatamodel */;
-			name = MakeTime.xcdatamodeld;
 			path = MakeTime.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

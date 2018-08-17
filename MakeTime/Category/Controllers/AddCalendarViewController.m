@@ -96,11 +96,7 @@
     EKCalendar *newCalendar = [EKCalendar calendarForEntityType:EKEntityTypeEvent
                                                      eventStore:self.appDelegate.eventManager.eventStore];
     newCalendar.title = self.categoryTextField.text;
-    for (EKSource *source in self.appDelegate.eventManager.eventStore.sources) {
-        if (source.sourceType == EKSourceTypeLocal) {
-            newCalendar.source = source;
-        }
-    }
+    newCalendar.source = self.appDelegate.eventManager.eventStore.defaultCalendarForNewEvents.source;
 
     // Trim whitespace and newline into a new NSString to check for an empty calendar title
     NSString *trimmedTitle = [newCalendar.title

@@ -141,7 +141,7 @@
    }
    
    /**** Log NSUserDefaults to view calendar identifiers ****/
-   //  NSLog(@"NSUserDefaults: \n%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+     NSLog(@"NSUserDefaults: \n%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
    
    self.customCalendars = (NSArray *)customCals;
    return self.customCalendars;
@@ -195,15 +195,9 @@
    cleaningCalendar.CGColor = [UIColor colorWithRed:(238/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0].CGColor;
    [calendarArray addObject:cleaningCalendar];
    
-   // The source of the calendar cannot be assigned directly. Instead, we must go through all the available sources of the event store object using a loop, and when the Local source is found it should be assigned to our calendar.
    for (EKCalendar *cal in calendarArray) {
-      for (EKSource *source in self.eventStore.sources) {
-         NSLog(@"%@", source);
-         if (source.sourceType == EKSourceTypeLocal) {
-            cal.source = source;
-         }
-      }
-      
+       cal.source = self.eventStore.defaultCalendarForNewEvents.source;
+    
       NSMutableArray *calendarIdentifiers = [[[NSUserDefaults standardUserDefaults] objectForKey:@"customCalendarIdentifiers"] mutableCopy];
       if ([calendarIdentifiers containsObject:cal.calendarIdentifier]) {
          [self.calendarChecker addObject:@(YES)];
@@ -258,8 +252,7 @@
    }
    
    // sort uniqueEventsArray by start date and return array
-   NSArray *sortedArray = [uniqueEventsArray sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
-   return sortedArray;
+   return [uniqueEventsArray sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
 }
 
 - (NSArray *)getEventsOfAllCalendars:(NSArray<EKCalendar *> *)calendars
@@ -301,8 +294,7 @@
    }
    
    // sort uniqueEventsArray by start date and return array
-   NSArray *sortedArray = [uniqueEventsArray sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
-   return sortedArray;
+   return [uniqueEventsArray sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
 }
 
 - (void)deleteEventWithIdentifier:(NSString *)identifier

@@ -60,61 +60,61 @@
 
 
 - (void)viewDidLoad {
-   [super viewDidLoad];
-   
-   [self configureViewAndCollectionView];
-   [self calculateStartAndEndDateCaches];
+    [super viewDidLoad];
+    
+    [self configureViewAndCollectionView];
+    [self calculateStartAndEndDateCaches];
 }
 
 - (void)viewDidLayoutSubviews {
-   [super viewDidLayoutSubviews];
-   
-   [self giveGradientBackgroundColor];
+    [super viewDidLayoutSubviews];
+    
+    [self giveGradientBackgroundColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-   [super viewWillAppear:animated];
-   [super updateAuthorizationStatusToAccessEventStore];
-   
-   // Get rid of line underneath the navigation bar by clipping its bounds to our view controller's view.
-   self.navigationController.navigationBar.clipsToBounds = YES;
-   
-   // Disable swipe when TodayVC appears
-   self.revealViewController.panGestureRecognizer.enabled = NO;
+    [super viewWillAppear:animated];
+    [super updateAuthorizationStatusToAccessEventStore];
+    
+    // Get rid of line underneath the navigation bar by clipping its bounds to our view controller's view.
+    self.navigationController.navigationBar.clipsToBounds = YES;
+    
+    // Disable swipe when TodayVC appears
+    self.revealViewController.panGestureRecognizer.enabled = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-   [super viewDidAppear:animated];
-   
-   [self customizeDayLabelText];
+    [super viewDidAppear:animated];
+    
+    [self customizeDayLabelText];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-   [super viewDidDisappear:animated];
-   
-   self.selectedDate = nil;
+    [super viewDidDisappear:animated];
+    
+    self.selectedDate = nil;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
-   [super viewWillDisappear:animated];
-   
-   // Re-enable swipe when TodayVC disappears
-   self.revealViewController.panGestureRecognizer.enabled = YES;
+    [super viewWillDisappear:animated];
+    
+    // Re-enable swipe when TodayVC disappears
+    self.revealViewController.panGestureRecognizer.enabled = YES;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-   NSLog(@"transition cellDisplayedIndex = %li", self.cellDisplayedIndex);
-   
-   [self.collectionView setContentOffset:CGPointMake(self.cellDisplayedIndex * self.view.bounds.size.height, 0) animated:NO];
-   
-   NSLog(@"self.currentIndexPath = %li", self.currentIndexPath.item);
-   TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:self.currentIndexPath];
-   [dayCell.collectionView.collectionViewLayout invalidateLayout];
+    NSLog(@"transition cellDisplayedIndex = %li", self.cellDisplayedIndex);
+    
+    [self.collectionView setContentOffset:CGPointMake(self.cellDisplayedIndex * self.view.bounds.size.height, 0) animated:NO];
+    
+    NSLog(@"self.currentIndexPath = %li", self.currentIndexPath.item);
+    TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:self.currentIndexPath];
+    [dayCell.collectionView.collectionViewLayout invalidateLayout];
 }
 
 - (void)viewWillLayoutSubviews {
-   [super viewWillLayoutSubviews];
+    [super viewWillLayoutSubviews];
 }
 
 
@@ -123,28 +123,28 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-   NSInteger numberOfDayCells = [self.calendar components:NSCalendarUnitDay
-                                                 fromDate:self.startDateCache
-                                                   toDate:self.endDateCache
-                                                  options:0].day + 1;
-   return numberOfDayCells;
+    NSInteger numberOfDayCells = [self.calendar components:NSCalendarUnitDay
+                                                  fromDate:self.startDateCache
+                                                    toDate:self.endDateCache
+                                                   options:0].day + 1;
+    return numberOfDayCells;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-   TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:indexPath];
-   dayCell.delegate = self;
-   
-   self.currentIndexPath = indexPath;
-   
-   NSDateComponents *offsetComponents = [NSDateComponents new];
-   offsetComponents.day = indexPath.item;
-   dayCell.selectedDate = [self.calendar dateByAddingComponents:offsetComponents
-                                                         toDate:self.startDateCache
-                                                        options:0];
-   [dayCell.collectionView reloadData];
-   
-   return dayCell;
+    TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:indexPath];
+    dayCell.delegate = self;
+    
+    self.currentIndexPath = indexPath;
+    
+    NSDateComponents *offsetComponents = [NSDateComponents new];
+    offsetComponents.day = indexPath.item;
+    dayCell.selectedDate = [self.calendar dateByAddingComponents:offsetComponents
+                                                          toDate:self.startDateCache
+                                                         options:0];
+    [dayCell.collectionView reloadData];
+    
+    return dayCell;
 }
 
 
@@ -152,7 +152,7 @@
 
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-   return self.collectionView.frame.size;
+    return self.collectionView.frame.size;
 }
 
 
@@ -160,17 +160,17 @@
 
 
 - (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-   [self scrollViewDidEndDecelerating:(UIScrollView *)self];
+    [self scrollViewDidEndDecelerating:(UIScrollView *)self];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-   for (TodayCollectionViewDayCell *dayCell in [self.collectionView visibleCells]) {
-      self.todayLabel.text = [self.dateFormatter stringFromDate:dayCell.selectedDate];
-      [[NSUserDefaults standardUserDefaults] setObject:dayCell.selectedDate forKey:@"dayDisplayed"];
-   }
-   
-   TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:self.currentIndexPath];
-   [dayCell.collectionView.collectionViewLayout invalidateLayout];
+    for (TodayCollectionViewDayCell *dayCell in [self.collectionView visibleCells]) {
+        self.todayLabel.text = [self.dateFormatter stringFromDate:dayCell.selectedDate];
+        [[NSUserDefaults standardUserDefaults] setObject:dayCell.selectedDate forKey:@"dayDisplayed"];
+    }
+    
+    TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:self.currentIndexPath];
+    [dayCell.collectionView.collectionViewLayout invalidateLayout];
 }
 
 
@@ -178,23 +178,23 @@
 
 
 - (void)dayCell:(TodayCollectionViewDayCell *)cell didSelectEvent:(EKEvent *)ekEvent {
-   UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Event"
-                                                                            message:[NSString stringWithFormat:@"%@ : %@", ekEvent.title, ekEvent.calendar.title]
-                                                                  preferredStyle:UIAlertControllerStyleActionSheet];
-   
-   UIAlertAction *editAction = [UIAlertAction actionWithTitle:@"Edit"
-                                                        style:UIAlertActionStyleDefault
-                                                      handler:^(UIAlertAction *action) {
-                                                         EditEventViewController *editEventVC = [[EditEventViewController alloc] initWithEvent:ekEvent];
-                                                         [self.navigationController pushViewController:editEventVC animated:YES];
-                                                      }];
-   UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive
-                                                        handler:^(UIAlertAction *action) {
-                                                           [self dismissViewControllerAnimated:YES completion:nil];
-                                                        }];
-   [alertController addAction:editAction];
-   [alertController addAction:cancelAction];
-   [self presentViewController:alertController animated:YES completion:nil];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Event"
+                                                                             message:[NSString stringWithFormat:@"%@ : %@", ekEvent.title, ekEvent.calendar.title]
+                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    UIAlertAction *editAction = [UIAlertAction actionWithTitle:@"Edit"
+                                                         style:UIAlertActionStyleDefault
+                                                       handler:^(UIAlertAction *action) {
+                                                           EditEventViewController *editEventVC = [[EditEventViewController alloc] initWithEvent:ekEvent];
+                                                           [self.navigationController pushViewController:editEventVC animated:YES];
+                                                       }];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive
+                                                         handler:^(UIAlertAction *action) {
+                                                             [self dismissViewControllerAnimated:YES completion:nil];
+                                                         }];
+    [alertController addAction:editAction];
+    [alertController addAction:cancelAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 
@@ -202,26 +202,26 @@
 
 
 - (IBAction)leftButtonTouched:(UIButton *)sender {
-   [self updateDayByValue:-1];
+    [self updateDayByValue:-1];
 }
 
 - (IBAction)rightButtonTouched:(UIButton *)sender {
-   [self updateDayByValue:1];
+    [self updateDayByValue:1];
 }
 
 - (void)updateDayByValue:(NSInteger)value {
-   NSDateComponents *valueComponents = [NSDateComponents new];
-   valueComponents.day = value;
-   NSDate *valueDate = [NSDate new];
-   
-   for (TodayCollectionViewDayCell *dayCell in [self.collectionView visibleCells]) {
-      valueDate = [self.calendar dateByAddingComponents:valueComponents toDate:dayCell.selectedDate options:0];
-      [self setDayDisplayed:valueDate animated:YES];
-      dayCell.selectedDate = valueDate;
-   }
-   
-   TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:self.currentIndexPath];
-   [dayCell.collectionView.collectionViewLayout invalidateLayout];
+    NSDateComponents *valueComponents = [NSDateComponents new];
+    valueComponents.day = value;
+    NSDate *valueDate = [NSDate new];
+    
+    for (TodayCollectionViewDayCell *dayCell in [self.collectionView visibleCells]) {
+        valueDate = [self.calendar dateByAddingComponents:valueComponents toDate:dayCell.selectedDate options:0];
+        [self setDayDisplayed:valueDate animated:YES];
+        dayCell.selectedDate = valueDate;
+    }
+    
+    TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:self.currentIndexPath];
+    [dayCell.collectionView.collectionViewLayout invalidateLayout];
 }
 
 
@@ -229,103 +229,103 @@
 
 
 - (void)customizeDayLabelText {
-   NSDate *currentDayDisplayed = [[NSUserDefaults standardUserDefaults] objectForKey:@"dayDisplayed"];
-   NSNumber *initialScroll = [[NSUserDefaults standardUserDefaults] objectForKey:@"initialScrollDone"];
-   
-   NSDateComponents *comps = [NSDateComponents new];
-   comps.day = 1;
-   
-   if (self.selectedDate) {
-      self.dayDisplayed = self.selectedDate;
-      
-   } else if (currentDayDisplayed && ![initialScroll boolValue]) {
-      self.dayDisplayed = [self.calendar dateByAddingComponents:comps toDate:currentDayDisplayed options:0];
-      
-   } else if (currentDayDisplayed) {
-      self.dayDisplayed = currentDayDisplayed;
-      
-   } else {
-      // add an extra day to account for the UIScrollView offset
-      self.dayDisplayed = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
-   }
-   
-   self.selectedDate = self.dayDisplayed;
-   self.todayLabel.text = [self.dateFormatter stringFromDate:self.dayDisplayed];
-   
-   [[NSUserDefaults standardUserDefaults] setObject:self.dayDisplayed forKey:@"dayDisplayed"];
-   [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"initialScrollDone"];
+    NSDate *currentDayDisplayed = [[NSUserDefaults standardUserDefaults] objectForKey:@"dayDisplayed"];
+    NSNumber *initialScroll = [[NSUserDefaults standardUserDefaults] objectForKey:@"initialScrollDone"];
+    
+    NSDateComponents *comps = [NSDateComponents new];
+    comps.day = 1;
+    
+    if (self.selectedDate) {
+        self.dayDisplayed = self.selectedDate;
+        
+    } else if (currentDayDisplayed && ![initialScroll boolValue]) {
+        self.dayDisplayed = [self.calendar dateByAddingComponents:comps toDate:currentDayDisplayed options:0];
+        
+    } else if (currentDayDisplayed) {
+        self.dayDisplayed = currentDayDisplayed;
+        
+    } else {
+        // add an extra day to account for the UIScrollView offset
+        self.dayDisplayed = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+    }
+    
+    self.selectedDate = self.dayDisplayed;
+    self.todayLabel.text = [self.dateFormatter stringFromDate:self.dayDisplayed];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.dayDisplayed forKey:@"dayDisplayed"];
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"initialScrollDone"];
 }
 
 - (void)configureViewAndCollectionView {
-   self.view.backgroundColor = [UIColor clearColor];
-   self.collectionView.backgroundColor = [UIColor clearColor];
-   self.automaticallyAdjustsScrollViewInsets = NO;
-   
-   // IMPORTANT property that requests our dayCell's ONLY when needed for display
-   self.collectionView.prefetchingEnabled = NO;
-   
-   [self.collectionView registerClass:[TodayCollectionViewDayCell class]
-           forCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class])];
-   
-   [self.view addSubview:self.collectionView];
+    self.view.backgroundColor = [UIColor clearColor];
+    self.collectionView.backgroundColor = [UIColor clearColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    // IMPORTANT property that requests our dayCell's ONLY when needed for display
+    //   self.collectionView.prefetchingEnabled = NO;
+    
+    [self.collectionView registerClass:[TodayCollectionViewDayCell class]
+            forCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class])];
+    
+    [self.view addSubview:self.collectionView];
 }
 
 - (void)giveGradientBackgroundColor {
-   // Create an overlay view to give a gradient background color
-   CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.bounds.size.height + 3000);
-   UIView *overlayView = [[UIView alloc] initWithFrame:frame];
-   UIColor *skyBlueLight = [UIColor colorWithHue:0.57 saturation:0.90 brightness:0.98 alpha:1.0];
-   overlayView.backgroundColor = [UIColor colorWithGradientStyle:UIGradientStyleTopToBottom
-                                                       withFrame:frame
-                                                       andColors:@[[UIColor whiteColor], skyBlueLight]];
-   [self.view insertSubview:overlayView atIndex:0];
+    // Create an overlay view to give a gradient background color
+    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.bounds.size.height + 3000);
+    UIView *overlayView = [[UIView alloc] initWithFrame:frame];
+    UIColor *skyBlueLight = [UIColor colorWithHue:0.57 saturation:0.90 brightness:0.98 alpha:1.0];
+    overlayView.backgroundColor = [UIColor colorWithGradientStyle:UIGradientStyleTopToBottom
+                                                        withFrame:frame
+                                                        andColors:@[[UIColor whiteColor], skyBlueLight]];
+    [self.view insertSubview:overlayView atIndex:0];
 }
 
 - (void)calculateStartAndEndDateCaches {
-   NSDateComponents *comps = [NSDateComponents new];
-   comps.year = -10;
-   self.startDateCache = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
-   
-   comps.year = 10;
-   self.endDateCache = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+    NSDateComponents *comps = [NSDateComponents new];
+    comps.year = -10;
+    self.startDateCache = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+    
+    comps.year = 10;
+    self.endDateCache = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
 }
 
 - (TodayCollectionViewDayCell *)currentDayCell {
-   CGFloat dayCellWidth = ((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout).itemSize.width;
-   
-   CGFloat pageNumberRoundedDown = floor(self.collectionView.contentOffset.x / dayCellWidth);
-   
-   return (TodayCollectionViewDayCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:pageNumberRoundedDown inSection:0]];
+    CGFloat dayCellWidth = ((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout).itemSize.width;
+    
+    CGFloat pageNumberRoundedDown = floor(self.collectionView.contentOffset.x / dayCellWidth);
+    
+    return (TodayCollectionViewDayCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:pageNumberRoundedDown inSection:0]];
 }
 
 - (NSUInteger)cellDisplayedIndex {
-   return (NSUInteger)(self.collectionView.contentOffset.x / self.collectionView.frame.size.width);
+    return (NSUInteger)(self.collectionView.contentOffset.x / self.collectionView.frame.size.width);
 }
 
 - (NSDate *)dayDisplayed {
-   NSDateComponents *comps = [NSDateComponents new];
-   comps.day = self.cellDisplayedIndex;
-   
-   NSDate *day = [self.calendar dateByAddingComponents:comps toDate:self.startDateCache options:0];
-   return day;
+    NSDateComponents *comps = [NSDateComponents new];
+    comps.day = self.cellDisplayedIndex;
+    
+    NSDate *day = [self.calendar dateByAddingComponents:comps toDate:self.startDateCache options:0];
+    return day;
 }
 
 - (void)setDayDisplayed:(NSDate *)dayDisplayed animated:(BOOL)animated {
-   NSDateComponents *differenceComponents = [self.calendar components:NSCalendarUnitDay
-                                                             fromDate:self.startDateCache
-                                                               toDate:dayDisplayed
-                                                              options:0];
-   if (differenceComponents.day != self.cellDisplayedIndex) {
-      CGRect rectToScroll = CGRectZero;
-      rectToScroll.size = self.collectionView.bounds.size;
-      rectToScroll.origin.x = differenceComponents.day * self.collectionView.bounds.size.width;
-      
-      [self.collectionView scrollRectToVisible:rectToScroll animated:animated];
-   }
+    NSDateComponents *differenceComponents = [self.calendar components:NSCalendarUnitDay
+                                                              fromDate:self.startDateCache
+                                                                toDate:dayDisplayed
+                                                               options:0];
+    if (differenceComponents.day != self.cellDisplayedIndex) {
+        CGRect rectToScroll = CGRectZero;
+        rectToScroll.size = self.collectionView.bounds.size;
+        rectToScroll.origin.x = differenceComponents.day * self.collectionView.bounds.size.width;
+        
+        [self.collectionView scrollRectToVisible:rectToScroll animated:animated];
+    }
 }
 
 - (void)setDayDisplayed:(NSDate *)dayDisplayed {
-   [self setDayDisplayed:dayDisplayed animated:NO];
+    [self setDayDisplayed:dayDisplayed animated:NO];
 }
 
 
@@ -333,26 +333,26 @@
 
 
 - (NSDateFormatter *)dateFormatter {
-   if (!_dateFormatter) {
-      _dateFormatter = [NSDateFormatter new];
-      _dateFormatter.locale = [NSLocale currentLocale];
-      [_dateFormatter setLocalizedDateFormatFromTemplate:@"MMMMdYYYY"];
-   }
-   return _dateFormatter;
+    if (!_dateFormatter) {
+        _dateFormatter = [NSDateFormatter new];
+        _dateFormatter.locale = [NSLocale currentLocale];
+        [_dateFormatter setLocalizedDateFormatFromTemplate:@"MMMMdYYYY"];
+    }
+    return _dateFormatter;
 }
 
 - (NSCalendar *)calendar {
-   if (!_calendar) {
-      _calendar = [NSCalendar currentCalendar];
-   }
-   return _calendar;
+    if (!_calendar) {
+        _calendar = [NSCalendar currentCalendar];
+    }
+    return _calendar;
 }
 
 - (AppDelegate *)appDelegate {
-   if (!_appDelegate) {
-      _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-   }
-   return _appDelegate;
+    if (!_appDelegate) {
+        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    }
+    return _appDelegate;
 }
 
 
