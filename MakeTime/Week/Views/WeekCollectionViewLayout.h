@@ -21,4 +21,6 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath;
 - (NSUInteger)weekViewLayout:(WeekCollectionViewLayout *)layout
    weekdayForCellAtIndexPath:(NSIndexPath *)indexPath;
 
+- (CGFloat)sizeForSupplementaryView;
+
 @end

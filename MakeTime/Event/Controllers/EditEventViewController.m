@@ -101,7 +101,8 @@
    
    [self customizeTitle];
    [self customizeBarButtonItems];
-   [self giveGradientBackgroundColor];
+//   [self giveGradientBackgroundColor];
+    self.view.backgroundColor = [UIColor whiteColor];
    
    [self registerCellSubclasses];
    [self addTapGestureRecognizer];

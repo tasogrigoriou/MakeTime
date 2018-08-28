@@ -39,7 +39,8 @@
    [super viewDidLoad];
    
    [self configureViewAndCollectionView];
-   [self giveGradientBackgroundColor];
+//   [self giveGradientBackgroundColor];
+    self.view.backgroundColor = [UIColor whiteColor];
    
    [self initImagesAndTextsArray];
 }

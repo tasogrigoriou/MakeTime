@@ -39,7 +39,8 @@
    [self customizeLabel];
    [self configureViewAndTableView];
    [self customizeBarButtonItems];
-   [self giveGradientBackgroundColor];
+//   [self giveGradientBackgroundColor];
+    self.view.backgroundColor = [UIColor whiteColor];
    
    // Assign calendarColors as UIColors and as NSStrings for the labels
    [self assignCalendarColors];

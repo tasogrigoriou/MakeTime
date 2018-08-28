@@ -34,7 +34,8 @@
    [self configureViewAndTableView];
    
    [self customizeNavBarTitle];
-   [self giveGradientBackgroundColor];
+//   [self giveGradientBackgroundColor];
+    self.view.backgroundColor = [UIColor whiteColor];
    [self customizeLeftBarButtonItem];
    
    self.repeatOptions = @[@"Never", @"Every day", @"Every week", @"Every month", @"Every year"];

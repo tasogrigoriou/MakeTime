@@ -22,14 +22,18 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UIRequiredDeviceCapabilities</key>
-	<array>
-		<string>armv7</string>
-	</array>
 	<key>NSCalendarsUsageDescription</key>
 	<string>Use Calendar App</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>Use Reminders</string>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen2</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

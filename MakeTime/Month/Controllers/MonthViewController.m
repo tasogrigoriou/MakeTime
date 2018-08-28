@@ -42,7 +42,8 @@
   [super viewDidLoad];
   
   [self configureViewAndCalendarView];
-  [self giveGradientBackgroundColor];
+//  [self giveGradientBackgroundColor];
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated

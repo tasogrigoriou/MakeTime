@@ -68,7 +68,6 @@
    WeekCollectionViewCell *cell = (WeekCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"WeekCollectionViewCell" forIndexPath:indexPath];
    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
    
-   //   cell.calLabel.text = eventComponent.calendar.title;
    cell.calLabel.text = @"";
    cell.backgroundColor = [UIColor colorWithCGColor:eventComponent.calendar.CGColor];
    
@@ -109,18 +108,16 @@
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-   //   EKEvent *event = self.customEvents[indexPath.item];
-   //   [self.delegate weekCell:self didSelectEvent:event];
-   
-   [self.collectionView reloadData];
+    EKEvent *event = self.customEvents[indexPath.item];
+    [self.delegate weekCell:self didSelectEvent:event];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-   WeekCollectionViewCell *cell = (WeekCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-   cell.backgroundColor = [UIColor clearColor];
-   
-   EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-   cell.backgroundColor = [UIColor colorWithCGColor:eventComponent.calendar.CGColor];
+    WeekCollectionViewCell *cell = (WeekCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    cell.backgroundColor = [UIColor clearColor];
+    
+    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
+    cell.backgroundColor = [UIColor colorWithCGColor:eventComponent.calendar.CGColor];
 }
 
 
@@ -130,17 +127,17 @@
 - (NSRange)weekViewLayout:(WeekCollectionViewLayout *)layout
 timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-   NSRange timespan = [self getTimespanForEvent:eventComponent];
-   
-   return timespan;
+   return [self getTimespanForEvent:eventComponent];
 }
 
 - (NSUInteger)weekViewLayout:(WeekCollectionViewLayout *)layout
    weekdayForCellAtIndexPath:(NSIndexPath *)indexPath {
    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-   NSUInteger weekday = [self getWeekdayForEvent:eventComponent];
-   
-   return weekday;
+   return [self getWeekdayForEvent:eventComponent];
+}
+
+- (CGFloat)sizeForSupplementaryView {
+    return [self.delegate sizeForSupplementaryView];
 }
 
 
@@ -154,7 +151,8 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
                                                                 calendar:ekEvent.calendar
                                                                startDate:ekEvent.startDate
                                                                  endDate:ekEvent.endDate
-                                                                   color:[UIColor colorWithCGColor:ekEvent.calendar.CGColor]];
+                                                                   color:[UIColor colorWithCGColor:ekEvent.calendar.CGColor]
+                                                              identifier:ekEvent.eventIdentifier];
       [eventComponentsArray addObject:eventComponents];
    }
    return (NSArray *)eventComponentsArray;
@@ -171,11 +169,12 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
       NSDate *startOfNextDay = [self.calendar dateByAddingComponents:comps toDate:startOfDate options:0];
       
       while ([eventComponent.endDate compare:startOfNextDay] == NSOrderedDescending) {
-         EventComponents *newEventComponent = [EventComponents eventWithTitle:@""
-                                                                     calendar:eventComponent.calendar
-                                                                    startDate:startOfNextDay
-                                                                      endDate:eventComponent.endDate
-                                                                        color:eventComponent.color];
+          EventComponents *newEventComponent = [EventComponents eventWithTitle:@""
+                                                                       calendar:eventComponent.calendar
+                                                                      startDate:startOfNextDay
+                                                                        endDate:eventComponent.endDate
+                                                                          color:eventComponent.color
+                                                                     identifier:eventComponent.identifier];
          // Update startOfNextDay to be next next day (until the event's endDate is smaller than the nextDay)
          startOfNextDay = [self.calendar dateByAddingComponents:comps toDate:startOfNextDay options:0];
          

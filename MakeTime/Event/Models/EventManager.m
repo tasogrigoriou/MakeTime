@@ -141,7 +141,7 @@
    }
    
    /**** Log NSUserDefaults to view calendar identifiers ****/
-     NSLog(@"NSUserDefaults: \n%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
+//     NSLog(@"NSUserDefaults: \n%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
    
    self.customCalendars = (NSArray *)customCals;
    return self.customCalendars;
@@ -276,25 +276,8 @@
    
    NSArray *eventsArray = [self.eventStore eventsMatchingPredicate:predicate];
    
-   // Copy all objects one by one to a new mutable array, and make sure that the same event is not added twice.
-   BOOL eventExists = NO;
-   NSMutableArray *uniqueEventsArray = [NSMutableArray new];
-   for (EKEvent *event in eventsArray) {
-      if (event.recurrenceRules && event.recurrenceRules.count > 0) {
-         for (EKEvent *uniqueEvent in uniqueEventsArray) {
-            if ([uniqueEvent.eventIdentifier isEqualToString:event.eventIdentifier]) {
-               eventExists = YES;
-               break;
-            }
-         }
-      }
-      if (!eventExists) {
-         [uniqueEventsArray addObject:event];
-      }
-   }
-   
-   // sort uniqueEventsArray by start date and return array
-   return [uniqueEventsArray sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
+   // sort eventsArray by start date and return array
+   return [eventsArray sortedArrayUsingSelector:@selector(compareStartDateWithEvent:)];
 }
 
 - (void)deleteEventWithIdentifier:(NSString *)identifier

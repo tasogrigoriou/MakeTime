@@ -33,6 +33,7 @@
 
 @protocol WeekCollectionViewWeekCellDelegate <NSObject>
 
-- (void)dayCell:(WeekCollectionViewWeekCell *)cell didSelectEvent:(EKEvent *)event;
+- (void)weekCell:(WeekCollectionViewWeekCell *)cell didSelectEvent:(EKEvent *)event;
+- (CGFloat)sizeForSupplementaryView;
 
 @end

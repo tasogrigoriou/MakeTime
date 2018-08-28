@@ -31,5 +31,6 @@
 @protocol TodayCollectionViewDayCellDelegate <NSObject>
 
 - (void)dayCell:(TodayCollectionViewDayCell *)cell didSelectEvent:(EKEvent *)ekEvent;
+- (CGFloat)sizeForSupplementaryView;
 
 @end

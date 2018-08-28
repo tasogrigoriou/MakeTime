@@ -14,15 +14,17 @@
                            calendar:(EKCalendar *)calendar
                           startDate:(NSDate *)startDate
                             endDate:(NSDate *)endDate
-                              color:(UIColor *)color {
-  EventComponents *eventComponents = [EventComponents new];
-  eventComponents.title = title;
-  eventComponents.calendar = calendar;
-  eventComponents.startDate = startDate;
-  eventComponents.endDate = endDate;
-  eventComponents.color = color;
-  
-  return eventComponents;
+                              color:(UIColor *)color
+                         identifier:(NSString *)identifier {
+    EventComponents *eventComponents = [EventComponents new];
+    eventComponents.title = title;
+    eventComponents.calendar = calendar;
+    eventComponents.startDate = startDate;
+    eventComponents.endDate = endDate;
+    eventComponents.color = color;
+    eventComponents.identifier = identifier;
+    
+    return eventComponents;
 }
 
 @end

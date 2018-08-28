@@ -1,18 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="AvenirNextCondensed.ttc">
-            <string>AvenirNextCondensed-Medium</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WeekViewController">
             <connections>
@@ -75,7 +69,6 @@
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="KmB-SO-CJU" secondAttribute="trailing" id="1Xm-ay-4KP"/>
                 <constraint firstAttribute="trailing" secondItem="zfk-65-v5o" secondAttribute="trailing" id="3Gd-ZZ-D5C"/>
-                <constraint firstAttribute="bottom" secondItem="zfk-65-v5o" secondAttribute="bottom" id="4GX-h1-m5m"/>
                 <constraint firstItem="zfk-65-v5o" firstAttribute="leading" secondItem="qq1-QO-SnP" secondAttribute="leading" id="HMI-Uc-JHy"/>
                 <constraint firstItem="GT0-Cl-vzh" firstAttribute="bottom" secondItem="KmB-SO-CJU" secondAttribute="bottom" id="Ovg-bS-MLl"/>
                 <constraint firstAttribute="bottom" secondItem="zfk-65-v5o" secondAttribute="bottom" id="RMZ-vk-t4j"/>

@@ -50,6 +50,8 @@
 		9F4035B71F13577C00EA1B16 /* EditCategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F4035B51F13577C00EA1B16 /* EditCategoriesTableViewCell.xib */; };
 		9F4035B91F1365A000EA1B16 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F4035B81F1365A000EA1B16 /* checkmark.png */; };
 		9F47B8371F44C8C00044700E /* EventComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F47B8361F44C8C00044700E /* EventComponents.m */; };
+		9F4D5C1D212BE485008E047E /* EventPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D5C1B212BE485008E047E /* EventPopUpViewController.m */; };
+		9F4D5C1E212BE485008E047E /* EventPopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F4D5C1C212BE485008E047E /* EventPopUpViewController.xib */; };
 		9F559B6B1EDC9521002FA48E /* CustomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F559B6A1EDC9521002FA48E /* CustomAnimationController.m */; };
 		9F56171D1E3D62AF00C92525 /* Chameleon_.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5617041E3D62AF00C92525 /* Chameleon_.m */; };
 		9F56171E1E3D62AF00C92525 /* ChameleonConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5617061E3D62AF00C92525 /* ChameleonConstants.m */; };
@@ -88,6 +90,7 @@
 		9F76F4821E5FCEB100641875 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F76F4711E5FCEB100641875 /* Info.plist */; };
 		9F78CB281E48302D00D70867 /* CalendarViewMonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F78CB271E48302D00D70867 /* CalendarViewMonthCell.m */; };
 		9F9D2C591EDE1287006167EB /* EventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D2C581EDE1287006167EB /* EventManager.m */; };
+		9FA26DDA2127E3F40053F628 /* LaunchScreen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA26DD92127E3F40053F628 /* LaunchScreen2.storyboard */; };
 		9FAE9A741EE83F31002F247F /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE9A721EE83F31002F247F /* CalendarViewController.m */; };
 		9FAE9A751EE83F31002F247F /* CalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FAE9A731EE83F31002F247F /* CalendarViewController.xib */; };
 		9FAE9A791EE84997002F247F /* AddEventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE9A771EE84997002F247F /* AddEventViewController.m */; };
@@ -186,6 +189,9 @@
 		9F4035B81F1365A000EA1B16 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		9F47B8351F44C8C00044700E /* EventComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventComponents.h; sourceTree = "<group>"; };
 		9F47B8361F44C8C00044700E /* EventComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventComponents.m; sourceTree = "<group>"; };
+		9F4D5C1A212BE485008E047E /* EventPopUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventPopUpViewController.h; sourceTree = "<group>"; };
+		9F4D5C1B212BE485008E047E /* EventPopUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventPopUpViewController.m; sourceTree = "<group>"; };
+		9F4D5C1C212BE485008E047E /* EventPopUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventPopUpViewController.xib; sourceTree = "<group>"; };
 		9F559B691EDC9521002FA48E /* CustomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnimationController.h; sourceTree = "<group>"; };
 		9F559B6A1EDC9521002FA48E /* CustomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnimationController.m; sourceTree = "<group>"; };
 		9F5617021E3D62AF00C92525 /* Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon.h; sourceTree = "<group>"; };
@@ -261,6 +267,7 @@
 		9F78CB271E48302D00D70867 /* CalendarViewMonthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewMonthCell.m; sourceTree = "<group>"; };
 		9F9D2C571EDE1287006167EB /* EventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventManager.h; sourceTree = "<group>"; };
 		9F9D2C581EDE1287006167EB /* EventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventManager.m; sourceTree = "<group>"; };
+		9FA26DD92127E3F40053F628 /* LaunchScreen2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen2.storyboard; sourceTree = "<group>"; };
 		9FAE9A711EE83F31002F247F /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
 		9FAE9A721EE83F31002F247F /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
 		9FAE9A731EE83F31002F247F /* CalendarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CalendarViewController.xib; sourceTree = "<group>"; };
@@ -654,6 +661,7 @@
 		9FBA79271DCC5CF1000AE696 = {
 			isa = PBXGroup;
 			children = (
+				9FA26DD92127E3F40053F628 /* LaunchScreen2.storyboard */,
 				9F32CF5B1ED4839100922048 /* Assets */,
 				9FBA79321DCC5CF1000AE696 /* MakeTime */,
 			);
@@ -817,6 +825,9 @@
 				9FD948761F2D4C1300483302 /* RepeatAlertViewController.h */,
 				9FD948771F2D4C1300483302 /* RepeatAlertViewController.m */,
 				9FD948781F2D4C1300483302 /* RepeatAlertViewController.xib */,
+				9F4D5C1A212BE485008E047E /* EventPopUpViewController.h */,
+				9F4D5C1B212BE485008E047E /* EventPopUpViewController.m */,
+				9F4D5C1C212BE485008E047E /* EventPopUpViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -924,6 +935,7 @@
 				9F0930811E1EF319007A33F6 /* menu@2x.png in Resources */,
 				9F09306C1E1CB787007A33F6 /* write.png in Resources */,
 				9F71EF3D1E21A22C00CD23DA /* TodayCollectionViewCell.xib in Resources */,
+				9F4D5C1E212BE485008E047E /* EventPopUpViewController.xib in Resources */,
 				9FBA79431DCC5CF1000AE696 /* Assets.xcassets in Resources */,
 				9F4035B71F13577C00EA1B16 /* EditCategoriesTableViewCell.xib in Resources */,
 				9F1ED88F1FF8B06E006FF015 /* EditEventViewController.xib in Resources */,
@@ -948,6 +960,7 @@
 				9F4035B91F1365A000EA1B16 /* checkmark.png in Resources */,
 				9F14B8971DEBE45000ADBE0C /* MonthViewController.xib in Resources */,
 				9F09306E1E1DDA98007A33F6 /* magic-wand.png in Resources */,
+				9FA26DDA2127E3F40053F628 /* LaunchScreen2.storyboard in Resources */,
 				9F0930781E1EF0C6007A33F6 /* menu2.png in Resources */,
 				9F1B5BC01F4AB58F00F20370 /* WeekCollectionViewCell.xib in Resources */,
 				9FD948891F325DC800483302 /* TodayCollectionReusableView.xib in Resources */,
@@ -1003,6 +1016,7 @@
 				9F76F4751E5FCEB100641875 /* FSCalendarCalculator.m in Sources */,
 				9F5617251E3D62AF00C92525 /* UILabel+Chameleon.m in Sources */,
 				9F76F47F1E5FCEB100641875 /* FSCalendarStickyHeader.m in Sources */,
+				9F4D5C1D212BE485008E047E /* EventPopUpViewController.m in Sources */,
 				9F76F4761E5FCEB100641875 /* FSCalendarCell.m in Sources */,
 				9F5617261E3D62AF00C92525 /* UINavigationController+Chameleon.m in Sources */,
 				9FCB504C1EEA0667001A7A3D /* UIViewController+SwipeBack.m in Sources */,
@@ -1154,7 +1168,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6X7DGG368N;
 				INFOPLIST_FILE = "Assets/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Grigoriou.MakeTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1169,7 +1183,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6X7DGG368N;
 				INFOPLIST_FILE = "Assets/Supporting Files/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Grigoriou.MakeTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";

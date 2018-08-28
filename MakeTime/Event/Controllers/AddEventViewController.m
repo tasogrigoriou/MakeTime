@@ -80,7 +80,8 @@
    
    [self customizeTitle];
    [self customizeBarButtonItems];
-   [self giveGradientBackgroundColor];
+//   [self giveGradientBackgroundColor];
+    self.view.backgroundColor = [UIColor whiteColor];
    
    [self registerCellSubclasses];
    [self addTapGestureRecognizer];
@@ -237,6 +238,9 @@
       comps.day = 1;
       todayVC.selectedDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
       [self.navigationController pushViewController:todayVC animated:YES];
+//       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//           [self.navigationController pushViewController:todayVC animated:YES];
+//   });
    }
 }
 

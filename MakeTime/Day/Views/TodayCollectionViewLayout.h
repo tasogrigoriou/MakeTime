@@ -23,4 +23,6 @@
 - (NSInteger)calendarViewLayout:(TodayCollectionViewLayout *)layout
      getStartingHourForTimespan:(NSRange)timespan;
 
+- (CGFloat)sizeForSupplementaryView;
+
 @end

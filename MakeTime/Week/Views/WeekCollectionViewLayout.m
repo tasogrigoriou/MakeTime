@@ -10,12 +10,14 @@
 
 static const CGFloat DAY_VIEW_HEIGHT = 80.0f;
 static const CGFloat DAY_VIEW_WIDTH = 80.0f;
-static const CGFloat TWENTY_FOUR_HOURS_WIDTH = 24.0f * 60.0f; // hours in a day represented as a float value
+static const CGFloat TWENTY_FOUR_HOURS_WIDTH = 24.0f * 60.0f; // mins in a day represented as a float value
 
 @interface WeekCollectionViewLayout ()
 
 @property (strong, nonatomic) NSMutableArray *cellAttributes;
 @property (strong, nonatomic) NSMutableArray *dayAttributes;
+
+@property (assign, nonatomic) CGFloat sizeForSupplementaryView;
 
 @end
 
@@ -24,7 +26,11 @@ static const CGFloat TWENTY_FOUR_HOURS_WIDTH = 24.0f * 60.0f; // hours in a day 
 
 
 - (CGSize)collectionViewContentSize {
-   return CGSizeMake(self.collectionView.bounds.size.width, DAY_VIEW_HEIGHT * 7);
+    if ([self.collectionView.delegate conformsToProtocol:@protocol(WeekCollectionViewLayoutDelegate)]) {
+        id <WeekCollectionViewLayoutDelegate> weekCollectionViewLayoutDelegate = (id <WeekCollectionViewLayoutDelegate>)self.collectionView.delegate;
+        self.sizeForSupplementaryView = [weekCollectionViewLayoutDelegate sizeForSupplementaryView];
+    }
+   return CGSizeMake(self.collectionView.bounds.size.width, self.sizeForSupplementaryView * 7);
 }
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
@@ -37,6 +43,8 @@ static const CGFloat TWENTY_FOUR_HOURS_WIDTH = 24.0f * 60.0f; // hours in a day 
    
    if ([self.collectionView.delegate conformsToProtocol:@protocol(WeekCollectionViewLayoutDelegate)]) {
       id <WeekCollectionViewLayoutDelegate> weekCollectionViewLayoutDelegate = (id <WeekCollectionViewLayoutDelegate>)self.collectionView.delegate;
+       
+       self.sizeForSupplementaryView = [weekCollectionViewLayoutDelegate sizeForSupplementaryView];
       
       // Compute every WeekCollectionViewCell layoutAttributes
       for (NSInteger i = 0; i < [self.collectionView numberOfSections]; i++) {
@@ -57,8 +65,10 @@ static const CGFloat TWENTY_FOUR_HOURS_WIDTH = 24.0f * 60.0f; // hours in a day 
             NSUInteger weekday = [weekCollectionViewLayoutDelegate weekViewLayout:self
                                                         weekdayForCellAtIndexPath:cellIndexPath];
             
-            attributesFrame.origin = CGPointMake(xpos, (weekday - 1) * DAY_VIEW_HEIGHT);
-            attributesFrame.size = CGSizeMake(width, DAY_VIEW_HEIGHT);
+//            attributesFrame.origin = CGPointMake(xpos, (weekday - 1) * DAY_VIEW_HEIGHT);
+             attributesFrame.origin = CGPointMake(xpos, (weekday - 1) * self.sizeForSupplementaryView);
+//            attributesFrame.size = CGSizeMake(width, DAY_VIEW_HEIGHT);
+             attributesFrame.size = CGSizeMake(width, self.sizeForSupplementaryView);
             attributes.frame = attributesFrame;
             
             [self.cellAttributes addObject:attributes];
@@ -70,8 +80,10 @@ static const CGFloat TWENTY_FOUR_HOURS_WIDTH = 24.0f * 60.0f; // hours in a day 
          UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:@"WeekCollectionReusableView" withIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
          
          CGRect attributesFrame = CGRectZero;
-         attributesFrame.size = CGSizeMake(DAY_VIEW_WIDTH, DAY_VIEW_HEIGHT);
-         attributesFrame.origin = CGPointMake(0, i * DAY_VIEW_HEIGHT);
+//         attributesFrame.size = CGSizeMake(DAY_VIEW_WIDTH, DAY_VIEW_HEIGHT);
+          attributesFrame.size = CGSizeMake(DAY_VIEW_WIDTH, self.sizeForSupplementaryView);
+//         attributesFrame.origin = CGPointMake(0, i * DAY_VIEW_HEIGHT);
+          attributesFrame.origin = CGPointMake(0, i * self.sizeForSupplementaryView);
          
          attributes.frame = attributesFrame;
          [self.dayAttributes addObject:attributes];

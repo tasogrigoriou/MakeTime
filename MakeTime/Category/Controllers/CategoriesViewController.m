@@ -39,7 +39,8 @@
    
    [self customizeLabel];
    [self configureViewAndTableView];
-   [self giveGradientBackgroundColor];
+//   [self giveGradientBackgroundColor];
+    self.view.backgroundColor = [UIColor whiteColor];
    
    self.customCalendars = [self.appDelegate.eventManager loadCustomCalendars];
    

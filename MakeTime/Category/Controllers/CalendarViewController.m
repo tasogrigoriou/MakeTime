@@ -38,7 +38,8 @@
    
    [self configureLabel];
    [self configureButtons];
-   [self giveGradientBackgroundColor];
+//   [self giveGradientBackgroundColor];
+    self.view.backgroundColor = [UIColor whiteColor];
    [self configureViewAndCollectionView];
    
    // Get a ref to the app delegate and load custom calendars (categories)
@@ -99,7 +100,7 @@
 {
    CalendarCollectionViewCell *calendarCell = (CalendarCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"CalendarCollectionViewCell" forIndexPath:indexPath];
    
-   EKCalendar *cal = self.customCalendars[indexPath.row];
+   EKCalendar *cal = self.customCalendars[indexPath.item];
    calendarCell.backgroundColor = [UIColor colorWithCGColor:cal.CGColor];
    calendarCell.calendarCellLabel.text = cal.title;
    
@@ -108,7 +109,7 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-   self.selectedCalendar = self.customCalendars[indexPath.row];
+   self.selectedCalendar = self.customCalendars[indexPath.item];
    
    AddEventViewController *addEventVC = [AddEventViewController new];
    addEventVC.indexOfCalendar = indexPath.row;
@@ -208,7 +209,6 @@ didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
 
 - (void)configureViewAndCollectionView
 {
-   self.view.backgroundColor = [UIColor clearColor];
    self.calendarCollectionView.backgroundColor = [UIColor clearColor];
    
    self.automaticallyAdjustsScrollViewInsets = NO;

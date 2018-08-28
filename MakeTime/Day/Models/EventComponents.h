@@ -17,11 +17,13 @@
 @property (strong, nonatomic) NSDate *startDate;
 @property (strong, nonatomic) NSDate *endDate;
 @property (strong, nonatomic) UIColor *color;
+@property (copy, nonatomic) NSString *identifier;
 
 + (EventComponents *)eventWithTitle:(NSString *)title
                            calendar:(EKCalendar *)calendar
                           startDate:(NSDate *)startDate
                             endDate:(NSDate *)endDate
-                              color:(UIColor *)color;
+                              color:(UIColor *)color
+                         identifier:(NSString *)identifier;
 
 @end

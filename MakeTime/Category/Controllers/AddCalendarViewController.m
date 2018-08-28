@@ -39,7 +39,8 @@
     [self configureLabels];
     [self configureViewAndTableView];
     [self configureBarButtonItems];
-    [self giveGradientBackgroundColor];
+//    [self giveGradientBackgroundColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     [self addTapGestureRecognizer];
 
     // Get a ref to the app delegate, load our custom categories,
