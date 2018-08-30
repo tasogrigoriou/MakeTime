@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -23,13 +24,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Week" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GT0-Cl-vzh">
-                    <rect key="frame" x="170" y="65" width="35" height="24"/>
+                    <rect key="frame" x="170" y="20" width="35" height="24"/>
                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yFn-L9-YdU">
-                    <rect key="frame" x="0.0" y="65" width="24" height="24"/>
+                    <rect key="frame" x="0.0" y="20" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="8PA-jm-DCK"/>
                         <constraint firstAttribute="width" constant="24" id="wSM-9J-h64"/>
@@ -40,7 +41,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KmB-SO-CJU">
-                    <rect key="frame" x="351" y="65" width="24" height="24"/>
+                    <rect key="frame" x="351" y="20" width="24" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="JfV-pC-43J"/>
                         <constraint firstAttribute="width" constant="24" id="phJ-17-eQA"/>
@@ -51,7 +52,7 @@
                     </connections>
                 </button>
                 <collectionView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="zfk-65-v5o">
-                    <rect key="frame" x="0.0" y="93" width="375" height="574"/>
+                    <rect key="frame" x="0.0" y="48" width="375" height="619"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Bgj-89-dIk">
                         <size key="itemSize" width="50" height="50"/>
@@ -71,14 +72,15 @@
                 <constraint firstAttribute="trailing" secondItem="zfk-65-v5o" secondAttribute="trailing" id="3Gd-ZZ-D5C"/>
                 <constraint firstItem="zfk-65-v5o" firstAttribute="leading" secondItem="qq1-QO-SnP" secondAttribute="leading" id="HMI-Uc-JHy"/>
                 <constraint firstItem="GT0-Cl-vzh" firstAttribute="bottom" secondItem="KmB-SO-CJU" secondAttribute="bottom" id="Ovg-bS-MLl"/>
-                <constraint firstAttribute="bottom" secondItem="zfk-65-v5o" secondAttribute="bottom" id="RMZ-vk-t4j"/>
-                <constraint firstItem="yFn-L9-YdU" firstAttribute="top" secondItem="qq1-QO-SnP" secondAttribute="top" constant="65" id="Ryv-mu-Ab7"/>
+                <constraint firstItem="yFn-L9-YdU" firstAttribute="top" secondItem="8fB-ns-qiY" secondAttribute="top" id="Ryv-mu-Ab7"/>
+                <constraint firstItem="zfk-65-v5o" firstAttribute="bottom" secondItem="8fB-ns-qiY" secondAttribute="bottom" id="VEr-hx-MSS"/>
                 <constraint firstItem="yFn-L9-YdU" firstAttribute="leading" secondItem="qq1-QO-SnP" secondAttribute="leading" id="VkX-sW-jnB"/>
-                <constraint firstItem="GT0-Cl-vzh" firstAttribute="top" secondItem="KmB-SO-CJU" secondAttribute="top" id="Zjk-fc-nnY"/>
+                <constraint firstItem="GT0-Cl-vzh" firstAttribute="top" secondItem="8fB-ns-qiY" secondAttribute="top" id="Zjk-fc-nnY"/>
                 <constraint firstItem="zfk-65-v5o" firstAttribute="top" secondItem="KmB-SO-CJU" secondAttribute="bottom" constant="4" id="fLm-di-sv0"/>
-                <constraint firstItem="KmB-SO-CJU" firstAttribute="top" secondItem="qq1-QO-SnP" secondAttribute="top" constant="65" id="fhu-LE-bUO"/>
+                <constraint firstItem="KmB-SO-CJU" firstAttribute="top" secondItem="8fB-ns-qiY" secondAttribute="top" id="fhu-LE-bUO"/>
                 <constraint firstItem="GT0-Cl-vzh" firstAttribute="centerX" secondItem="qq1-QO-SnP" secondAttribute="centerX" id="kE7-Qr-ecR"/>
             </constraints>
+            <viewLayoutGuide key="safeArea" id="8fB-ns-qiY"/>
             <point key="canvasLocation" x="-50.5" y="-10.5"/>
         </view>
     </objects>

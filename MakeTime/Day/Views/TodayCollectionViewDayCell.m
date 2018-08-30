@@ -21,6 +21,7 @@
 #import "AppDelegate.h"
 #import "AddEventViewController.h"
 #import "EventComponents.h"
+#import "ReusableViewCache.h"
 
 @interface TodayCollectionViewDayCell () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, TodayCollectionViewLayoutDelegate>
 
@@ -39,6 +40,9 @@
 @property (strong, nonatomic) NSArray *eventComponentsArray;
 @property (strong, nonatomic) NSArray *convertedEventComponentsArray;
 @property (strong, nonatomic) NSArray<NSDate *> *everyTwoHourDateArray;
+
+@property (strong, nonatomic) NSDate *date;
+@property (strong, nonatomic) NSDate *startOfDay;
 
 @end
 
@@ -99,24 +103,30 @@
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
-    TodayCollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"TodayCollectionReusableView" forIndexPath:indexPath];
-    view.backgroundColor = [UIColor clearColor];
+    ReusableViewCache *reusableViewCache = [ReusableViewCache sharedManager];
+//    if (reusableViewCache.reusableViews.count == 24) {
+//        [self.collectionView bringSubviewToFront:reusableViewCache.reusableViews[indexPath.item]];
+//
+//        // Disable user interaction to allow selection of the cell underneath the reusable view
+//        reusableViewCache.reusableViews[indexPath.item].userInteractionEnabled = NO;
+//        return reusableViewCache.reusableViews[indexPath.item];
+//    } else {
+        TodayCollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"TodayCollectionReusableView" forIndexPath:indexPath];
+        view.backgroundColor = [UIColor clearColor];
     
-    // We want to start the cell hour at the hour user is waking up,
-    // so we need to set dateBySettingHour based on when user sets their wake up time.
-    NSDate *startOfDay = [self.calendar dateBySettingHour:0 minute:0 second:0 ofDate:[NSDate date] options:0];
-    NSDate *dateOneHourAhead = [startOfDay dateByAddingTimeInterval:(long)indexPath.item * 3600];
-    [self.dateFormatter setLocalizedDateFormatFromTemplate:@"h"];
-    NSString *stringDate = [self.dateFormatter stringFromDate:dateOneHourAhead];
-    view.hourLabel.text = stringDate;
-    
-    // Make sure the ReusableView is brought to the front of the subview hierarchy (on top of the cell)
-    [self.collectionView bringSubviewToFront:view];
-    
-    // Disable user interaction to allow selection of the cell underneath the reusable view
-    view.userInteractionEnabled = NO;
-    
-    return view;
+        NSDate *dateOneHourAhead = [self.startOfDay dateByAddingTimeInterval:(long)indexPath.item * 3600];
+        view.hourLabel.text = [self.dateFormatter stringFromDate:dateOneHourAhead];
+        
+        // Make sure the ReusableView is brought to the front of the subview hierarchy (on top of the cell)
+        [self.collectionView bringSubviewToFront:view];
+        
+        // Disable user interaction to allow selection of the cell underneath the reusable view
+        view.userInteractionEnabled = NO;
+        
+        [reusableViewCache.reusableViews addObject:view];
+
+        return view;
+//    }
 }
 
 
@@ -318,6 +328,7 @@
     if (!_dateFormatter) {
         _dateFormatter = [NSDateFormatter new];
         _dateFormatter.locale = [NSLocale currentLocale];
+        [_dateFormatter setLocalizedDateFormatFromTemplate:@"h"];
     }
     return _dateFormatter;
 }
@@ -334,6 +345,20 @@
         _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }
     return _appDelegate;
+}
+
+- (NSDate *)date {
+    if (!_date) {
+        _date = [NSDate date];
+    }
+    return _date;
+}
+
+- (NSDate *)startOfDay {
+    if (!_startOfDay) {
+        _startOfDay = [self.calendar dateBySettingHour:0 minute:0 second:0 ofDate:self.date options:0];
+    }
+    return _startOfDay;
 }
 
 

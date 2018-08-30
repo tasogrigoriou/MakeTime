@@ -65,10 +65,8 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     
     [self configureViewAndCollectionView];
     //    [self giveGradientBackgroundColor];
-    self.view.backgroundColor = [UIColor whiteColor];
     [self calculateStartAndEndDateCaches];
-    
-    [self.view setNeedsDisplay];
+//    [self.view setNeedsDisplay];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -77,9 +75,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [super updateAuthorizationStatusToAccessEventStore];
     
-    // Get rid of line underneath the navigation bar by clipping its bounds to our view controller's view.
     self.navigationController.navigationBar.clipsToBounds = YES;
     
     // Disable swipe when TodayVC appears
@@ -125,10 +121,6 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     
     layout.itemSize = (size.width < size.height) ? itemSizeForPortraitMode : itemSizeForLandscapeMode;
     [layout invalidateLayout];
-}
-
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
 }
 
 
@@ -260,19 +252,8 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"initialScrollDoneForWeek"];
 }
 
-- (void)giveGradientBackgroundColor {
-    // Create an overlay view to give a gradient background color
-    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 2000);
-    UIView *overlayView = [[UIView alloc] initWithFrame:frame];
-    UIColor *skyBlueLight = [UIColor colorWithHue:0.57 saturation:0.90 brightness:0.98 alpha:1.0];
-    overlayView.backgroundColor = [UIColor colorWithGradientStyle:UIGradientStyleTopToBottom
-                                                        withFrame:frame
-                                                        andColors:@[[UIColor whiteColor], skyBlueLight]];
-    [self.view insertSubview:overlayView atIndex:0];
-}
-
 - (void)configureViewAndCollectionView {
-    self.view.backgroundColor = [UIColor clearColor];
+    self.view.backgroundColor = [UIColor whiteColor];
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     

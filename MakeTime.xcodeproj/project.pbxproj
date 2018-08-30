@@ -65,6 +65,7 @@
 		9F5617261E3D62AF00C92525 /* UINavigationController+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5617181E3D62AF00C92525 /* UINavigationController+Chameleon.m */; };
 		9F5617271E3D62AF00C92525 /* UIView+ChameleonPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F56171A1E3D62AF00C92525 /* UIView+ChameleonPrivate.m */; };
 		9F5617281E3D62AF00C92525 /* UIViewController+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F56171C1E3D62AF00C92525 /* UIViewController+Chameleon.m */; };
+		9F60B8CE2135138B00E300BF /* MakeTimeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F60B8CD2135138B00E300BF /* MakeTimeTabBarController.m */; };
 		9F71EF3C1E21A22C00CD23DA /* TodayCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F71EF3A1E21A22C00CD23DA /* TodayCollectionViewCell.m */; };
 		9F71EF3D1E21A22C00CD23DA /* TodayCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F71EF3B1E21A22C00CD23DA /* TodayCollectionViewCell.xib */; };
 		9F71EF411E23784B00CD23DA /* RearCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F71EF3F1E23784B00CD23DA /* RearCollectionViewCell.m */; };
@@ -89,6 +90,7 @@
 		9F76F4811E5FCEB100641875 /* FSCalendarWeekdayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F76F4701E5FCEB100641875 /* FSCalendarWeekdayView.m */; };
 		9F76F4821E5FCEB100641875 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F76F4711E5FCEB100641875 /* Info.plist */; };
 		9F78CB281E48302D00D70867 /* CalendarViewMonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F78CB271E48302D00D70867 /* CalendarViewMonthCell.m */; };
+		9F9B426C2138770100B8C2B8 /* ReusableViewCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9B426B2138770100B8C2B8 /* ReusableViewCache.m */; };
 		9F9D2C591EDE1287006167EB /* EventManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9D2C581EDE1287006167EB /* EventManager.m */; };
 		9FA26DDA2127E3F40053F628 /* LaunchScreen2.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FA26DD92127E3F40053F628 /* LaunchScreen2.storyboard */; };
 		9FAE9A741EE83F31002F247F /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FAE9A721EE83F31002F247F /* CalendarViewController.m */; };
@@ -221,6 +223,8 @@
 		9F56171A1E3D62AF00C92525 /* UIView+ChameleonPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ChameleonPrivate.m"; sourceTree = "<group>"; };
 		9F56171B1E3D62AF00C92525 /* UIViewController+Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Chameleon.h"; sourceTree = "<group>"; };
 		9F56171C1E3D62AF00C92525 /* UIViewController+Chameleon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Chameleon.m"; sourceTree = "<group>"; };
+		9F60B8CC2135138B00E300BF /* MakeTimeTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MakeTimeTabBarController.h; sourceTree = "<group>"; };
+		9F60B8CD2135138B00E300BF /* MakeTimeTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MakeTimeTabBarController.m; sourceTree = "<group>"; };
 		9F71EF391E21A22C00CD23DA /* TodayCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayCollectionViewCell.h; sourceTree = "<group>"; };
 		9F71EF3A1E21A22C00CD23DA /* TodayCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayCollectionViewCell.m; sourceTree = "<group>"; };
 		9F71EF3B1E21A22C00CD23DA /* TodayCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodayCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -265,6 +269,8 @@
 		9F76F4711E5FCEB100641875 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F78CB261E48302D00D70867 /* CalendarViewMonthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewMonthCell.h; sourceTree = "<group>"; };
 		9F78CB271E48302D00D70867 /* CalendarViewMonthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewMonthCell.m; sourceTree = "<group>"; };
+		9F9B426A2138770100B8C2B8 /* ReusableViewCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReusableViewCache.h; sourceTree = "<group>"; };
+		9F9B426B2138770100B8C2B8 /* ReusableViewCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReusableViewCache.m; sourceTree = "<group>"; };
 		9F9D2C571EDE1287006167EB /* EventManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventManager.h; sourceTree = "<group>"; };
 		9F9D2C581EDE1287006167EB /* EventManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventManager.m; sourceTree = "<group>"; };
 		9FA26DD92127E3F40053F628 /* LaunchScreen2.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen2.storyboard; sourceTree = "<group>"; };
@@ -492,6 +498,15 @@
 			path = Chameleon;
 			sourceTree = "<group>";
 		};
+		9F60B8CB2134CB6B00E300BF /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				9F60B8CC2135138B00E300BF /* MakeTimeTabBarController.h */,
+				9F60B8CD2135138B00E300BF /* MakeTimeTabBarController.m */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		9F76F4501E5FCEB100641875 /* FSCalendar */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,6 +552,8 @@
 			children = (
 				9F47B8351F44C8C00044700E /* EventComponents.h */,
 				9F47B8361F44C8C00044700E /* EventComponents.m */,
+				9F9B426A2138770100B8C2B8 /* ReusableViewCache.h */,
+				9F9B426B2138770100B8C2B8 /* ReusableViewCache.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -678,6 +695,7 @@
 		9FBA79321DCC5CF1000AE696 /* MakeTime */ = {
 			isa = PBXGroup;
 			children = (
+				9F60B8CB2134CB6B00E300BF /* Core */,
 				9F32CF541ED482AB00922048 /* Calendar */,
 				9FD9487D1F31B74900483302 /* Category */,
 				9F9D2C4A1EDE1044006167EB /* Day */,
@@ -1004,6 +1022,7 @@
 				9F5617271E3D62AF00C92525 /* UIView+ChameleonPrivate.m in Sources */,
 				9F1B5BC31F4AB60A00F20370 /* WeekCollectionViewLayout.m in Sources */,
 				9FCB504B1EEA0667001A7A3D /* UINavigationController+SwipeBack.m in Sources */,
+				9F60B8CE2135138B00E300BF /* MakeTimeTabBarController.m in Sources */,
 				9F76F47E1E5FCEB100641875 /* FSCalendarScopeHandle.m in Sources */,
 				9FBC52F91EFE13C4001BF4CD /* AddCalendarViewController.m in Sources */,
 				9FBA79411DCC5CF1000AE696 /* MakeTime.xcdatamodeld in Sources */,
@@ -1040,6 +1059,7 @@
 				9F76F47B1E5FCEB100641875 /* FSCalendarDelegationProxy.m in Sources */,
 				9F1C8E5F1F1CB37300268023 /* EventTableViewCell.m in Sources */,
 				9F1C8E641F1CB38B00268023 /* DatePickerTableViewCell.m in Sources */,
+				9F9B426C2138770100B8C2B8 /* ReusableViewCache.m in Sources */,
 				9F76F4721E5FCEB100641875 /* FSCalendar+Deprecated.m in Sources */,
 				9FBA79351DCC5CF1000AE696 /* main.m in Sources */,
 				9F14B88C1DEBE43700ADBE0C /* TodayViewController.m in Sources */,

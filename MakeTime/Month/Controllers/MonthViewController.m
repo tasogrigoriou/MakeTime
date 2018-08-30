@@ -8,24 +8,21 @@
 
 #import "MonthViewController.h"
 #import "TodayViewController.h"
-#import "CalendarView.h"
 #import "UIColor+RBExtras.h"
 #import "Chameleon.h"
 #import "CalendarViewDayCell.h"
 #import <EventKit/EventKit.h>
 #import "SWRevealViewController.h"
+#import "FSCalendar.h"
 
 
-@interface MonthViewController () <CalendarViewDataSource, CalendarViewDelegate, UITextFieldDelegate>
+@interface MonthViewController () <FSCalendarDelegate, FSCalendarDataSource, UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *monthLabel;
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
-
-@property (strong, nonatomic) CalendarView *calendarMonthView;
+@property (weak, nonatomic) IBOutlet FSCalendar *calendar;
 
 @property (strong, nonatomic) NSDateFormatter *headerFormatter;
-@property (strong, nonatomic) NSCalendar *calendar;
 @property (strong, nonatomic) NSArray *events;
 
 @end
@@ -37,164 +34,181 @@
 #pragma mark - View Lifecycle
 
 
-- (void)viewDidLoad
-{
-  [super viewDidLoad];
-  
-  [self configureViewAndCalendarView];
-//  [self giveGradientBackgroundColor];
-    self.view.backgroundColor = [UIColor whiteColor];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self configureViewAndCalendarView];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-  [super viewDidAppear:animated];
-  NSDate *today = [NSDate date];
-  
-  self.monthLabel.text = [self.headerFormatter stringFromDate:today];
-  
-  // Make the calendar appear in the month of today/set scope
-  self.calendarMonthView.monthDisplayed = today;
-  self.calendarMonthView.scope = CalendarScopeMonth;
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navigationController.navigationBar.clipsToBounds = YES;
 }
 
 
-#pragma mark - CalendarMonthViewDataSource
+#pragma mark - FSCalendarDelegate
 
 
-- (NSDate *)startDate
-{
-  NSDateComponents *offsetDateComps = [NSDateComponents new];
-  offsetDateComps.year = -2;
-  offsetDateComps.month = -3;
-  NSDate *date = [self.calendar dateByAddingComponents:offsetDateComps toDate:[NSDate date] options:0];
-  return date;
+/**
+ Asks the delegate whether the specific date is allowed to be selected by tapping.
+ */
+- (BOOL)calendar:(FSCalendar *)calendar shouldSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
+    return YES;
 }
 
-- (NSDate *)endDate
-{
-  NSDateComponents *offsetComponents = [NSDateComponents new];
-  offsetComponents.year = 2;
-  offsetComponents.month = 3;
-  NSDate *date = [self.calendar dateByAddingComponents:offsetComponents toDate:[NSDate date] options:0];
-  return date;
+/**
+ Tells the delegate a date in the calendar is selected by tapping.
+ */
+- (void)calendar:(FSCalendar *)calendar didSelectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
+    
+}
+
+/**
+ Asks the delegate whether the specific date is allowed to be deselected by tapping.
+ */
+- (BOOL)calendar:(FSCalendar *)calendar shouldDeselectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
+    return YES;
+}
+
+/**
+ Tells the delegate a date in the calendar is deselected by tapping.
+ */
+- (void)calendar:(FSCalendar *)calendar didDeselectDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
+    
 }
 
 
-#pragma mark - CalendarMonthViewDelegate
-
-
-- (void)calendarController:(CalendarView *)calendarViewController didSelectDay:(NSDate *)date
-{
-  SWRevealViewController *revealController = self.revealViewController;
-  TodayViewController *todayVC = [TodayViewController new];
-  NSDateComponents *comps = [NSDateComponents new];
-  comps.day = 1;
-  todayVC.selectedDate = [self.calendar dateByAddingComponents:comps toDate:date options:0];
-  UINavigationController *newFrontVC = [[UINavigationController alloc] initWithRootViewController:todayVC];
-  [revealController pushFrontViewController:newFrontVC animated:YES];
+/**
+ Tells the delegate the calendar is about to change the bounding rect.
+ */
+- (void)calendar:(FSCalendar *)calendar boundingRectWillChange:(CGRect)bounds animated:(BOOL)animated {
+    
 }
 
-- (void)calendarController:(CalendarView *)calendarViewController didScrollToMonth:(NSDate *)date
-{
-  self.monthLabel.text = [self.headerFormatter stringFromDate:date];
+/**
+ Tells the delegate that the specified cell is about to be displayed in the calendar.
+ */
+- (void)calendar:(FSCalendar *)calendar willDisplayCell:(FSCalendarCell *)cell forDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)monthPosition {
+    
 }
 
-- (void)calendarController:(CalendarView *)calendarViewController didScrollToWeek:(NSDate *)date
-{
-  
+/**
+ Tells the delegate the calendar is about to change the current page.
+ */
+- (void)calendarCurrentPageDidChange:(FSCalendar *)calendar {
+    
 }
 
-- (IBAction)leftButtonTouched:(id)sender
-{
-  [self updateMonthByValue:-1];
+
+#pragma mark - FSCalendarDataSource
+
+
+/**
+ * Asks the dataSource for a title for the specific date as a replacement of the day text
+ */
+- (nullable NSString *)calendar:(FSCalendar *)calendar titleForDate:(NSDate *)date {
+    return nil;
 }
 
-- (IBAction)rightButtonTouched:(id)sender
-{
-  [self updateMonthByValue:1];
+/**
+ * Asks the dataSource for a subtitle for the specific date under the day text.
+ */
+- (nullable NSString *)calendar:(FSCalendar *)calendar subtitleForDate:(NSDate *)date {
+    return nil;
 }
 
-- (void)updateMonthByValue:(NSInteger)value
-{
-  NSDateComponents *valueComponents = [NSDateComponents new];
-  valueComponents.month = value;
-  
-  NSDate *updatedMonthDate = [self.calendar dateByAddingComponents:valueComponents
-                                                            toDate:self.calendarMonthView.monthDisplayed
-                                                           options:0];
-  
-  [self.calendarMonthView setMonthDisplayed:updatedMonthDate animated:YES];
+/**
+ * Asks the dataSource for an image for the specific date.
+ */
+- (nullable UIImage *)calendar:(FSCalendar *)calendar imageForDate:(NSDate *)date {
+    return nil;
+}
+
+/**
+ * Asks the dataSource the minimum date to display.
+ */
+- (NSDate *)minimumDateForCalendar:(FSCalendar *)calendar {
+    return nil;
+}
+
+/**
+ * Asks the dataSource the maximum date to display.
+ */
+- (NSDate *)maximumDateForCalendar:(FSCalendar *)calendar {
+    return nil;
+}
+
+/**
+ * Asks the data source for a cell to insert in a particular data of the calendar.
+ */
+- (__kindof FSCalendarCell *)calendar:(FSCalendar *)calendar cellForDate:(NSDate *)date atMonthPosition:(FSCalendarMonthPosition)position {
+    return nil;
+}
+
+/**
+ * Asks the dataSource the number of event dots for a specific date.
+ *
+ *
+ *   - (UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance eventColorForDate:(NSDate *)date;
+ *   - (NSArray *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance eventColorsForDate:(NSDate *)date;
+ */
+- (NSInteger)calendar:(FSCalendar *)calendar numberOfEventsForDate:(NSDate *)date {
+    return 0;
+}
+
+
+#pragma mark - IBActions
+
+
+- (IBAction)leftButtonTouched:(id)sender {
+    [self updateMonthByValue:-1];
+}
+
+- (IBAction)rightButtonTouched:(id)sender {
+    [self updateMonthByValue:1];
+}
+
+- (void)updateMonthByValue:(NSInteger)value {
+    NSCalendar *currentCalendar = [NSCalendar currentCalendar];
+    NSDateComponents *valueComponents = [NSDateComponents new];
+    valueComponents.month = value;
+    
+    NSDate *updatedMonthDate = [currentCalendar dateByAddingComponents:valueComponents
+                                                                toDate:self.calendar.currentPage
+                                                               options:0];
+    [self.calendar setCurrentPage:updatedMonthDate animated:YES];
 }
 
 
 #pragma mark - Private Methods
 
 
-- (void)configureViewAndCalendarView
-{
-  self.view.backgroundColor = [UIColor clearColor];
-  self.automaticallyAdjustsScrollViewInsets = NO;
-  
-  CGRect calendarFrame = CGRectMake(0, self.view.frame.origin.y + 65 + 24, self.view.frame.size.width - 280, 300);
-  self.calendarMonthView = [[CalendarView alloc] initWithFrame:calendarFrame];
-  self.calendarMonthView.backgroundColor = [UIColor clearColor];
-  self.calendarMonthView.delegate = self;
-  self.calendarMonthView.dataSource = self;
-  self.calendarMonthView.showsEvents = YES;
-  
-  [self.view addSubview:self.calendarMonthView];
-}
-
-- (void)giveGradientBackgroundColor
-{
-  // Create an overlay view to give a gradient background color
-  CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 3000);
-  UIView *overlayView = [[UIView alloc] initWithFrame:frame];
-  UIColor *skyBlueLight = [UIColor colorWithHue:0.57 saturation:0.90 brightness:0.98 alpha:1.0];
-  overlayView.backgroundColor = [UIColor colorWithGradientStyle:UIGradientStyleTopToBottom
-                                                      withFrame:frame
-                                                      andColors:@[[UIColor whiteColor], skyBlueLight]];
-  [self.view insertSubview:overlayView atIndex:0];
+- (void)configureViewAndCalendarView {
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    self.calendar.appearance.titleFont = [UIFont fontWithName:@"AvenirNext-Medium" size:12.0f];
+    self.calendar.appearance.weekdayFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0f];
+    self.calendar.appearance.headerTitleFont = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:17.0f];
+    
+    [self.view bringSubviewToFront:self.leftButton];
+    [self.view bringSubviewToFront:self.rightButton];
 }
 
 
 #pragma mark - Custom Getters
 
 
-- (NSCalendar *)calendar
-{
-  if (!_calendar) {
-    _calendar = [NSCalendar currentCalendar];
-  }
-  return _calendar;
-}
-                          
-- (NSDateFormatter *)headerFormatter
-{
-  if (!_headerFormatter) {
-    _headerFormatter = [NSDateFormatter new];
-    _headerFormatter.dateFormat = @"MMMM, yyyy";
-  }
-  return _headerFormatter;
+- (NSDateFormatter *)headerFormatter {
+    if (!_headerFormatter) {
+        _headerFormatter = [NSDateFormatter new];
+        _headerFormatter.dateFormat = @"MMMM, yyyy";
+    }
+    return _headerFormatter;
 }
 
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

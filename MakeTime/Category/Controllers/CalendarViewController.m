@@ -179,11 +179,11 @@ didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
 
 - (void)configureButtons
 {
-   self.addCategoryButton.layer.cornerRadius = 1.0f;
-   self.addCategoryButton.layer.borderWidth = 0.7f;
-   self.addCategoryButton.layer.shadowOpacity = 0.5f;
-   self.addCategoryButton.layer.borderColor = [UIColor lightGrayHTMLColor].CGColor;
-   self.addCategoryButton.layer.shadowColor = [UIColor lightGrayHTMLColor].CGColor;
+//   self.addCategoryButton.layer.cornerRadius = 1.0f;
+//   self.addCategoryButton.layer.borderWidth = 0.7f;
+//   self.addCategoryButton.layer.shadowOpacity = 0.5f;
+//   self.addCategoryButton.layer.borderColor = [UIColor lightGrayHTMLColor].CGColor;
+//   self.addCategoryButton.layer.shadowColor = [UIColor lightGrayHTMLColor].CGColor;
    
    // Customize left bar button item
    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backarrow2"]

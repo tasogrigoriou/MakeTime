@@ -52,9 +52,8 @@
 
 @end
 
-@implementation TodayViewController
 
-@dynamic isAccessToEventStoreGranted;
+@implementation TodayViewController
 
 
 #pragma mark - View Lifecycle
@@ -65,18 +64,14 @@
     
     [self configureViewAndCollectionView];
     [self calculateStartAndEndDateCaches];
-    //   [self giveGradientBackgroundColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [super updateAuthorizationStatusToAccessEventStore];
     
-    // Get rid of line underneath the navigation bar by clipping its bounds to our view controller's view.
-    self.navigationController.navigationBar.clipsToBounds = YES;
-    
-    // Disable swipe when TodayVC appears
-    self.revealViewController.panGestureRecognizer.enabled = NO;
+//    self.navigationController.navigationBarHidden = YES;
+//    self.navigationController.navigationBar.clipsToBounds = YES;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -108,6 +103,40 @@
 //    TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:self.currentIndexPath];
 //    [dayCell.collectionView.collectionViewLayout invalidateLayout];
 //}
+
+- (void)updateAuthorizationStatusToAccessEventStore {
+    EKAuthorizationStatus authorizationStatus = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
+    switch (authorizationStatus) {
+        case EKAuthorizationStatusDenied: {
+        case EKAuthorizationStatusRestricted: {
+            self.isAccessToEventStoreGranted = NO;
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Access Denied"
+                                                                           message:@"This app doesn't have access to your Calendars. Please allow access in Settings"
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                                  handler:^(UIAlertAction *action) {}];
+            [alert addAction:defaultAction];
+            [self presentViewController:alert animated:YES completion:nil];
+            break;
+        }
+        }
+        case EKAuthorizationStatusAuthorized: {
+            self.isAccessToEventStoreGranted = YES;
+            [[NSUserDefaults standardUserDefaults] setObject:@(self.isAccessToEventStoreGranted) forKey:@"eventStoreGranted"];
+            break;
+        }
+        case EKAuthorizationStatusNotDetermined: {
+            __weak TodayViewController *weakSelf = self;
+            [self.appDelegate.eventManager.eventStore requestAccessToEntityType:EKEntityTypeEvent
+                                                                     completion:^(BOOL granted, NSError *error) {
+                                                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                                                             weakSelf.isAccessToEventStoreGranted = granted;
+                                                                         });
+                                                                     }];
+            break;
+        }
+    }
+}
 
 
 #pragma mark - UICollectionViewDataSource
@@ -254,24 +283,12 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     
     // IMPORTANT property that requests our dayCell's ONLY when needed for display
-    //       self.collectionView.prefetchingEnabled = NO;
+    self.collectionView.prefetchingEnabled = NO;
     
     [self.collectionView registerClass:[TodayCollectionViewDayCell class]
             forCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class])];
     
     [self.view addSubview:self.collectionView];
-}
-
-- (void)giveGradientBackgroundColor {
-    // Create an overlay view to give a gradient background color
-    //    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.bounds.size.height + 3000);
-    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.bounds.size.height);
-    UIView *overlayView = [[UIView alloc] initWithFrame:frame];
-    UIColor *skyBlueLight = [UIColor colorWithHue:0.57 saturation:0.90 brightness:0.98 alpha:1.0];
-    overlayView.backgroundColor = [UIColor colorWithGradientStyle:UIGradientStyleTopToBottom
-                                                        withFrame:frame
-                                                        andColors:@[[UIColor whiteColor], skyBlueLight]];
-    [self.view insertSubview:overlayView atIndex:0];
 }
 
 - (void)calculateStartAndEndDateCaches {

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fOC-Mw-vVT">
-                    <rect key="frame" x="0.0" y="65" width="375" height="602"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -32,11 +32,12 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fOC-Mw-vVT" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="65" id="Phk-vh-1Fi"/>
+                <constraint firstItem="fOC-Mw-vVT" firstAttribute="top" secondItem="aG5-s1-yB4" secondAttribute="top" id="Phk-vh-1Fi"/>
                 <constraint firstItem="fOC-Mw-vVT" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="anP-aU-5to"/>
-                <constraint firstAttribute="bottom" secondItem="fOC-Mw-vVT" secondAttribute="bottom" id="eaG-xO-NMF"/>
+                <constraint firstItem="aG5-s1-yB4" firstAttribute="bottom" secondItem="fOC-Mw-vVT" secondAttribute="bottom" id="eaG-xO-NMF"/>
                 <constraint firstAttribute="trailing" secondItem="fOC-Mw-vVT" secondAttribute="trailing" id="zdj-K9-umW"/>
             </constraints>
+            <viewLayoutGuide key="safeArea" id="aG5-s1-yB4"/>
             <point key="canvasLocation" x="33.5" y="54.5"/>
         </view>
     </objects>
