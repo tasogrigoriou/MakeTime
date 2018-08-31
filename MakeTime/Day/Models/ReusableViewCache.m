@@ -22,6 +22,7 @@
 - (id)init {
     if (self = [super init]) {
         self.reusableViews = [[NSMutableArray alloc] init];
+        self.reusableViewsText = [[NSMutableArray alloc] init];
     }
     return self;
 }

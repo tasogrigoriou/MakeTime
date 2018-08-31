@@ -12,6 +12,7 @@
 @interface ReusableViewCache : NSObject
 
 @property (nonatomic, strong) NSMutableArray<UICollectionReusableView *> *reusableViews;
+@property (nonatomic, strong) NSMutableArray<NSString *> *reusableViewsText;
 
 + (id)sharedManager;
 

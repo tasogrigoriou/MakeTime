@@ -52,13 +52,13 @@
     
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBoldItalic" size:20.0f];
+    label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:21.0f];
     for (UIFont *font in [UIFont fontNamesForFamilyName:@"Avenir Next Condensed"]) {
         NSLog(@"%@", font);
     }
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
-    label.text = @"MAKETIME";
+    label.text = @"MakeTime";
     [label sizeToFit];
     self.navigationItem.titleView = label;
 }
