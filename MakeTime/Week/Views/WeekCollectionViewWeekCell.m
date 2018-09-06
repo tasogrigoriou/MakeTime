@@ -15,6 +15,8 @@
 #import "WeekCollectionReusableView.h"
 #import "EventComponents.h"
 
+#define NAME "Anthony"
+
 @interface WeekCollectionViewWeekCell () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WeekCollectionViewLayoutDelegate>
 
 @property (strong, nonatomic) NSCalendar *calendar;
@@ -26,6 +28,10 @@
 
 @property (strong, nonatomic) NSArray *eventComponentsArray;
 @property (strong, nonatomic) NSArray *convertedEventComponentsArray;
+
+@property (strong, nonatomic) NSArray<NSDate *> *daysInWeek;
+
+@property (strong, nonatomic) NSMutableArray<NSString *> *weekdayLabelsText;
 
 @end
 
@@ -44,12 +50,37 @@
    return self;
 }
 
-- (instancetype)initWithCoder:(NSCoder *)coder {
-   self = [super initWithCoder:coder];
-   if (self) {
-      [self configureViewAndCollectionView];
-   }
-   return self;
+- (void)didSetSelectedDate {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self initDaysInWeek];
+        [self loadCustomCalendarsAndEvents];
+        [self loadWeekdayLabelsArray];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    });
+}
+
+- (void)loadWeekdayLabelsArray {
+    [self.weekdayLabelsText removeAllObjects];
+    
+    NSDateComponents *comps = [NSDateComponents new];
+    NSDate *startOfWeek = [self startOfWeekOfDate:self.selectedDate];
+    
+    for (NSInteger i = 0; i < 7; i++) {
+        comps.day = i;
+        NSDate *weekDate = [self.calendar dateByAddingComponents:comps
+                                                          toDate:startOfWeek
+                                                         options:0];
+        [self.dateFormatter setLocalizedDateFormatFromTemplate:@"EEEE MM:dd"];
+        NSString *stringDate = [self.dateFormatter stringFromDate:weekDate];
+        
+        NSArray *foo = [stringDate componentsSeparatedByString:@" "];
+        NSString *firstBit = [foo objectAtIndex:0];
+        NSString *secondBit = [foo objectAtIndex:1];
+        NSString *whole = [NSString stringWithFormat:@"%@\n%@", firstBit, secondBit];
+        [self.weekdayLabelsText addObject:whole];
+    }
 }
 
 
@@ -58,8 +89,6 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-   [self loadCustomCalendarsAndEvents];
-   
    return [self.convertedEventComponentsArray count];
 }
 
@@ -79,26 +108,10 @@
                                  atIndexPath:(NSIndexPath *)indexPath {
    WeekCollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"WeekCollectionReusableView" forIndexPath:indexPath];
    view.backgroundColor = [UIColor clearColor];
-   
-   // Get the sunday from the selectedDate in the current week we are in
-   NSDate *startOfWeek = [self startOfWeekOfDate:self.selectedDate];
-   
-   NSDateComponents *comps = [NSDateComponents new];
-   comps.day = 0;
-   comps.day += indexPath.item;
-   NSDate *weekDate = [self.calendar dateByAddingComponents:comps
-                                                     toDate:startOfWeek
-                                                    options:0];
-   
-   [self.dateFormatter setLocalizedDateFormatFromTemplate:@"EEEE MM:dd"];
-   NSString *stringDate = [self.dateFormatter stringFromDate:weekDate];
-   
-   NSArray *foo = [stringDate componentsSeparatedByString:@" "];
-   NSString *firstBit = [foo objectAtIndex:0];
-   NSString *secondBit = [foo objectAtIndex:1];
-   NSString *whole = [NSString stringWithFormat:@"%@\n%@", firstBit, secondBit];
-   
-   view.weekdayLabel.text = whole;
+    
+    if (self.weekdayLabelsText.count == 7) {
+        view.weekdayLabel.text = self.weekdayLabelsText[indexPath.item];
+    }
    
    return view;
 }
@@ -108,8 +121,13 @@
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    EKEvent *event = self.customEvents[indexPath.item];
-    [self.delegate weekCell:self didSelectEvent:event];
+    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
+    
+    for (EKEvent *ekEvent in self.customEvents) {
+        if ([ekEvent.eventIdentifier isEqualToString:eventComponent.identifier]) {
+            [self.delegate weekCell:self didSelectEvent:ekEvent];
+        }
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -159,30 +177,31 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (NSArray *)getConvertedEventComponents {
-   NSMutableArray *convertedEventComponentsArray = [NSMutableArray new];
-   
-   for (EventComponents *eventComponent in self.eventComponentsArray) {
-      
-      NSDate *startOfDate = [self.calendar startOfDayForDate:eventComponent.startDate];
-      NSDateComponents *comps = [NSDateComponents new];
-      comps.day = 1;
-      NSDate *startOfNextDay = [self.calendar dateByAddingComponents:comps toDate:startOfDate options:0];
-      
-      while ([eventComponent.endDate compare:startOfNextDay] == NSOrderedDescending) {
-          EventComponents *newEventComponent = [EventComponents eventWithTitle:@""
-                                                                       calendar:eventComponent.calendar
-                                                                      startDate:startOfNextDay
-                                                                        endDate:eventComponent.endDate
-                                                                          color:eventComponent.color
-                                                                     identifier:eventComponent.identifier];
-         // Update startOfNextDay to be next next day (until the event's endDate is smaller than the nextDay)
-         startOfNextDay = [self.calendar dateByAddingComponents:comps toDate:startOfNextDay options:0];
-         
-         [convertedEventComponentsArray addObject:newEventComponent];
-      }
-      
-      [convertedEventComponentsArray addObject:eventComponent];
-   }
+   NSMutableArray *convertedEventComponentsArray = [NSMutableArray array];
+    
+    for (EventComponents *eventComponent in self.eventComponentsArray) {
+        
+        for (NSDate *day in self.daysInWeek) {
+            if ([eventComponent.startDate compare:day] == NSOrderedDescending) {
+                continue;
+            }
+            if ([eventComponent.endDate compare:day] == NSOrderedDescending) {
+                EventComponents *newEventComponent = [EventComponents eventWithTitle:@""
+                                                                            calendar:eventComponent.calendar
+                                                                           startDate:day
+                                                                             endDate:eventComponent.endDate
+                                                                               color:eventComponent.color
+                                                                          identifier:eventComponent.identifier];
+                [convertedEventComponentsArray addObject:newEventComponent];
+            }
+        }
+        
+        NSDateComponents *eventWeekComponents = [self.calendar components:NSCalendarUnitWeekOfYear fromDate:eventComponent.startDate];
+        NSDateComponents *selectedWeekComponents = [self.calendar components:NSCalendarUnitWeekOfYear fromDate:self.selectedDate];
+        if (eventWeekComponents.weekOfYear == selectedWeekComponents.weekOfYear) {
+            [convertedEventComponentsArray addObject:eventComponent];
+        }
+    }
    
    return (NSArray *)convertedEventComponentsArray;
 }
@@ -197,7 +216,6 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
    WeekCollectionViewLayout *layout = [WeekCollectionViewLayout new];
    CGRect frame = self.frame;
    frame.origin = CGPointZero;
-   NSLog(@"weekviewlayout width = %f , weekviewlayout height = %f", frame.size.width, frame.size.height);
    self.collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
    self.collectionView.backgroundColor = [UIColor clearColor];
    self.collectionView.delegate = self;
@@ -216,8 +234,8 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
 - (void)loadCustomCalendarsAndEvents {
    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"eventStoreGranted"]) {
       
-      self.customCalendars = [self.appDelegate.eventManager loadCustomCalendars];
-      self.customEvents = [self.appDelegate.eventManager getEventsOfAllCalendars:self.customCalendars
+       self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
+       self.customEvents = [[EventManager sharedManager] getEventsOfAllCalendars:self.customCalendars
                                                                   thatFallInWeek:self.selectedDate];
       
       // Get converted event comps and sort them by startDate
@@ -227,14 +245,20 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
       self.convertedEventComponentsArray = [convertedEventArray sortedArrayUsingDescriptors:@[dateDescriptor]];
       
       for (EKEvent *event in self.customEvents) {
-         NSLog(@"custom event = %@", event);
+         NSLog(@"custom event date = %@ --- %@", event.startDate, event.endDate);
       }
+       
+       for (EventComponents *eventComponent in self.convertedEventComponentsArray) {
+           NSLog(@"custom eventCOMPONENT date = %@ --- %@", eventComponent.startDate, eventComponent.endDate);
+       }
+       
+       NSLog(@"self.customEvents count = %li", self.customEvents.count);
       
-      for (EventComponents *eventComponent in self.convertedEventComponentsArray) {
-         NSLog(@"eventComponent title = %@", eventComponent.title);
-         NSLog(@"eventComponent startDate = %@", eventComponent.startDate);
-         NSLog(@"eventComponent endDate = %@", eventComponent.endDate);
-      }
+//      for (EventComponents *eventComponent in self.convertedEventComponentsArray) {
+//         NSLog(@"eventComponent title = %@", eventComponent.title);
+//         NSLog(@"eventComponent startDate = %@", eventComponent.startDate);
+//         NSLog(@"eventComponent endDate = %@", eventComponent.endDate);
+//      }
    }
 }
 
@@ -298,6 +322,32 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
       _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
    }
    return _appDelegate;
+}
+
+- (NSMutableArray<NSString *> *)weekdayLabelsText {
+    if (!_weekdayLabelsText) {
+        _weekdayLabelsText = [NSMutableArray array];
+    }
+    return _weekdayLabelsText;
+}
+
+- (void)initDaysInWeek {
+        // Get the first of the week (Sunday)
+        NSDateComponents *firstOfTheWeekComponents = [self.calendar components:NSCalendarUnitYearForWeekOfYear | NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitWeekOfYear | NSCalendarUnitWeekday fromDate:self.selectedDate];
+        [firstOfTheWeekComponents setWeekday:1];
+        
+        NSDate *firstOfTheWeekDate = [self.calendar dateFromComponents:firstOfTheWeekComponents];
+        NSDate *startOfWeek = [self.calendar dateBySettingHour:0 minute:0 second:0 ofDate:firstOfTheWeekDate options:0];
+        
+        NSMutableArray *days = [NSMutableArray array];
+        NSDateComponents *comps = [NSDateComponents new];
+        for (NSInteger i = 0; i < 7; i++) {
+            comps.day = i;
+            NSDate *nextDay = [self.calendar dateByAddingComponents:comps toDate:startOfWeek options:0];
+            [days addObject:nextDay];
+        }
+        
+    _daysInWeek = (NSArray *)days;
 }
 
 

@@ -8,7 +8,6 @@
 
 #import "CustomViewController.h"
 #import "AppDelegate.h"
-#import "SWRevealViewController.h"
 #import "UIColor+RBExtras.h"
 #import "QuartzCore/QuartzCore.h"
 #import "CalendarViewController.h"
@@ -28,22 +27,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
     [self configureNavigationItemTitle];
     [self configureBarButtonItems];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     [self updateAuthorizationStatusToAccessEventStore];
 }
 
@@ -86,19 +81,23 @@
         }
         case EKAuthorizationStatusNotDetermined: {
             __weak CustomViewController *weakSelf = self;
-            [self.appDelegate.eventManager.eventStore requestAccessToEntityType:EKEntityTypeEvent
-                                                                     completion:^(BOOL granted, NSError *error) {
-                                                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                                                             weakSelf.isAccessToEventStoreGranted = granted;
-                                                                         });
-                                                                     }];
+            [[[EventManager sharedManager] eventStore] requestAccessToEntityType:EKEntityTypeEvent
+                                                                      completion:^(BOOL granted, NSError *error) {
+                                                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                                                              weakSelf.isAccessToEventStoreGranted = granted;
+                                                                          });
+                                                                      }];
             break;
         }
     }
 }
 
 - (IBAction)revealAdd:(id)sender {
-    [self.navigationController pushViewController:[CalendarViewController new] animated:YES];
+//    [self.navigationController pushViewController:[CalendarViewController new] animated:YES];
+//    [self presentViewController:[CalendarViewController new] animated:YES completion:nil];
+    
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[CalendarViewController new]];
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 - (void)configureBarButtonItems {

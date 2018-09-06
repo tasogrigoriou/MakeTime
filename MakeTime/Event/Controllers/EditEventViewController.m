@@ -7,7 +7,6 @@
 //
 
 #import "EditEventViewController.h"
-#import "SWRevealViewController.h"
 #import "TodayViewController.h"
 #import "UIColor+RBExtras.h"
 #import "Chameleon.h"
@@ -97,12 +96,10 @@
    
    // Get a reference to the app delegate for access to the instance of the EventManager's event store
    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-   self.customCalendars = [self.appDelegate.eventManager loadCustomCalendars];
+   self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
    
    [self customizeTitle];
    [self customizeBarButtonItems];
-//   [self giveGradientBackgroundColor];
-    self.view.backgroundColor = [UIColor whiteColor];
    
    [self registerCellSubclasses];
    [self addTapGestureRecognizer];
@@ -115,9 +112,6 @@
 - (void)viewWillAppear:(BOOL)animated {
    [super viewWillAppear:animated];
    
-   // disable swipe when view is added to hierarchy
-   self.revealViewController.panGestureRecognizer.enabled = NO;
-   
    if (self.repeatString) {
       self.eventHasRepeat = YES;
    }
@@ -126,13 +120,6 @@
    }
    
    [self.editEventTableView reloadData];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-   [super viewWillDisappear:animated];
-   
-   // re-enable swipe when view is removed from hierarchy
-   self.revealViewController.panGestureRecognizer.enabled = YES;
 }
 
 
@@ -192,17 +179,18 @@
 }
 
 - (void)saveEvent:(id)sender {
+    EventManager *eventManager = [EventManager sharedManager];
    NSError *error;
    
    // Only delete the original event when user wants to edit the event and save the updates.
-   if (![self.appDelegate.eventManager.eventStore removeEvent:self.currentEvent span:EKSpanFutureEvents error:&error]) {
+   if (![eventManager.eventStore removeEvent:self.currentEvent span:EKSpanFutureEvents error:&error]) {
       NSLog(@"error = %@", [error localizedDescription]);
    } else {
       NSLog(@"Successfully removed event");
    }
    
    // To create an EKEvent, we need a title, start date, end date, and a calendar
-   EKEvent *event = [EKEvent eventWithEventStore:self.appDelegate.eventManager.eventStore];
+   EKEvent *event = [EKEvent eventWithEventStore:eventManager.eventStore];
    event.title = self.eventTitle;
    event.startDate = self.eventStartDate;
    event.endDate = self.eventEndDate;
@@ -250,15 +238,11 @@
    }
    
    // Save event to the event store and push TodayVC on nav controller.
-   if (![self.appDelegate.eventManager.eventStore saveEvent:event span:EKSpanFutureEvents commit:YES error:&error]) {
+   if (![eventManager.eventStore saveEvent:event span:EKSpanFutureEvents commit:YES error:&error]) {
       NSLog(@"error: %@", [error localizedDescription]);
    } else {
-      NSLog(@"Successfully saved event %@", event);
-      TodayViewController *todayVC = [TodayViewController new];
-      NSDateComponents *comps = [NSDateComponents new];
-      comps.day = 1;
-      todayVC.selectedDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
-      [self.navigationController pushViewController:todayVC animated:YES];
+       NSLog(@"Successfully saved event %@", event);
+       [self dismissViewControllerAnimated:YES completion:nil];
    }
 }
 
@@ -528,8 +512,8 @@
 
 
 - (void)configureViewAndEventTableView {
-   self.view.backgroundColor = [UIColor clearColor];
-   self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
    self.navigationController.navigationBar.clipsToBounds = NO;
    
    self.editEventTableView.backgroundColor = [UIColor clearColor];

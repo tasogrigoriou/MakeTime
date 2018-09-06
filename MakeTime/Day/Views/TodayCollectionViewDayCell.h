@@ -25,6 +25,8 @@
 
 @property (weak, nonatomic) id<TodayCollectionViewDayCellDelegate> delegate;
 
+- (void)didSetSelectedDate;
+
 @end
 
 

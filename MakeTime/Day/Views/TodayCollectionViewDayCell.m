@@ -16,12 +16,12 @@
 #import "TodayCollectionViewCell.h"
 #import "WeekViewController.h"
 #import "CalendarView.h"
-#import "SWRevealViewController.h"
 #import "EventManager.h"
 #import "AppDelegate.h"
 #import "AddEventViewController.h"
 #import "EventComponents.h"
-#import "ReusableViewCache.h"
+#import "MakeTimeCache.h"
+#import "TodayDayView.h"
 
 @interface TodayCollectionViewDayCell () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, TodayCollectionViewLayoutDelegate>
 
@@ -56,8 +56,44 @@
     if (self = [super initWithFrame:frame]) {
         [self configureViewAndCollectionView];
     }
-    
     return self;
+}
+
+- (void)didSetSelectedDate {
+    [self addTodayDayImageSubview];
+    [self loadEventData];
+}
+
+- (void)addTodayDayImageSubview {
+    for (UIView *view in self.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    MakeTimeCache *makeTimeCache = [MakeTimeCache sharedManager];
+    TodayDayView *todayDayView = [[TodayDayView alloc] initWithFrame:self.collectionView.frame];
+    CGFloat size = [self.delegate sizeForSupplementaryView];
+    todayDayView.backgroundColor = [UIColor clearColor];
+    
+    if (makeTimeCache.todayDayImage == nil) {
+        [todayDayView initHourLabelsWithCollectionView:self.collectionView sizeForView:size];
+        makeTimeCache.todayDayImage = [todayDayView imageWithView:todayDayView size:self.bounds.size];
+    }
+    
+    UIImageView *todayDayImageView = [[UIImageView alloc] initWithImage:makeTimeCache.todayDayImage];
+    todayDayImageView.frame = self.bounds;
+    todayDayImageView.backgroundColor = [UIColor clearColor];
+    [self addSubview:todayDayImageView];
+}
+
+- (void)loadEventData {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self initEveryTwoHourDateArray];
+        [self loadConvertedEventComponents];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.collectionView reloadData];
+        });
+    });
 }
 
 
@@ -66,68 +102,35 @@
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    // Call init/load methods here and NOT in initWithFrame: to hold off on accessing self.selectedDate property (until TodayVC sets it in cellForRowAtIndexPath: method)
-    [self initTwoHourIntervalArray];
-    [self initEveryTwoHourDateArray];
-    [self loadConvertedEventComponents];
-    
     return [self.convertedEventComponentsArray count];
-    
-    //   __block NSUInteger items = 0;
-    //   dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    //      [self initTwoHourIntervalArray];
-    //      [self initEveryTwoHourDateArray];
-    //      [self loadConvertedEventComponents];
-    //
-    //      dispatch_async(dispatch_get_main_queue(), ^{
-    //         items = [self.convertedEventComponentsArray count];
-    //      });
-    //   });
-    //   return items;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
     TodayCollectionViewCell *cell = (TodayCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"TodayCell" forIndexPath:indexPath];
     EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
     
-    //   cell.eventLabel.text = eventComponent.title;
     cell.eventLabel.text = @"";
     cell.backgroundColor = [UIColor colorWithCGColor:eventComponent.calendar.CGColor];
-    cell.contentView.backgroundColor = [UIColor clearColor];
     
     return cell;
 }
 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
-           viewForSupplementaryElementOfKind:(NSString *)kind
-                                 atIndexPath:(NSIndexPath *)indexPath {
-    ReusableViewCache *reusableViewCache = [ReusableViewCache sharedManager];
-//    if (reusableViewCache.reusableViews.count == 24) {
-//        [self.collectionView bringSubviewToFront:reusableViewCache.reusableViews[indexPath.item]];
-//
-//        // Disable user interaction to allow selection of the cell underneath the reusable view
-//        reusableViewCache.reusableViews[indexPath.item].userInteractionEnabled = NO;
-//        return reusableViewCache.reusableViews[indexPath.item];
-//    } else {
-        TodayCollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"TodayCollectionReusableView" forIndexPath:indexPath];
-        view.backgroundColor = [UIColor clearColor];
-    
-        NSDate *dateOneHourAhead = [self.startOfDay dateByAddingTimeInterval:(long)indexPath.item * 3600];
-        view.hourLabel.text = [self.dateFormatter stringFromDate:dateOneHourAhead];
-        
-        // Make sure the ReusableView is brought to the front of the subview hierarchy (on top of the cell)
-        [self.collectionView bringSubviewToFront:view];
-        
-        // Disable user interaction to allow selection of the cell underneath the reusable view
-        view.userInteractionEnabled = NO;
-        
-        [reusableViewCache.reusableViews addObject:view];
 
-        return view;
-//    }
-}
+//    TodayCollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"TodayCollectionReusableView" forIndexPath:indexPath];
+//    view.backgroundColor = [UIColor clearColor];
+//
+//    MakeTimeCache *makeTimeCache = [MakeTimeCache sharedManager];
+//    view.hourLabel.text = makeTimeCache.reusableViewsText[indexPath.row];
+//
+//    // Make sure the ReusableView is brought to the front of the subview hierarchy (on top of the cell)
+//    [self.collectionView bringSubviewToFront:view];
+//
+//    // Disable user interaction to allow selection of the cell underneath the reusable view
+//    view.userInteractionEnabled = NO;
+//
+//    return view;
+//}
 
 
 #pragma mark - UICollectionViewDelegate
@@ -138,7 +141,7 @@
     
     for (EKEvent *ekEvent in self.customEvents) {
         if ([ekEvent.eventIdentifier isEqualToString:eventComponent.identifier]) {
-            NSLog(@"Found match: EKEvent = %@", ekEvent);
+            NSLog(@"did select event with date = %@ --- %@", ekEvent.startDate, ekEvent.endDate);
             [self.delegate dayCell:self didSelectEvent:ekEvent];
         }
     }
@@ -159,7 +162,7 @@
 - (NSInteger)calendarViewLayout:(TodayCollectionViewLayout *)layout
      getStartingHourForTimespan:(NSRange)timespan {
     NSInteger startingHour = 0;
-    for (NSNumber *twohourInMinutes in self.twoHourIntervalsInMinutesArray) {
+    for (NSNumber *twohourInMinutes in [[MakeTimeCache sharedManager] twoHourIntervalsInMinutesArray]) {
         // Determine the event's starting hour by its location
         if (timespan.location >= [twohourInMinutes integerValue] &&
             timespan.location < [twohourInMinutes integerValue] + 120) {
@@ -213,7 +216,9 @@
             }
         }
         
-        [convertedEventComponentsArray addObject:eventComponent];
+        if ([self.calendar isDate:eventComponent.startDate inSameDayAsDate:self.selectedDate]) {
+            [convertedEventComponentsArray addObject:eventComponent];
+        }
     }
     
     return (NSArray *)convertedEventComponentsArray;
@@ -264,21 +269,11 @@
     [self.collectionView registerClass:[TodayCollectionReusableView class] forSupplementaryViewOfKind:@"TodayCollectionReusableView" withReuseIdentifier:@"TodayCollectionReusableView"];
 }
 
-- (void)initTwoHourIntervalArray {
-    NSInteger minutes = 0;
-    NSMutableArray *twoHourIntervalsInMinutes = [NSMutableArray new];
-    for (NSInteger i = 0; i <= 12; i++) {
-        [twoHourIntervalsInMinutes addObject:@(minutes)];
-        minutes += 120;
-    }
-    self.twoHourIntervalsInMinutesArray = (NSArray *)twoHourIntervalsInMinutes;
-}
-
 - (void)initEveryTwoHourDateArray {
     NSMutableArray *twoHourDateMutableArray = [NSMutableArray new];
     NSInteger hour = 0;
     
-    for (NSInteger i = 0; i <= 12; i++) {
+    for (NSInteger i = 0; i < 12; i++) {
         NSDate *date = [self.calendar dateBySettingHour:0 minute:0 second:0 ofDate:self.selectedDate options:0];
         if (hour != 24) {
             date = [self.calendar dateBySettingHour:hour minute:0 second:0 ofDate:self.selectedDate options:0];
@@ -299,9 +294,9 @@
 - (void)loadConvertedEventComponents {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"eventStoreGranted"]) {
         
-        self.customCalendars = [self.appDelegate.eventManager loadCustomCalendars];
-        self.customEvents = [self.appDelegate.eventManager getEventsOfAllCalendars:self.customCalendars
-                                                                    thatFallOnDate:self.selectedDate];
+        self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
+        self.customEvents = [[EventManager sharedManager] getEventsOfAllCalendars:self.customCalendars
+                                                                   thatFallOnDate:self.selectedDate];
         
         // Get converted event comps and sort them by startDate
         self.eventComponentsArray = [self copyCustomEventsIntoEventComponents];

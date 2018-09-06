@@ -34,7 +34,7 @@
    
    // Get a ref to the app delegate, load our custom categories,
    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-   self.customCalendars = [self.appDelegate.eventManager loadCustomCalendars];
+   self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
    
    [self customizeLabel];
    [self configureViewAndTableView];
@@ -55,8 +55,7 @@
    [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (IBAction)saveCalendarColor:(id)sender
-{
+- (IBAction)saveCalendarColor:(id)sender {
    // Get the calendar that was selected from CategoriesVC
    EKCalendar *cal = self.customCalendars[self.indexOfCategory];
    
@@ -66,7 +65,7 @@
    
    // Commit the calendar color change to the event store
    NSError *error;
-   if (![self.appDelegate.eventManager.eventStore saveCalendar:cal commit:YES error:&error]) {
+   if (![[[EventManager sharedManager] eventStore] saveCalendar:cal commit:YES error:&error]) {
       NSLog(@"%@", [error localizedDescription]);
    } else NSLog(@"Successfully updated %@ CGColor property", cal.title);
    
@@ -94,13 +93,13 @@
    [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)removeCalendarHandler
-{
+- (void)removeCalendarHandler {
    NSError *error;
    EKCalendar *cal = self.customCalendars[self.indexOfCategory];
-   
-   [self.appDelegate.eventManager removeCustomCalendarIdentifier:cal.calendarIdentifier];
-   if (![self.appDelegate.eventManager.eventStore removeCalendar:cal commit:YES error:&error]) {
+    EventManager *eventManager = [EventManager sharedManager];
+    
+   [eventManager removeCustomCalendarIdentifier:cal.calendarIdentifier];
+   if (![eventManager.eventStore removeCalendar:cal commit:YES error:&error]) {
       NSLog(@"%@", [error localizedDescription]);
    } else {
       NSLog(@"Successfully deleted calendar titled %@", cal.title);

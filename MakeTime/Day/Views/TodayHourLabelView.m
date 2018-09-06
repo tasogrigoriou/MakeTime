@@ -1,27 +1,26 @@
 //
-//  WeekCollectionReusableView.m
+//  TodayHourLabelView.m
 //  MakeTime
 //
-//  Created by Anastasios Grigoriou on 8/20/17.
-//  Copyright © 2017 Grigoriou. All rights reserved.
+//  Created by Anastasios Grigoriou on 9/3/18.
+//  Copyright © 2018 Grigoriou. All rights reserved.
 //
 
-#import "WeekCollectionReusableView.h"
+#import "TodayHourLabelView.h"
 #import "UIColor+RBExtras.h"
 
-@implementation WeekCollectionReusableView
+@implementation TodayHourLabelView
 
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"WeekCollectionReusableView"
+        NSArray *arrayOfViews = [[NSBundle mainBundle] loadNibNamed:@"TodayHourLabelView"
                                                               owner:self options:nil];
         if ([arrayOfViews count] < 1) {
             return nil;
         }
-        if (![[arrayOfViews objectAtIndex:0] isKindOfClass:[UICollectionReusableView class]]) {
+        if (![[arrayOfViews objectAtIndex:0] isKindOfClass:[UIView class]]) {
             return nil;
         }
-        
         self = [arrayOfViews objectAtIndex:0];
         [self drawRoundedCorners];
     }
@@ -30,7 +29,7 @@
 }
 
 - (void)drawRoundedCorners {
-    self.layer.cornerRadius = 2.0f;
+    self.layer.cornerRadius = 3.0f;
     self.layer.borderWidth = 0.5f;
     self.layer.borderColor = [UIColor lightGrayHTMLColor].CGColor;
 }

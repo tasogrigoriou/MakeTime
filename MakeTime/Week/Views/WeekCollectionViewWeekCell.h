@@ -28,12 +28,14 @@
 
 @property (weak, nonatomic) id<WeekCollectionViewWeekCellDelegate> delegate;
 
+- (void)didSetSelectedDate;
+
 @end
 
 
 @protocol WeekCollectionViewWeekCellDelegate <NSObject>
 
-- (void)weekCell:(WeekCollectionViewWeekCell *)cell didSelectEvent:(EKEvent *)event;
+- (void)weekCell:(WeekCollectionViewWeekCell *)cell didSelectEvent:(EKEvent *)ekEvent;
 - (CGFloat)sizeForSupplementaryView;
 
 @end

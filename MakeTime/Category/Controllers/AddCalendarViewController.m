@@ -8,7 +8,6 @@
 
 #import "AddCalendarViewController.h"
 #import "AppDelegate.h"
-#import "SWRevealViewController.h"
 #import "CategoriesTableViewCell.h"
 #import "UIColor+RBExtras.h"
 #import "Chameleon.h"
@@ -45,7 +44,7 @@
 
     // Get a ref to the app delegate, load our custom categories,
     self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    self.customCalendars = [self.appDelegate.eventManager loadCustomCalendars];
+    self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
 
     // Assign calendarColors as UIColors and as NSStrings for the labels
     [self assignCalendarColors];
@@ -54,30 +53,13 @@
     self.checkedRow = 100;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    // disable swipe when view is added to hierarchy
-    self.revealViewController.panGestureRecognizer.enabled = NO;
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-
-    // re-enable swipe when view is removed from hierarchy
-    self.revealViewController.panGestureRecognizer.enabled = YES;
-}
-
 
 #pragma mark - UITextFieldDelegate
 
 
 // The text field calls this method whenever the user taps the return button.
 // Use this method to implement any custom behavior when return is tapped (MUST make sure delegate is set in XIB).
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
 }
@@ -86,18 +68,17 @@
 #pragma mark - Selectors
 
 
-- (void)popViewController:(id)sender
-{
+- (void)popViewController:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)saveCalendar:(id)sender
-{
+- (void)saveCalendar:(id)sender {
+    EventManager *eventManager = [EventManager sharedManager];
     // Create a new calendar with a title, source, and color
     EKCalendar *newCalendar = [EKCalendar calendarForEntityType:EKEntityTypeEvent
-                                                     eventStore:self.appDelegate.eventManager.eventStore];
+                                                     eventStore:eventManager.eventStore];
     newCalendar.title = self.categoryTextField.text;
-    newCalendar.source = self.appDelegate.eventManager.eventStore.defaultCalendarForNewEvents.source;
+    newCalendar.source = eventManager.eventStore.defaultCalendarForNewEvents.source;
 
     // Trim whitespace and newline into a new NSString to check for an empty calendar title
     NSString *trimmedTitle = [newCalendar.title
@@ -145,11 +126,11 @@
 
     // Save and commit the calendar to the event store and save its calendar identifier to NSUserDefaults.
     NSError *error;
-    if (![self.appDelegate.eventManager.eventStore saveCalendar:newCalendar commit:YES error:&error]) {
+    if (![eventManager.eventStore saveCalendar:newCalendar commit:YES error:&error]) {
         NSLog(@"%@", [error localizedDescription]);
     } else {
         NSLog(@"Successfully saved calendar - %@", newCalendar.title);
-        [self.appDelegate.eventManager saveCustomCalendarIdentifier:newCalendar.calendarIdentifier];
+        [eventManager saveCustomCalendarIdentifier:newCalendar.calendarIdentifier];
     }
 
     [self.navigationController popViewControllerAnimated:YES];
@@ -159,13 +140,11 @@
 #pragma mark - UITableViewDataSource
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.calendarStringColors count];
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CategoriesTableViewCell *cell = (CategoriesTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CategoriesTableViewCell"];
     cell.backgroundColor = [UIColor clearColor];
 
@@ -178,36 +157,43 @@
 
     cell.categoriesLabel.text = self.calendarStringColors[indexPath.row];
     cell.categoriesLabel.font = [UIFont fontWithName:@"Avenir Next Condensed Medium" size:15.0f];
-    cell.categoriesColorView.backgroundColor = self.calendarUIColors[indexPath.row];
-    cell.categoriesColorView.layer.cornerRadius = 6.0f;
+    
+    // Since we need the backgroundColor of the colorView to persist through out the highlight animation,
+    // Create a CALayer with a background color, instead of using the backgroundColor property of UIView.
+    UIColor *calendarColor = self.calendarUIColors[indexPath.row];
+    CALayer *layer = [CALayer layer];
+    layer.cornerRadius = 6.0f;
+    layer.frame = cell.categoriesColorView.bounds;
+    layer.backgroundColor = calendarColor.CGColor;
+    [cell.categoriesColorView.layer addSublayer:layer];
 
     return cell;
 }
 
 // Create custom view to display section header
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 33)];
-
-    // Create a horizontal, dark gray line and insert it as a subview of our custom headerView.
-    //  UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 30, self.view.frame.size.width, 0.30)];
-    //  lineView.backgroundColor = [UIColor lightGrayColor];
-    //  [view addSubview:lineView];
-
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, tableView.frame.size.width, 36)];
-    label.font = [UIFont fontWithName:@"Avenir Next Condensed Ultra Light" size:15.0f];
-    label.layer.opacity = 0.7;
-    label.text = @"Color";
-    [view addSubview:label];
-
-    return view;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 33)];
+//
+//    // Create a horizontal, dark gray line and insert it as a subview of our custom headerView.
+//    //  UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 30, self.view.frame.size.width, 0.30)];
+//    //  lineView.backgroundColor = [UIColor lightGrayColor];
+//    //  [view addSubview:lineView];
+//
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, tableView.frame.size.width, 36)];
+//    label.font = [UIFont fontWithName:@"Avenir Next Condensed Ultra Light" size:15.0f];
+//    label.layer.opacity = 0.7;
+//    label.text = @"Color";
+//    [view addSubview:label];
+//
+//    return view;
+//}
 
 // Method required for tableView:viewForHeaderInSection: to work
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
-{
-    return 33.0f;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
+//{
+//    return 33.0f;
+//}
 
 
 #pragma mark - UITableViewDelegate
@@ -234,12 +220,11 @@
 #pragma mark - Private Methods
 
 
-- (void)configureLabels
-{
+- (void)configureLabels {
     // Customize title on nav bar
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"Avenir Next Condensed Regular" size:13.0f];
+    label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
     label.text = @"New Category";
@@ -251,31 +236,35 @@
     self.categoryLabel.layer.opacity = 0.7;
 }
 
-- (void)configureBarButtonItems
-{
-    // Assign a cancel button on the left side of the nav bar
-    UIBarButtonItem *cancelBBI = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-                                                                  style:UIBarButtonItemStylePlain
-                                                                 target:self
-                                                                 action:@selector(popViewController:)];
-    [cancelBBI
-            setTitleTextAttributes:@{ NSFontAttributeName : [UIFont fontWithName:@"Avenir Next Condensed Medium" size:14.0],
-                    NSForegroundColorAttributeName : [UIColor blackColor] } forState:UIControlStateNormal];
-    cancelBBI.tintColor = [UIColor blackColor];
-    self.navigationItem.leftBarButtonItem = cancelBBI;
-
-    // Assign a save button on the right side of the nav bar
-    UIBarButtonItem *saveBBI = [[UIBarButtonItem alloc] initWithTitle:@"Save"
-                                                                style:UIBarButtonItemStylePlain
-                                                               target:self
-                                                               action:@selector(saveCalendar:)];
-    [saveBBI
-            setTitleTextAttributes:@{ NSFontAttributeName : [UIFont fontWithName:@"Avenir Next Condensed Medium" size:14.0],
-                    NSForegroundColorAttributeName : [UIColor blackColor] } forState:UIControlStateNormal];
-    saveBBI.tintColor = [UIColor blackColor];
-    self.navigationItem.rightBarButtonItem = saveBBI;
-
-    self.navigationController.swipeBackEnabled = NO;
+- (void)configureBarButtonItems {
+    
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeSystem];
+//    button.bounds = CGRectMake(0, 0, 24.0, 24.0);
+//    button.tintColor = [UIColor blackColor];
+//    [button setImage:[UIImage imageNamed:@"backarrow2"] forState:UIControlStateNormal];
+//    [button addTarget:self action:@selector(popViewController:) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    self.navigationItem.leftBarButtonItem = leftBarButton;
+    
+    NSDictionary *textAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0], NSForegroundColorAttributeName : [UIColor blackColor] };
+    
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+                                                                       style:UIBarButtonItemStylePlain
+                                                                      target:self
+                                                                      action:@selector(popViewController:)];
+    [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    leftButtonItem.tintColor = [UIColor blackColor];
+    self.navigationItem.leftBarButtonItem = leftButtonItem;
+    
+    UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save"
+                                                                   style:UIBarButtonItemStylePlain
+                                                                  target:self
+                                                                  action:@selector(saveCalendar:)];
+    [saveButton setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [saveButton setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    saveButton.tintColor = [UIColor blackColor];
+    self.navigationItem.rightBarButtonItem = saveButton;
 }
 
 - (void)configureViewAndTableView

@@ -25,6 +25,8 @@
 // Assigns the range (location, length) of the event within a particular day.
 @property (assign, nonatomic) NSRange *timespanOfEvent;
 
++ (id)sharedManager;
+
 - (void)saveCustomCalendarIdentifier:(NSString *)identifier;
 - (void)removeCustomCalendarIdentifier:(NSString *)identifier;
 - (BOOL)isCalendarCustomWithIdentifier:(NSString *)identifier;

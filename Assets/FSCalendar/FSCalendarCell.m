@@ -421,7 +421,7 @@ OFFSET_PROPERTY(preferredEventOffset, PreferredEventOffset, _appearance.eventOff
         self.contentView = view;
         
         self.eventLayers = [NSPointerArray weakObjectsPointerArray];
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 5; i++) {
             CALayer *layer = [CALayer layer];
             layer.backgroundColor = [UIColor clearColor].CGColor;
             [self.contentView.layer addSublayer:layer];
@@ -493,7 +493,7 @@ OFFSET_PROPERTY(preferredEventOffset, PreferredEventOffset, _appearance.eventOff
 - (void)setNumberOfEvents:(NSInteger)numberOfEvents
 {
     if (_numberOfEvents != numberOfEvents) {
-        _numberOfEvents = MIN(MAX(numberOfEvents,0),3);
+        _numberOfEvents = MIN(MAX(numberOfEvents,0),5);
         [self setNeedsLayout];
     }
 }

@@ -11,6 +11,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EventPopUpViewController">
             <connections>
+                <outlet property="popUpView" destination="WJ0-Hh-wmp" id="2xw-75-FAB"/>
+                <outlet property="textView" destination="WDW-xa-JcS" id="Txr-vM-TeU"/>
                 <outlet property="view" destination="T9k-Yk-6Dl" id="ajV-2e-HLb"/>
             </connections>
         </placeholder>
@@ -48,29 +50,49 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aAj-Vt-yCp">
-                            <rect key="frame" x="97" y="191" width="86" height="22"/>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aAj-Vt-yCp">
+                            <rect key="frame" x="0.0" y="185" width="140" height="40"/>
                             <color key="backgroundColor" red="0.30163472879999997" green="0.70777184270000004" blue="0.1435239428" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="86" id="38F-9u-wxO"/>
-                                <constraint firstAttribute="height" constant="22" id="Vff-yV-hY9"/>
+                                <constraint firstAttribute="height" constant="40" id="UVN-fn-Uqk"/>
+                                <constraint firstAttribute="width" constant="140" id="iap-LF-tXv"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                            <state key="normal" title="Got it!">
+                            <state key="normal" title="Cancel">
                                 <color key="titleColor" red="0.9415141347" green="0.9415141347" blue="0.9415141347" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
+                            <connections>
+                                <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="R39-9e-VF7"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMH-qY-Bat">
+                            <rect key="frame" x="140" y="185" width="140" height="40"/>
+                            <color key="backgroundColor" red="0.30163472879999997" green="0.70777184270000004" blue="0.1435239428" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="5OS-ar-RuQ"/>
+                                <constraint firstAttribute="width" constant="140" id="rHU-QK-ygN"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <state key="normal" title="Edit">
+                                <color key="titleColor" red="0.9415141347" green="0.9415141347" blue="0.9415141347" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            </state>
+                            <connections>
+                                <action selector="editButtonPressed:" destination="-1" eventType="touchUpInside" id="ceI-zq-scC"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.9415141347" green="0.9415141347" blue="0.9415141347" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="WDW-xa-JcS" firstAttribute="top" secondItem="xnx-pe-GN9" secondAttribute="top" constant="49" id="9Df-mU-RB6"/>
                         <constraint firstAttribute="trailing" secondItem="WDW-xa-JcS" secondAttribute="trailing" id="Gb0-2I-L6u"/>
-                        <constraint firstAttribute="bottom" secondItem="aAj-Vt-yCp" secondAttribute="bottom" constant="12" id="RoO-eW-27O"/>
+                        <constraint firstAttribute="bottom" secondItem="YMH-qY-Bat" secondAttribute="bottom" id="Oi0-3A-aez"/>
+                        <constraint firstAttribute="bottom" secondItem="aAj-Vt-yCp" secondAttribute="bottom" id="RoO-eW-27O"/>
                         <constraint firstItem="xnx-pe-GN9" firstAttribute="leading" secondItem="WJ0-Hh-wmp" secondAttribute="leading" id="XsU-px-1UC"/>
+                        <constraint firstItem="aAj-Vt-yCp" firstAttribute="leading" secondItem="WJ0-Hh-wmp" secondAttribute="leading" id="YWi-TN-JYb"/>
                         <constraint firstItem="xnx-pe-GN9" firstAttribute="top" secondItem="WJ0-Hh-wmp" secondAttribute="top" id="aMl-aO-RvY"/>
-                        <constraint firstItem="aAj-Vt-yCp" firstAttribute="centerX" secondItem="WJ0-Hh-wmp" secondAttribute="centerX" id="cZ2-a5-ws2"/>
                         <constraint firstAttribute="height" constant="225" id="kyU-VD-dhr"/>
                         <constraint firstItem="WDW-xa-JcS" firstAttribute="leading" secondItem="WJ0-Hh-wmp" secondAttribute="leading" id="neK-Kf-Uz8"/>
+                        <constraint firstAttribute="trailing" secondItem="YMH-qY-Bat" secondAttribute="trailing" id="ovv-Ol-dST"/>
                         <constraint firstAttribute="width" constant="280" id="r6A-Xn-wgl"/>
                         <constraint firstAttribute="trailing" secondItem="xnx-pe-GN9" secondAttribute="trailing" id="xBL-Ux-tC5"/>
                     </constraints>
@@ -82,7 +104,7 @@
                 <constraint firstItem="WJ0-Hh-wmp" firstAttribute="centerX" secondItem="T9k-Yk-6Dl" secondAttribute="centerX" id="n5N-ck-8jm"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="q94-x8-aub"/>
-            <point key="canvasLocation" x="33.5" y="53"/>
+            <point key="canvasLocation" x="33.5" y="52.5"/>
         </view>
     </objects>
 </document>

@@ -7,16 +7,14 @@
 //
 
 #import "AppDelegate.h"
-#import "SWRevealViewController.h"
 #import "RearViewController.h"
 #import "TodayViewController.h"
 #import "WeekViewController.h"
 #import "MonthViewController.h"
-#import "CustomAnimationController.h"
 #import "AddEventViewController.h"
 #import "MakeTimeTabBarController.h"
 
-@interface AppDelegate () <SWRevealViewControllerDelegate>
+@interface AppDelegate ()
 
 @end
 
@@ -70,7 +68,7 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    self.eventManager = [EventManager new];
+    [EventManager sharedManager];
 }
 
 
@@ -82,14 +80,6 @@
     
     //  NSDate *today = [NSDate date];
     //  [[NSUserDefaults standardUserDefaults] setObject:today forKey:@"dayDisplayed"];
-}
-
-- (EventManager *)eventManager
-{
-    if (!_eventManager) {
-        _eventManager = [EventManager new];
-    }
-    return _eventManager;
 }
 
 

@@ -7,7 +7,6 @@
 //
 
 #import "RepeatAlertViewController.h"
-#import "SWRevealViewController.h"
 #import "SwipeBack.h"
 #import "CategoriesTableViewCell.h"
 #import "UIColor+RBExtras.h"
@@ -43,20 +42,6 @@
    
    // Call delegate method here to ensure that when we push the RepeatAlertVC, the boolean gets assigned to YES.
    [self.delegate didPushRepeatAlertViewController:YES];
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-   [super viewWillAppear:animated];
-   
-   // disable swipe when view is added to hierarchy
-   self.revealViewController.panGestureRecognizer.enabled = NO;
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-   [super viewWillDisappear:animated];
-   
-   // re-enable swipe when view is removed from hierarchy
-   self.revealViewController.panGestureRecognizer.enabled = YES;
 }
 
 

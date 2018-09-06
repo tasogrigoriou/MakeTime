@@ -23,7 +23,6 @@
 		9F14B8921DEBE44800ADBE0C /* WeekViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F14B8901DEBE44800ADBE0C /* WeekViewController.xib */; };
 		9F14B8961DEBE45000ADBE0C /* MonthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F14B8941DEBE45000ADBE0C /* MonthViewController.m */; };
 		9F14B8971DEBE45000ADBE0C /* MonthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F14B8951DEBE45000ADBE0C /* MonthViewController.xib */; };
-		9F14B89F1DEBF31000ADBE0C /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F14B89E1DEBF31000ADBE0C /* SWRevealViewController.m */; };
 		9F14B8A31DEBF54800ADBE0C /* RearViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F14B8A11DEBF54800ADBE0C /* RearViewController.m */; };
 		9F14B8A41DEBF54800ADBE0C /* RearViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F14B8A21DEBF54800ADBE0C /* RearViewController.xib */; };
 		9F17EC861E39B78700019CDC /* jadecolor.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9F17EC851E39B78700019CDC /* jadecolor.jpg */; };
@@ -49,10 +48,14 @@
 		9F4035B61F13577C00EA1B16 /* EditCategoriesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4035B41F13577C00EA1B16 /* EditCategoriesTableViewCell.m */; };
 		9F4035B71F13577C00EA1B16 /* EditCategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F4035B51F13577C00EA1B16 /* EditCategoriesTableViewCell.xib */; };
 		9F4035B91F1365A000EA1B16 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F4035B81F1365A000EA1B16 /* checkmark.png */; };
+		9F44175C213D180A009FD17D /* MakeTimeCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F44175B213D180A009FD17D /* MakeTimeCache.m */; };
+		9F441761213D984E009FD17D /* TodayHourLabelView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F441760213D984E009FD17D /* TodayHourLabelView.m */; };
+		9F441763213D99A7009FD17D /* TodayHourLabelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F441762213D99A7009FD17D /* TodayHourLabelView.xib */; };
+		9F441766213D9D05009FD17D /* TodayDayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F441765213D9D05009FD17D /* TodayDayView.m */; };
+		9F441768213D9D0E009FD17D /* TodayDayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F441767213D9D0E009FD17D /* TodayDayView.xib */; };
 		9F47B8371F44C8C00044700E /* EventComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F47B8361F44C8C00044700E /* EventComponents.m */; };
 		9F4D5C1D212BE485008E047E /* EventPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D5C1B212BE485008E047E /* EventPopUpViewController.m */; };
 		9F4D5C1E212BE485008E047E /* EventPopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F4D5C1C212BE485008E047E /* EventPopUpViewController.xib */; };
-		9F559B6B1EDC9521002FA48E /* CustomAnimationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F559B6A1EDC9521002FA48E /* CustomAnimationController.m */; };
 		9F56171D1E3D62AF00C92525 /* Chameleon_.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5617041E3D62AF00C92525 /* Chameleon_.m */; };
 		9F56171E1E3D62AF00C92525 /* ChameleonConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5617061E3D62AF00C92525 /* ChameleonConstants.m */; };
 		9F56171F1E3D62AF00C92525 /* NSArray+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F56170A1E3D62AF00C92525 /* NSArray+Chameleon.m */; };
@@ -150,8 +153,6 @@
 		9F14B8931DEBE45000ADBE0C /* MonthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MonthViewController.h; sourceTree = "<group>"; };
 		9F14B8941DEBE45000ADBE0C /* MonthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MonthViewController.m; sourceTree = "<group>"; };
 		9F14B8951DEBE45000ADBE0C /* MonthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MonthViewController.xib; sourceTree = "<group>"; };
-		9F14B89D1DEBF31000ADBE0C /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		9F14B89E1DEBF31000ADBE0C /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		9F14B8A01DEBF54800ADBE0C /* RearViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RearViewController.h; sourceTree = "<group>"; };
 		9F14B8A11DEBF54800ADBE0C /* RearViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RearViewController.m; sourceTree = "<group>"; };
 		9F14B8A21DEBF54800ADBE0C /* RearViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RearViewController.xib; sourceTree = "<group>"; };
@@ -189,13 +190,19 @@
 		9F4035B41F13577C00EA1B16 /* EditCategoriesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditCategoriesTableViewCell.m; sourceTree = "<group>"; };
 		9F4035B51F13577C00EA1B16 /* EditCategoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditCategoriesTableViewCell.xib; sourceTree = "<group>"; };
 		9F4035B81F1365A000EA1B16 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
+		9F44175A213D180A009FD17D /* MakeTimeCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MakeTimeCache.h; sourceTree = "<group>"; };
+		9F44175B213D180A009FD17D /* MakeTimeCache.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MakeTimeCache.m; sourceTree = "<group>"; };
+		9F44175F213D984E009FD17D /* TodayHourLabelView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayHourLabelView.h; sourceTree = "<group>"; };
+		9F441760213D984E009FD17D /* TodayHourLabelView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayHourLabelView.m; sourceTree = "<group>"; };
+		9F441762213D99A7009FD17D /* TodayHourLabelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodayHourLabelView.xib; sourceTree = "<group>"; };
+		9F441764213D9D05009FD17D /* TodayDayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodayDayView.h; sourceTree = "<group>"; };
+		9F441765213D9D05009FD17D /* TodayDayView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodayDayView.m; sourceTree = "<group>"; };
+		9F441767213D9D0E009FD17D /* TodayDayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodayDayView.xib; sourceTree = "<group>"; };
 		9F47B8351F44C8C00044700E /* EventComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventComponents.h; sourceTree = "<group>"; };
 		9F47B8361F44C8C00044700E /* EventComponents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventComponents.m; sourceTree = "<group>"; };
 		9F4D5C1A212BE485008E047E /* EventPopUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventPopUpViewController.h; sourceTree = "<group>"; };
 		9F4D5C1B212BE485008E047E /* EventPopUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventPopUpViewController.m; sourceTree = "<group>"; };
 		9F4D5C1C212BE485008E047E /* EventPopUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventPopUpViewController.xib; sourceTree = "<group>"; };
-		9F559B691EDC9521002FA48E /* CustomAnimationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomAnimationController.h; sourceTree = "<group>"; };
-		9F559B6A1EDC9521002FA48E /* CustomAnimationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomAnimationController.m; sourceTree = "<group>"; };
 		9F5617021E3D62AF00C92525 /* Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon.h; sourceTree = "<group>"; };
 		9F5617031E3D62AF00C92525 /* Chameleon_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon_.h; sourceTree = "<group>"; };
 		9F5617041E3D62AF00C92525 /* Chameleon_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chameleon_.m; sourceTree = "<group>"; };
@@ -440,7 +447,6 @@
 				9F37B2651E47046100C8443C /* Frameworks */,
 				9F32CF5C1ED4855B00922048 /* Model */,
 				9FBA79311DCC5CF1000AE696 /* Products */,
-				9FD9487C1F311BA300483302 /* SWReveal */,
 				9FBA79331DCC5CF1000AE696 /* Supporting Files */,
 				9FCB50451EEA0667001A7A3D /* SwipeBack */,
 				9FD9487B1F3115A100483302 /* UIColorConverter */,
@@ -501,8 +507,14 @@
 		9F60B8CB2134CB6B00E300BF /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				9FBA79361DCC5CF1000AE696 /* AppDelegate.h */,
+				9FBA79371DCC5CF1000AE696 /* AppDelegate.m */,
 				9F60B8CC2135138B00E300BF /* MakeTimeTabBarController.h */,
 				9F60B8CD2135138B00E300BF /* MakeTimeTabBarController.m */,
+				9F44175A213D180A009FD17D /* MakeTimeCache.h */,
+				9F44175B213D180A009FD17D /* MakeTimeCache.m */,
+				9F9D2C571EDE1287006167EB /* EventManager.h */,
+				9F9D2C581EDE1287006167EB /* EventManager.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -571,6 +583,12 @@
 				9FF1FA861F54A5E80090F33E /* TodayCollectionViewDayCell.m */,
 				9FFA42011E92015C00832C31 /* TodayCollectionViewLayout.h */,
 				9FFA42021E92015C00832C31 /* TodayCollectionViewLayout.m */,
+				9F44175F213D984E009FD17D /* TodayHourLabelView.h */,
+				9F441760213D984E009FD17D /* TodayHourLabelView.m */,
+				9F441762213D99A7009FD17D /* TodayHourLabelView.xib */,
+				9F441764213D9D05009FD17D /* TodayDayView.h */,
+				9F441765213D9D05009FD17D /* TodayDayView.m */,
+				9F441767213D9D0E009FD17D /* TodayDayView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -710,8 +728,6 @@
 		9FBA79331DCC5CF1000AE696 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9FBA79361DCC5CF1000AE696 /* AppDelegate.h */,
-				9FBA79371DCC5CF1000AE696 /* AppDelegate.m */,
 				9FBA79421DCC5CF1000AE696 /* Assets.xcassets */,
 				9FB385871DE41D9700A6F1E4 /* Default-568h@2x.png */,
 				9FBA79471DCC5CF1000AE696 /* Info.plist */,
@@ -756,17 +772,6 @@
 				9F1C8E5A1F16320800268023 /* UIColor+Converter.m */,
 			);
 			path = UIColorConverter;
-			sourceTree = "<group>";
-		};
-		9FD9487C1F311BA300483302 /* SWReveal */ = {
-			isa = PBXGroup;
-			children = (
-				9F559B691EDC9521002FA48E /* CustomAnimationController.h */,
-				9F559B6A1EDC9521002FA48E /* CustomAnimationController.m */,
-				9F14B89D1DEBF31000ADBE0C /* SWRevealViewController.h */,
-				9F14B89E1DEBF31000ADBE0C /* SWRevealViewController.m */,
-			);
-			path = SWReveal;
 			sourceTree = "<group>";
 		};
 		9FD9487D1F31B74900483302 /* Category */ = {
@@ -869,8 +874,6 @@
 		9FD948841F31B88D00483302 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9F9D2C571EDE1287006167EB /* EventManager.h */,
-				9F9D2C581EDE1287006167EB /* EventManager.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -963,7 +966,9 @@
 				9FB385881DE41D9700A6F1E4 /* Default-568h@2x.png in Resources */,
 				9F21FD071E18893100BBE626 /* pen-point-tip.png in Resources */,
 				9F0930821E1EF319007A33F6 /* menu@3x.png in Resources */,
+				9F441768213D9D0E009FD17D /* TodayDayView.xib in Resources */,
 				9FC695E11F266B2600006F13 /* EventTextFieldTableViewCell.xib in Resources */,
+				9F441763213D99A7009FD17D /* TodayHourLabelView.xib in Resources */,
 				9F0930761E1EF010007A33F6 /* watch2.png in Resources */,
 				9F0930741E1EECA8007A33F6 /* watch.png in Resources */,
 				9F1C8E601F1CB37300268023 /* EventTableViewCell.xib in Resources */,
@@ -1030,18 +1035,19 @@
 				9FD948881F325DC800483302 /* TodayCollectionReusableView.m in Sources */,
 				9F76F47A1E5FCEB100641875 /* FSCalendarDelegationFactory.m in Sources */,
 				9F4035B11F11F4C200EA1B16 /* EditCategoriesViewController.m in Sources */,
-				9F14B89F1DEBF31000ADBE0C /* SWRevealViewController.m in Sources */,
 				9F1B5BC71F4AB61D00F20370 /* WeekCollectionReusableView.m in Sources */,
 				9F76F4751E5FCEB100641875 /* FSCalendarCalculator.m in Sources */,
 				9F5617251E3D62AF00C92525 /* UILabel+Chameleon.m in Sources */,
 				9F76F47F1E5FCEB100641875 /* FSCalendarStickyHeader.m in Sources */,
 				9F4D5C1D212BE485008E047E /* EventPopUpViewController.m in Sources */,
 				9F76F4761E5FCEB100641875 /* FSCalendarCell.m in Sources */,
+				9F441761213D984E009FD17D /* TodayHourLabelView.m in Sources */,
 				9F5617261E3D62AF00C92525 /* UINavigationController+Chameleon.m in Sources */,
 				9FCB504C1EEA0667001A7A3D /* UIViewController+SwipeBack.m in Sources */,
 				9F76F4801E5FCEB100641875 /* FSCalendarTransitionCoordinator.m in Sources */,
 				9F56171F1E3D62AF00C92525 /* NSArray+Chameleon.m in Sources */,
 				9F76F4771E5FCEB100641875 /* FSCalendarCollectionView.m in Sources */,
+				9F441766213D9D05009FD17D /* TodayDayView.m in Sources */,
 				9F76F4811E5FCEB100641875 /* FSCalendarWeekdayView.m in Sources */,
 				9F1ED88E1FF8B06E006FF015 /* EditEventViewController.m in Sources */,
 				9F47B8371F44C8C00044700E /* EventComponents.m in Sources */,
@@ -1066,9 +1072,9 @@
 				9F76F47C1E5FCEB100641875 /* FSCalendarExtensions.m in Sources */,
 				9FCA3EF51E4858BC00A016FF /* CollectionViewFlowLayout.m in Sources */,
 				9F76F4781E5FCEB100641875 /* FSCalendarCollectionViewLayout.m in Sources */,
-				9F559B6B1EDC9521002FA48E /* CustomAnimationController.m in Sources */,
 				9FB96D021EF342CC00BDC3BA /* CategoriesViewController.m in Sources */,
 				9F71EF3C1E21A22C00CD23DA /* TodayCollectionViewCell.m in Sources */,
+				9F44175C213D180A009FD17D /* MakeTimeCache.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

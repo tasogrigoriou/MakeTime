@@ -22,16 +22,22 @@
     self = [super init];
     if (self) {
         [self initViewControllers];
-        [self setupTabBarTitles];
+        [self setupTabBarItems];
     }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tabBar.opaque = NO;
-    self.tabBar.translucent = YES;
-    self.view.backgroundColor = [UIColor redColor];
+//    self.tabBar.opaque = YES;
+//    self.tabBar.translucent = YES;
+//    self.view.backgroundColor = [UIColor whiteColor];
+//    self.tabBar.backgroundColor = [UIColor clearColor];
+    
+    // SET TAB BAR TRANSPARENT
+//    self.tabBar.backgroundColor = [UIColor clearColor];
+//    self.tabBar.backgroundImage = [[UIImage alloc] init];
+//    self.tabBar.shadowImage = [[UIImage alloc] init];  // removes the border
 }
 
 - (void)initViewControllers {
@@ -58,7 +64,7 @@
     self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, categoriesNavigationController];
 }
 
-- (void)setupTabBarTitles {
+- (void)setupTabBarItems {
     self.tabBar.items[0].image = [UIImage imageNamed:@"menu.png"];
     self.tabBar.items[0].selectedImage = [UIImage imageNamed:@"menu.png"];
     self.tabBar.items[0].title = @"Day";

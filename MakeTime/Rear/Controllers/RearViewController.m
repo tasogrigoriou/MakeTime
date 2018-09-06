@@ -7,7 +7,6 @@
 //
 
 #import "RearViewController.h"
-#import "SWRevealViewController.h"
 #import "TodayViewController.h"
 #import "WeekViewController.h"
 #import "MonthViewController.h"
@@ -43,33 +42,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
    
    [self initImagesAndTextsArray];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-   [super viewWillAppear:animated];
-   
-   // Disable user interaction of the FrontViewController (TodayVC) when RearViewController appears
-   [self.revealViewController.frontViewController.view setUserInteractionEnabled:NO];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-   [super viewWillDisappear:animated];
-   
-   // Keep front view active to interact with tap/pan gesture to close the menu (view is removed from hierarchy)
-   [self.revealViewController.frontViewController.view setUserInteractionEnabled:YES];
-   
-   // Disable swipe when RearVC disappears
-   self.revealViewController.panGestureRecognizer.enabled = NO;
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-   [super viewDidAppear:animated];
-   
-   // Re-enable swipe when RearVC is loaded
-   self.revealViewController.panGestureRecognizer.enabled = YES;
 }
 
 
@@ -114,7 +86,7 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
    // Grab a handle to the reveal controller
    // (as if you'd do with a navigation controller via self.navigationController)
-   SWRevealViewController *revealController = self.revealViewController;
+//   SWRevealViewController *revealController = self.revealViewController;
    
    // Store a new UIViewController as nil and instantiate it according to if statements.
    UIViewController *newFrontController = nil;
@@ -166,11 +138,11 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
          }
    }
    
-   [collectionView performBatchUpdates:^{
-      [revealController setFrontViewController:newFrontController animated:YES];
-      [revealController setFrontViewPosition:FrontViewPositionLeft animated:YES];
-      [collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-   } completion:nil];
+//   [collectionView performBatchUpdates:^{
+//      [revealController setFrontViewController:newFrontController animated:YES];
+//      [revealController setFrontViewPosition:FrontViewPositionLeft animated:YES];
+//      [collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
+//   } completion:nil];
    
 }
 

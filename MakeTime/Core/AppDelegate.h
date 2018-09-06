@@ -14,7 +14,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) EventManager *eventManager;
 @property (assign, nonatomic) BOOL isFirstLaunch;
 
 @property (readonly, strong) NSPersistentContainer *persistentContainer;

@@ -15,7 +15,6 @@
 #import "TodayCollectionViewCell.h"
 #import "WeekViewController.h"
 #import "CalendarView.h"
-#import "SWRevealViewController.h"
 #import "EventManager.h"
 #import "AppDelegate.h"
 #import "AddEventViewController.h"
@@ -23,8 +22,9 @@
 #import "TodayCollectionViewDayCell.h"
 #import "EditEventViewController.h"
 #import "EventPopUpViewController.h"
+#import "TodayDayView.h"
 
-@interface TodayViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, TodayCollectionViewDayCellDelegate>
+@interface TodayViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, TodayCollectionViewDayCellDelegate, EventPopUpDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UILabel *todayLabel;
@@ -49,6 +49,8 @@
 
 @property (assign, nonatomic) NSUInteger cellDisplayedIndex;
 @property (strong, nonatomic) NSIndexPath *currentIndexPath;
+
+@property (strong, nonatomic) NSDateComponents *dayComponents;
 
 @end
 
@@ -86,23 +88,18 @@
     self.selectedDate = nil;
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    // Re-enable swipe when TodayVC disappears
-    self.revealViewController.panGestureRecognizer.enabled = YES;
-}
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{;
+//        [self setDayDisplayed:self.selectedDate animated:NO];
+//    });
+//    [((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout) invalidateLayout];
 
-//- (void)viewWillTransitionToSize:(CGSize)size
-//       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-//    NSLog(@"transition cellDisplayedIndex = %li", self.cellDisplayedIndex);
-//
-//    [self.collectionView setContentOffset:CGPointMake(self.cellDisplayedIndex * self.view.bounds.size.height, 0) animated:NO];
-//
-//    NSLog(@"self.currentIndexPath = %li", self.currentIndexPath.item);
+    //    NSLog(@"self.currentIndexPath = %li", self.currentIndexPath.item);
 //    TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:self.currentIndexPath];
 //    [dayCell.collectionView.collectionViewLayout invalidateLayout];
-//}
+}
 
 - (void)updateAuthorizationStatusToAccessEventStore {
     EKAuthorizationStatus authorizationStatus = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
@@ -127,12 +124,12 @@
         }
         case EKAuthorizationStatusNotDetermined: {
             __weak TodayViewController *weakSelf = self;
-            [self.appDelegate.eventManager.eventStore requestAccessToEntityType:EKEntityTypeEvent
-                                                                     completion:^(BOOL granted, NSError *error) {
-                                                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                                                             weakSelf.isAccessToEventStoreGranted = granted;
-                                                                         });
-                                                                     }];
+            [[[EventManager sharedManager] eventStore] requestAccessToEntityType:EKEntityTypeEvent
+                                                                      completion:^(BOOL granted, NSError *error) {
+                                                                          dispatch_async(dispatch_get_main_queue(), ^{
+                                                                              weakSelf.isAccessToEventStoreGranted = granted;
+                                                                          });
+                                                                      }];
             break;
         }
     }
@@ -157,12 +154,11 @@
     
     self.currentIndexPath = indexPath;
     
-    NSDateComponents *offsetComponents = [NSDateComponents new];
-    offsetComponents.day = indexPath.item;
-    dayCell.selectedDate = [self.calendar dateByAddingComponents:offsetComponents
+    self.dayComponents.day = indexPath.item;
+    dayCell.selectedDate = [self.calendar dateByAddingComponents:self.dayComponents
                                                           toDate:self.startDateCache
                                                          options:0];
-    [dayCell.collectionView reloadData];
+    [dayCell didSetSelectedDate];
     
     return dayCell;
 }
@@ -195,31 +191,24 @@
 
 
 - (void)dayCell:(TodayCollectionViewDayCell *)cell didSelectEvent:(EKEvent *)ekEvent {
-    //    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Event"
-    //                                                                             message:[NSString stringWithFormat:@"%@ : %@", ekEvent.title, ekEvent.calendar.title]
-    //                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
-    //
-    //    UIAlertAction *editAction = [UIAlertAction actionWithTitle:@"Edit"
-    //                                                         style:UIAlertActionStyleDefault
-    //                                                       handler:^(UIAlertAction *action) {
-    //                                                           EditEventViewController *editEventVC = [[EditEventViewController alloc] initWithEvent:ekEvent];
-    //                                                           [self.navigationController pushViewController:editEventVC animated:YES];
-    //                                                       }];
-    //    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDestructive
-    //                                                         handler:^(UIAlertAction *action) {
-    //                                                             [self dismissViewControllerAnimated:YES completion:nil];
-    //                                                         }];
-    //    [alertController addAction:editAction];
-    //    [alertController addAction:cancelAction];
-    //    [self presentViewController:alertController animated:YES completion:nil];
-    
-    
     self.definesPresentationContext = true;
-    [self.navigationController presentViewController:[[EventPopUpViewController alloc] initWithStyle] animated:YES completion:nil];
+    EventPopUpViewController *eventPopUpVC = [[EventPopUpViewController alloc] initWithEvent:ekEvent delegate:self];
+    [self.navigationController presentViewController:eventPopUpVC animated:YES completion:nil];
+    self.tabBarController.tabBar.alpha = 0.4;
+    self.tabBarController.tabBar.userInteractionEnabled = NO;
 }
 
 - (CGFloat)sizeForSupplementaryView {
     return self.collectionView.frame.size.height / 12;
+}
+
+
+#pragma mark - EventPopUpDelegate
+
+
+- (void)didDismissViewController {
+    self.tabBarController.tabBar.alpha = 1.0;
+    self.tabBarController.tabBar.userInteractionEnabled = YES;
 }
 
 
@@ -282,9 +271,6 @@
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    // IMPORTANT property that requests our dayCell's ONLY when needed for display
-    self.collectionView.prefetchingEnabled = NO;
-    
     [self.collectionView registerClass:[TodayCollectionViewDayCell class]
             forCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class])];
     
@@ -292,12 +278,13 @@
 }
 
 - (void)calculateStartAndEndDateCaches {
+    NSDate *today = [NSDate date];
     NSDateComponents *comps = [NSDateComponents new];
     comps.year = -10;
-    self.startDateCache = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+    self.startDateCache = [self.calendar dateByAddingComponents:comps toDate:today options:0];
     
     comps.year = 10;
-    self.endDateCache = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+    self.endDateCache = [self.calendar dateByAddingComponents:comps toDate:today options:0];
 }
 
 - (TodayCollectionViewDayCell *)currentDayCell {
@@ -363,6 +350,13 @@
         _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }
     return _appDelegate;
+}
+
+- (NSDateComponents *)dayComponents {
+    if (!_dayComponents) {
+        _dayComponents = [NSDateComponents new];
+    }
+    return _dayComponents;
 }
 
 

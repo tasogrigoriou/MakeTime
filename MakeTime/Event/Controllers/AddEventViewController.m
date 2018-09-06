@@ -7,7 +7,6 @@
 //
 
 #import "AddEventViewController.h"
-#import "SWRevealViewController.h"
 #import "TodayViewController.h"
 #import "UIColor+RBExtras.h"
 #import "Chameleon.h"
@@ -76,7 +75,7 @@
    
    // Get a reference to the app delegate for access to the instance of the EventManager's event store
    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-   self.customCalendars = [self.appDelegate.eventManager loadCustomCalendars];
+   self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
    
    [self customizeTitle];
    [self customizeBarButtonItems];
@@ -95,9 +94,6 @@
 {
    [super viewWillAppear:animated];
    
-   // disable swipe when view is added to hierarchy
-   self.revealViewController.panGestureRecognizer.enabled = NO;
-   
    if (self.repeatString) {
       self.eventHasRepeat = YES;
    }
@@ -106,14 +102,6 @@
    }
    
    [self.eventTableView reloadData];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-   [super viewWillDisappear:animated];
-   
-   // re-enable swipe when view is removed from hierarchy
-   self.revealViewController.panGestureRecognizer.enabled = YES;
 }
 
 
@@ -177,14 +165,14 @@
    [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)saveEvent:(id)sender
-{
+- (void)saveEvent:(id)sender {
+    EventManager *eventManager = [EventManager sharedManager];
    // To create an EKEvent, we need a title, start date, end date, and a calendar
-   EKEvent *event = [EKEvent eventWithEventStore:self.appDelegate.eventManager.eventStore];
+   EKEvent *event = [EKEvent eventWithEventStore:eventManager.eventStore];
    event.title = self.eventTitle;
    event.startDate = self.eventStartDate;
    event.endDate = self.eventEndDate;
-   event.calendar = self.appDelegate.eventManager.customCalendars[self.indexOfCalendar];
+   event.calendar = eventManager.customCalendars[self.indexOfCalendar];
    
    // Specify the recurrence frequency and interval values based on the repeat index in the tableview
    EKRecurrenceFrequency frequency;
@@ -223,13 +211,12 @@
    }
    
    if (wantsAlarm) {
-      EKAlarm *alarm = [EKAlarm alarmWithRelativeOffset:timeInterval];
-      [event addAlarm:alarm];
+      [event addAlarm:[EKAlarm alarmWithRelativeOffset:timeInterval]];
    }
    
    // Save event to the event store.
    NSError *error;
-   if (![self.appDelegate.eventManager.eventStore saveEvent:event span:EKSpanFutureEvents commit:YES error:&error]) {
+   if (![eventManager.eventStore saveEvent:event span:EKSpanFutureEvents commit:YES error:&error]) {
       NSLog(@"error: %@", [error localizedDescription]);
    } else {
       NSLog(@"%@", event);
@@ -238,9 +225,6 @@
       comps.day = 1;
       todayVC.selectedDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:[NSDate date] options:0];
       [self.navigationController pushViewController:todayVC animated:YES];
-//       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//           [self.navigationController pushViewController:todayVC animated:YES];
-//   });
    }
 }
 
@@ -248,13 +232,11 @@
 #pragma mark - UITableViewDataSource
 
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
    return 3;
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    // # of rows will be based on how many customizations to the new event we will need
    if (section == 0) {
       return 2;
@@ -267,8 +249,7 @@
    }
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
    EventTextFieldTableViewCell *eventTextFieldCell = (EventTextFieldTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventTextFieldTableViewCell"];
    eventTextFieldCell.titleTextField.delegate = self;
    eventTextFieldCell.backgroundColor = [UIColor clearColor];
@@ -361,8 +342,7 @@
 #pragma mark - UITableViewDelegate
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
    self.selectedIndexPath = indexPath;
    
    // Need to call beginUpdates since multiple actions are being done below
@@ -411,8 +391,7 @@
    }
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
    CGFloat rowHeight = tableView.rowHeight;
    
    // If we have a date picker shown at the corresponding index path, make sure the height is what is set as in IB.
@@ -438,8 +417,7 @@
 //}
 
 // Simple way to get a transparent section header without creating your own header views.
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
-{
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section {
    if ([view isKindOfClass:[UITableViewHeaderFooterView class]]) {
       UITableViewHeaderFooterView *headerView = (UITableViewHeaderFooterView *)view;
       headerView.contentView.backgroundColor = [UIColor clearColor];
@@ -447,8 +425,7 @@
    }
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section
-{
+- (void)tableView:(UITableView *)tableView willDisplayFooterView:(UIView *)view forSection:(NSInteger)section {
    if ([view isKindOfClass:[UITableViewHeaderFooterView class]]) {
       UITableViewHeaderFooterView *footerView = (UITableViewHeaderFooterView *)view;
       footerView.contentView.backgroundColor = [UIColor clearColor];
@@ -469,19 +446,16 @@
 #pragma mark - RepeatAlertViewControllerDelegate
 
 
-- (void)didPushRepeatAlertViewController:(BOOL)boolean
-{
+- (void)didPushRepeatAlertViewController:(BOOL)boolean {
    self.didPushRepeatAlertVC = boolean;
 }
 
-- (void)didSelectRepeatOption:(NSInteger)index
-{
+- (void)didSelectRepeatOption:(NSInteger)index {
    self.repeatIndex = index;
    self.repeatString = self.repeatOptions[index];
 }
 
-- (void)didSelectAlarmOption:(NSInteger)index
-{
+- (void)didSelectAlarmOption:(NSInteger)index {
    self.alarmIndex = index;
    self.alarmString = self.alarmOptions[index];
 }
@@ -490,8 +464,7 @@
 #pragma mark - DatePicker Methods
 
 
-- (NSIndexPath *)calculateDatePickerIndexPath:(NSIndexPath *)indexPathSelected
-{
+- (NSIndexPath *)calculateDatePickerIndexPath:(NSIndexPath *)indexPathSelected {
    // If the tapped row is under the shown date picker,
    // return the selected index path's row (since the selected row will now become the index of the date picker)
    if (self.datePickerIndexPath && self.datePickerIndexPath.row < indexPathSelected.row) {
@@ -503,8 +476,7 @@
    }
 }
 
-- (void)changeDateAboveDatePicker:(UIDatePicker *)sender
-{
+- (void)changeDateAboveDatePicker:(UIDatePicker *)sender {
    // When the date picker changes its date value, call changeDateAboveDatePicker: to update the event cell's label
    NSIndexPath *parentIndexPath = [NSIndexPath indexPathForRow:self.datePickerIndexPath.row - 1 inSection:1];
    
@@ -522,8 +494,7 @@
 #pragma mark - Private Methods
 
 
-- (void)configureViewAndEventTableView
-{
+- (void)configureViewAndEventTableView {
    self.view.backgroundColor = [UIColor clearColor];
    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
    self.navigationController.navigationBar.clipsToBounds = NO;
@@ -541,8 +512,7 @@
    }
 }
 
-- (void)customizeTitle
-{
+- (void)customizeTitle {
    // Customize title on nav bar
    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
    label.backgroundColor = [UIColor clearColor];
@@ -554,8 +524,7 @@
    self.navigationItem.titleView = label;
 }
 
-- (void)customizeBarButtonItems
-{
+- (void)customizeBarButtonItems {
    // Assign a cancel button on the left side of the nav bar
    UIBarButtonItem *cancelBBI = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                                  style:UIBarButtonItemStylePlain
@@ -579,21 +548,27 @@
    self.navigationItem.rightBarButtonItem = saveBBI;
 }
 
-- (void)customizeDatesAndOptions
-{
+- (void)customizeDatesAndOptions {
    self.dateFormatter = [NSDateFormatter new];
    self.dateFormatter.dateStyle = NSDateFormatterShortStyle;
    self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
-   
-   self.eventStartDate = [NSDate date];
-   self.eventEndDate = [NSDate date];
+    
+    NSDate *nowDate = [NSDate date];
+    NSDateComponents *comps = [NSDateComponents new];
+    comps.hour = 1;
+    NSDate *hourAheadDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:nowDate options:0];
+    
+    NSTimeInterval seconds = ceil([nowDate timeIntervalSinceReferenceDate] / 300.0) * 300.0;
+    self.eventStartDate = [NSDate dateWithTimeIntervalSinceReferenceDate:seconds];
+    
+    NSTimeInterval endSeconds = ceil([hourAheadDate timeIntervalSinceReferenceDate] / 300.0) * 300.0;
+    self.eventEndDate = [NSDate dateWithTimeIntervalSinceReferenceDate:endSeconds];
    
    self.repeatOptions = @[@"Never", @"Daily", @"Weekly", @"Monthly", @"Yearly"];
    self.alarmOptions = @[@"None", @"At time of event", @"5 minutes before", @"10 minutes before", @"30 minutes before", @"1 hour before"];
 }
 
-- (void)giveGradientBackgroundColor
-{
+- (void)giveGradientBackgroundColor {
    // Create an overlay view to give a gradient background color
    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 3000);
    UIView *overlayView = [[UIView alloc] initWithFrame:frame];
@@ -604,8 +579,7 @@
    [self.view insertSubview:overlayView atIndex:0];
 }
 
-- (void)registerCellSubclasses
-{
+- (void)registerCellSubclasses {
    // Load and register our 3 cell subclasses
    UINib *nib = [UINib nibWithNibName:@"EventTableViewCell" bundle:nil];
    UINib *nib2 = [UINib nibWithNibName:@"DatePickerTableViewCell" bundle:nil];
@@ -615,8 +589,7 @@
    [self.eventTableView registerNib:nib3 forCellReuseIdentifier:@"EventTextFieldTableViewCell"];
 }
 
-- (void)addTapGestureRecognizer
-{
+- (void)addTapGestureRecognizer {
    // Add a gesture recognizer and assign it to the view,
    // then call endEditing: action method to have the UITextField resign first responder status when screen is touched.
    // Make sure the gesture recognizer doesn't intercept taps on the view by assigning NO to cancelsTouches property

@@ -9,7 +9,6 @@
 #import "WeekViewController.h"
 #import "WeekCollectionViewWeekCell.h"
 #import "WeekCollectionViewLayout.h"
-#import "SWRevealViewController.h"
 #import "TodayViewController.h"
 #import "UIColor+RBExtras.h"
 #import "Chameleon.h"
@@ -20,9 +19,10 @@
 #import "AppDelegate.h"
 #import "EventKit/EventKit.h"
 #import "WeekCollectionViewLayout.h"
+#import "EventPopUpViewController.h"
 
 
-@interface WeekViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, WeekCollectionViewWeekCellDelegate>
+@interface WeekViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, WeekCollectionViewWeekCellDelegate, EventPopUpDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UILabel *weekLabel;
@@ -41,6 +41,8 @@
 @property (strong, nonatomic) NSIndexPath *currentIndexPath;
 
 @property (assign, nonatomic) CGFloat lastContentOffset;
+
+@property (strong, nonatomic) NSDateComponents *offsetComponents;
 
 @end
 
@@ -62,66 +64,46 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self configureViewAndCollectionView];
-    //    [self giveGradientBackgroundColor];
     [self calculateStartAndEndDateCaches];
-//    [self.view setNeedsDisplay];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
     self.navigationController.navigationBar.clipsToBounds = YES;
-    
-    // Disable swipe when TodayVC appears
-    self.revealViewController.panGestureRecognizer.enabled = NO;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     [self customizeWeekLabelText]; // TODO - optimize code, DON'T call customizeLabel here!
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    
     self.selectedDate = nil;
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    
-    // Re-enable swipe when WeekVC disappears
-    self.revealViewController.panGestureRecognizer.enabled = YES;
-}
-
-- (void)viewWillTransitionToSize:(CGSize)size
-       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    
-    NSLog(@"transition cellDisplayedIndex = %li", self.cellDisplayedIndex);
-    [self.collectionView setContentOffset:CGPointMake((self.cellDisplayedIndex + 1) * self.view.bounds.size.height, 0) animated:YES];
-    [self.collectionView.collectionViewLayout invalidateLayout];
-    [self.collectionView setContentOffset:CGPointMake((self.cellDisplayedIndex) * self.view.bounds.size.height, 0) animated:YES];
-    [self customizeWeekLabelText];
-    
-    //   [self updateCollectionViewLayoutWithSize:size];
-}
-
-- (void)updateCollectionViewLayoutWithSize:(CGSize)size {
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
-    CGSize itemSizeForPortraitMode = CGSizeMake(self.view.bounds.size.width, 80.0f * 7);
-    CGSize itemSizeForLandscapeMode = CGSizeMake(20, 20);
-    
-    layout.itemSize = (size.width < size.height) ? itemSizeForPortraitMode : itemSizeForLandscapeMode;
-    [layout invalidateLayout];
-}
+//- (void)viewWillTransitionToSize:(CGSize)size
+//       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+//    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+//
+//    NSLog(@"transition cellDisplayedIndex = %li", self.cellDisplayedIndex);
+//    [self.collectionView setContentOffset:CGPointMake((self.cellDisplayedIndex + 1) * self.view.bounds.size.height, 0) animated:YES];
+//    [self.collectionView.collectionViewLayout invalidateLayout];
+//    [self.collectionView setContentOffset:CGPointMake((self.cellDisplayedIndex) * self.view.bounds.size.height, 0) animated:YES];
+//    [self customizeWeekLabelText];
+//
+////       [self updateCollectionViewLayoutWithSize:size];
+//}
+//
+//- (void)updateCollectionViewLayoutWithSize:(CGSize)size {
+//    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
+//    CGSize itemSizeForPortraitMode = CGSizeMake(self.view.bounds.size.width, 80.0f * 7);
+//    CGSize itemSizeForLandscapeMode = CGSizeMake(20, 20);
+//
+//    layout.itemSize = (size.width < size.height) ? itemSizeForPortraitMode : itemSizeForLandscapeMode;
+//    [layout invalidateLayout];
+//}
 
 
 #pragma mark - UICollectionViewDataSource
@@ -143,12 +125,11 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     
     self.currentIndexPath = indexPath;
     
-    NSDateComponents *offsetComponents = [NSDateComponents new];
-    offsetComponents.weekOfYear = indexPath.item;
-    weekCell.selectedDate = [self.calendar dateByAddingComponents:offsetComponents
+    self.offsetComponents.weekOfYear = indexPath.item;
+    weekCell.selectedDate = [self.calendar dateByAddingComponents:self.offsetComponents
                                                            toDate:self.startDateCache
                                                           options:0];
-    [weekCell.collectionView reloadData];
+    [weekCell didSetSelectedDate];
     
     return weekCell;
 }
@@ -167,12 +148,25 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 #pragma mark - WeekCollectionViewWeekCellDelegate
 
 
-- (void)weekCell:(WeekCollectionViewWeekCell *)cell didSelectEvent:(EKEvent *)event {
-    
+- (void)weekCell:(WeekCollectionViewWeekCell *)cell didSelectEvent:(EKEvent *)ekEvent {
+    self.definesPresentationContext = true;
+    EventPopUpViewController *eventPopUpVC = [[EventPopUpViewController alloc] initWithEvent:ekEvent delegate:self];
+    [self.navigationController presentViewController:eventPopUpVC animated:YES completion:nil];
+    self.tabBarController.tabBar.alpha = 0.4;
+    self.tabBarController.tabBar.userInteractionEnabled = NO;
 }
 
 - (CGFloat)sizeForSupplementaryView {
     return self.collectionView.frame.size.height / 7;
+}
+
+
+#pragma mark - EventPopUpDelegate
+
+
+- (void)didDismissViewController {
+    self.tabBarController.tabBar.alpha = 1.0;
+    self.tabBarController.tabBar.userInteractionEnabled = YES;
 }
 
 
@@ -191,7 +185,6 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     for (WeekCollectionViewWeekCell *weekCell in [self.collectionView visibleCells]) {
-        NSLog(@"weekCell.selectedDate = %@", weekCell.selectedDate);
         self.weekLabel.text = [self.dateFormatter stringFromDate:weekCell.selectedDate];
         [[NSUserDefaults standardUserDefaults] setObject:weekCell.selectedDate forKey:@"weekDisplayed"];
     }
@@ -257,9 +250,6 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     self.collectionView.backgroundColor = [UIColor clearColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     
-    // IMPORTANT property that requests our dayCell's ONLY when needed for display
-    self.collectionView.prefetchingEnabled = NO;
-    
     [self.collectionView registerClass:[WeekCollectionViewWeekCell class]
             forCellWithReuseIdentifier:NSStringFromClass([WeekCollectionViewWeekCell class])];
     
@@ -268,12 +258,13 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
 - (void)calculateStartAndEndDateCaches {
     NSDateComponents *comps = [NSDateComponents new];
+    NSDate *today = [NSDate date];
     comps.day = -1;
     comps.year = -10;
-    self.startDateCache = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+    self.startDateCache = [self.calendar dateByAddingComponents:comps toDate:today options:0];
     
     comps.year = 10;
-    self.endDateCache = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+    self.endDateCache = [self.calendar dateByAddingComponents:comps toDate:today options:0];
 }
 
 - (WeekCollectionViewWeekCell *)currentWeekCell {
@@ -338,6 +329,13 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
         _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }
     return _appDelegate;
+}
+
+- (NSDateComponents *)offsetComponents {
+    if (!_offsetComponents) {
+        _offsetComponents = [NSDateComponents new];
+    }
+    return _offsetComponents;
 }
 
 
