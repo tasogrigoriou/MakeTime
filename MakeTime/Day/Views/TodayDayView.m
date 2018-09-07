@@ -10,6 +10,7 @@
 #import "TodayHourLabelView.h"
 #import "MakeTimeCache.h"
 #import <QuartzCore/QuartzCore.h>
+#import "UIColor+RBExtras.h"
 
 @implementation TodayDayView
 
@@ -46,6 +47,17 @@
         }
         hourView.frame = attributesFrame;
         hourView.hourLabel.text = makeTimeCache.reusableViewsText[i];
+        
+        // Add extra border for top two hour view's (12AM and 1AM)
+        if (i == 0 || i == 1) {
+            CALayer *topBorder = [CALayer layer];
+            topBorder.borderColor = [UIColor lightGrayHTMLColor].CGColor;
+            topBorder.borderWidth = hourView.layer.borderWidth / 1.5;
+            topBorder.frame = CGRectMake(0, 0, CGRectGetWidth(hourView.frame), 1);
+            topBorder.cornerRadius = hourView.layer.cornerRadius;
+            hourView.clipsToBounds = YES;
+            [hourView.layer addSublayer:topBorder];
+        }
         
         [self addSubview:hourView];
         [hourViews addObject:hourView];

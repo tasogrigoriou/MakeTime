@@ -138,7 +138,7 @@
    // Create a CALayer with a background color, instead of using the backgroundColor property of UIView.
    UIColor *calendarColor = self.calendarUIColors[indexPath.row];
    CALayer *layer = [CALayer layer];
-   layer.cornerRadius = 6.0f;
+    layer.cornerRadius = cell.categoriesColorView.bounds.size.width / 2;
    layer.frame = cell.categoriesColorView.bounds;
    layer.backgroundColor = calendarColor.CGColor;
    [cell.categoriesColorView.layer addSublayer:layer];
@@ -210,9 +210,9 @@
 - (void)customizeBarButtonItems
 {
    // Give the delete button a border
-   self.deleteCategoryButton.layer.cornerRadius = 1.0f;
-   self.deleteCategoryButton.layer.borderWidth = 0.7f;
-   self.deleteCategoryButton.layer.borderColor = [UIColor lightGrayHTMLColor].CGColor;
+//   self.deleteCategoryButton.layer.cornerRadius = 1.0f;
+//   self.deleteCategoryButton.layer.borderWidth = 0.7f;
+//   self.deleteCategoryButton.layer.borderColor = [UIColor lightGrayHTMLColor].CGColor;
    
    // Assign a cancel button on the left side of the nav bar
    UIBarButtonItem *cancelBBI = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"

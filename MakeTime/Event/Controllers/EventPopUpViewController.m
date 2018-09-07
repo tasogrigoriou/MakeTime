@@ -31,7 +31,7 @@
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
-        self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+        self.modalPresentationStyle = UIModalPresentationOverFullScreen;
         self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         self.event = event;
         self.delegate = delegate;

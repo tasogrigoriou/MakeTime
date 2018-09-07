@@ -71,20 +71,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [super updateAuthorizationStatusToAccessEventStore];
-    
-//    self.navigationController.navigationBarHidden = YES;
-//    self.navigationController.navigationBar.clipsToBounds = YES;
+    [self.collectionView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     [self customizeDayLabelText];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    
     self.selectedDate = nil;
 }
 
@@ -194,8 +190,6 @@
     self.definesPresentationContext = true;
     EventPopUpViewController *eventPopUpVC = [[EventPopUpViewController alloc] initWithEvent:ekEvent delegate:self];
     [self.navigationController presentViewController:eventPopUpVC animated:YES completion:nil];
-    self.tabBarController.tabBar.alpha = 0.4;
-    self.tabBarController.tabBar.userInteractionEnabled = NO;
 }
 
 - (CGFloat)sizeForSupplementaryView {
@@ -207,8 +201,7 @@
 
 
 - (void)didDismissViewController {
-    self.tabBarController.tabBar.alpha = 1.0;
-    self.tabBarController.tabBar.userInteractionEnabled = YES;
+    
 }
 
 

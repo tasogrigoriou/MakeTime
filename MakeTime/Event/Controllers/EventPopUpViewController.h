@@ -19,7 +19,6 @@
 
 @property (weak, nonatomic) id<EventPopUpDelegate> delegate;
 
-- (instancetype)initWithEvent:(EKEvent *)event
-                    delegate:(id<EventPopUpDelegate>)delegate;
+- (instancetype)initWithEvent:(EKEvent *)event delegate:(id<EventPopUpDelegate>)delegate;
 
 @end

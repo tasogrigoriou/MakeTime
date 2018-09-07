@@ -72,13 +72,15 @@
         NSDate *weekDate = [self.calendar dateByAddingComponents:comps
                                                           toDate:startOfWeek
                                                          options:0];
-        [self.dateFormatter setLocalizedDateFormatFromTemplate:@"EEEE MM:dd"];
+        [self.dateFormatter setLocalizedDateFormatFromTemplate:@"E MMM d"];
         NSString *stringDate = [self.dateFormatter stringFromDate:weekDate];
         
         NSArray *foo = [stringDate componentsSeparatedByString:@" "];
-        NSString *firstBit = [foo objectAtIndex:0];
+        NSString *firstBit = [[foo objectAtIndex:0] componentsSeparatedByString:@","].firstObject;
         NSString *secondBit = [foo objectAtIndex:1];
-        NSString *whole = [NSString stringWithFormat:@"%@\n%@", firstBit, secondBit];
+        NSString *thirdBit = [foo objectAtIndex:2];
+//        NSString *whole = [NSString stringWithFormat:@"%@\n%@ %@", firstBit, secondBit, thirdBit];
+        NSString *whole = [NSString stringWithFormat:@"%@\n%@", firstBit, thirdBit];
         [self.weekdayLabelsText addObject:whole];
     }
 }

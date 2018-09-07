@@ -38,14 +38,10 @@
   return self;
 }
 
-- (void)drawRoundedCorners
-{
-  // Draw rounded corners on our TodayCell.
-  self.layer.cornerRadius = 3.0f;
+- (void)drawRoundedCorners {
+  self.layer.cornerRadius = 3.5f;
   self.layer.borderWidth = 0.5f;
-  self.layer.shadowOpacity = 0.5f;
   self.layer.borderColor = [UIColor clearColor].CGColor;
-  self.layer.shadowColor = [UIColor clearColor].CGColor;
 }
 
 - (void)setHighlighted:(BOOL)highlighted

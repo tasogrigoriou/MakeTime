@@ -74,7 +74,7 @@
     
     UIColor *calendarColor = [UIColor colorWithCGColor:cal.CGColor];
     CALayer *layer = [CALayer layer];
-    layer.cornerRadius = 6.0f;
+    layer.cornerRadius = cell.categoriesColorView.bounds.size.width / 2;
     layer.frame = cell.categoriesColorView.bounds;
     layer.backgroundColor = calendarColor.CGColor;
     [cell.categoriesColorView.layer addSublayer:layer];

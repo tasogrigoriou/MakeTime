@@ -70,12 +70,12 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.clipsToBounds = YES;
+    [self.collectionView reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self customizeWeekLabelText]; // TODO - optimize code, DON'T call customizeLabel here!
+    [self customizeWeekLabelText];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -152,12 +152,10 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     self.definesPresentationContext = true;
     EventPopUpViewController *eventPopUpVC = [[EventPopUpViewController alloc] initWithEvent:ekEvent delegate:self];
     [self.navigationController presentViewController:eventPopUpVC animated:YES completion:nil];
-    self.tabBarController.tabBar.alpha = 0.4;
-    self.tabBarController.tabBar.userInteractionEnabled = NO;
 }
 
 - (CGFloat)sizeForSupplementaryView {
-    return self.collectionView.frame.size.height / 7;
+    return self.collectionView.frame.size.width / 7;
 }
 
 
@@ -165,8 +163,6 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
 
 - (void)didDismissViewController {
-    self.tabBarController.tabBar.alpha = 1.0;
-    self.tabBarController.tabBar.userInteractionEnabled = YES;
 }
 
 

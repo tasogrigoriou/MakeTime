@@ -134,7 +134,7 @@
 - (void)customizeNavBarTitle {
    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
    label.backgroundColor = [UIColor clearColor];
-   label.font = [UIFont fontWithName:@"Avenir Next Condensed Regular" size:14.0f];
+   label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
    label.textAlignment = NSTextAlignmentCenter;
    label.textColor = [UIColor blackColor];
    

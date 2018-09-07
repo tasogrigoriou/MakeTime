@@ -11,6 +11,7 @@
 
 @interface AddEventViewController : UIViewController
 
+@property (strong, nonatomic) EKCalendar *calendar;
 @property (assign, nonatomic) NSInteger indexOfCalendar;
 
 @property (strong, nonatomic) NSString *eventTitle;
@@ -28,5 +29,7 @@
 
 // Method to call from DatePickerTableViewCell to update the date when selected from the date picker
 - (void)changeDateAboveDatePicker:(UIDatePicker *)sender;
+
+- (instancetype)initWithCalendar:(EKCalendar *)calendar;
 
 @end

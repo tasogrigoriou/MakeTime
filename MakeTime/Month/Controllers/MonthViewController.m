@@ -51,9 +51,6 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.clipsToBounds = YES;
-    self.calendar.appearance.titleFont = [UIFont fontWithName:@"AvenirNext-Medium" size:12.0f];
-    self.calendar.appearance.weekdayFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0f];
-    self.calendar.appearance.headerTitleFont = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:17.0f];
 //    self.calendar.placeholderType = FSCalendarPlaceholderTypeNone;
 }
 
@@ -255,7 +252,6 @@
  * Asks the delegate for subtitle text color in selected state for the specific date.
  */
 - (nullable UIColor *)calendar:(FSCalendar *)calendar appearance:(FSCalendarAppearance *)appearance subtitleSelectionColorForDate:(NSDate *)date {
-    
     return nil;
 }
 
@@ -334,17 +330,6 @@
         }
     }
     return [eventColors count] > 0 ? eventColors : nil;
-    
-//    NSMutableArray *eventColors = [NSMutableArray array];
-//    NSArray *events = [self.appDelegate.eventManager getEventsOfAllCalendars:self.appDelegate.eventManager.customCalendars
-//                                                              thatFallOnDate:date];
-//    for (EKEvent *event in events) {
-//        UIColor *calendarColor = [UIColor colorWithCGColor:event.calendar.CGColor];
-//        if (![eventColors containsObject:calendarColor]) {
-//            [eventColors addObject:calendarColor];
-//        }
-//    }
-//    return [eventColors count] > 0 ? eventColors : nil;
 }
 
 
@@ -377,6 +362,10 @@
 - (void)configureViewAndCalendarView {
     self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
+    
+    self.calendar.appearance.titleFont = [UIFont fontWithName:@"AvenirNext-Medium" size:12.0f];
+    self.calendar.appearance.weekdayFont = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0f];
+    self.calendar.appearance.headerTitleFont = [UIFont fontWithName:@"AvenirNextCondensed-Medium" size:17.0f];
     
     [self.view bringSubviewToFront:self.leftButton];
     [self.view bringSubviewToFront:self.rightButton];

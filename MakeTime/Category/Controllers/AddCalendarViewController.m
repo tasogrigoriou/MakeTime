@@ -170,31 +170,6 @@
     return cell;
 }
 
-// Create custom view to display section header
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 33)];
-//
-//    // Create a horizontal, dark gray line and insert it as a subview of our custom headerView.
-//    //  UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 30, self.view.frame.size.width, 0.30)];
-//    //  lineView.backgroundColor = [UIColor lightGrayColor];
-//    //  [view addSubview:lineView];
-//
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(12, 0, tableView.frame.size.width, 36)];
-//    label.font = [UIFont fontWithName:@"Avenir Next Condensed Ultra Light" size:15.0f];
-//    label.layer.opacity = 0.7;
-//    label.text = @"Color";
-//    [view addSubview:label];
-//
-//    return view;
-//}
-
-// Method required for tableView:viewForHeaderInSection: to work
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section;
-//{
-//    return 33.0f;
-//}
-
 
 #pragma mark - UITableViewDelegate
 

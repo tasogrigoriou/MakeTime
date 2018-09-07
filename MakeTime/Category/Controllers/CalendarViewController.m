@@ -92,7 +92,7 @@
 {
     self.selectedCalendar = self.customCalendars[indexPath.item];
     
-    AddEventViewController *addEventVC = [AddEventViewController new];
+    AddEventViewController *addEventVC = [[AddEventViewController alloc] initWithCalendar:self.selectedCalendar];
     addEventVC.indexOfCalendar = indexPath.item;
     [self.navigationController pushViewController:addEventVC animated:YES];
 }

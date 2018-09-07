@@ -25,12 +25,7 @@ static CGFloat const TwoHoursViewWidth = 120.0f;
 
 
 - (CGSize)collectionViewContentSize {
-    if ([self.collectionView.delegate conformsToProtocol:@protocol(TodayCollectionViewLayoutDelegate)]) {
-        id <TodayCollectionViewLayoutDelegate> todayCollectionViewLayoutDelegate = (id <TodayCollectionViewLayoutDelegate>)self.collectionView.delegate;
-        
-        self.sizeForSupplementaryView = [todayCollectionViewLayoutDelegate sizeForSupplementaryView];
-    }
-    return CGSizeMake(self.collectionView.bounds.size.width, self.sizeForSupplementaryView * 12);
+    return self.collectionView.bounds.size;
 }
 
 /* Calculate every layoutAttributes we will need to use.
@@ -72,24 +67,6 @@ static CGFloat const TwoHoursViewWidth = 120.0f;
                 [self.cellAttributes addObject:attributes];
             }
         }
-        
-        // Compute every hour block (TodayReusableView) layoutAttributes
-//        NSInteger j = 0;
-//
-//        for (NSInteger i = 0; i < 24; i++) {
-//            UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:@"TodayCollectionReusableView" withIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
-//            CGRect attributesFrame = CGRectZero;
-//            attributesFrame.size = CGSizeMake(self.collectionView.bounds.size.width / 2, self.sizeForSupplementaryView);
-//            if (i % 2 == 0) {
-//                attributesFrame.origin = CGPointMake(0, j * self.sizeForSupplementaryView);
-//            } else {
-//                attributesFrame.origin = CGPointMake(self.collectionView.bounds.size.width / 2, j * self.sizeForSupplementaryView);
-//                j++;
-//            }
-//            attributes.frame = attributesFrame;
-//            [self.hourAttributes addObject:attributes];
-//        }
-        
     }
 }
 

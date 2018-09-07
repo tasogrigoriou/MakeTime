@@ -113,9 +113,6 @@
 }
 
 - (NSArray *)loadCustomCalendars {
-    if (self.customCalendars != nil) {
-        return self.customCalendars;
-    }
     NSMutableArray *customCals = [NSMutableArray new];
     
     // Load default calendars (if we're on first launch of app)
