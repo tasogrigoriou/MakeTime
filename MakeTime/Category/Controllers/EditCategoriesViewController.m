@@ -28,30 +28,35 @@
 #pragma mark - View Lifecycle
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
    [super viewDidLoad];
-   
-   // Get a ref to the app delegate, load our custom categories,
-   self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-   self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
    
    [self customizeLabel];
    [self configureViewAndTableView];
    [self customizeBarButtonItems];
-//   [self giveGradientBackgroundColor];
-    self.view.backgroundColor = [UIColor whiteColor];
    
-   // Assign calendarColors as UIColors and as NSStrings for the labels
-   [self assignCalendarColors];
+    [self loadCalendarData];
+}
+
+- (void)loadCalendarData {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [self assignCalendarColors];
+        });
+        [[EventManager sharedManager] loadCustomCalendars];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.customCalendars = [[EventManager sharedManager] customCalendars];
+            [self.editCategoriesTableView reloadData];
+        });
+    });
 }
 
 
 #pragma mark - IBActions
 
 
-- (IBAction)popViewController:(id)sender
-{
+- (IBAction)popViewController:(id)sender {
    [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -192,7 +197,7 @@
    UINib *nib = [UINib nibWithNibName:@"CategoriesTableViewCell" bundle:nil];
    [self.editCategoriesTableView registerNib:nib forCellReuseIdentifier:@"CategoriesTableViewCell"];
    
-   self.view.backgroundColor = [UIColor clearColor];
+   self.view.backgroundColor = [UIColor whiteColor];
    self.editCategoriesTableView.backgroundColor = [UIColor clearColor];
    
    // Insert a dummy footer view to limit the tableview to only show the amount of cells returned in data source method

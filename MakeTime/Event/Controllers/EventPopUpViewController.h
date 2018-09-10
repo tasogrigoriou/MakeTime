@@ -12,6 +12,7 @@
 @class EventPopUpViewController;
 
 @protocol EventPopUpDelegate <NSObject>
+- (void)editEventButtonPressedWithEvent:(EKEvent *)event;
 - (void)didDismissViewController;
 @end
 

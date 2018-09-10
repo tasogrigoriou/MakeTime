@@ -29,6 +29,8 @@
 @property (strong, nonatomic) NSArray *repeatOptions;
 @property (strong, nonatomic) NSArray *alarmOptions;
 
+@property (strong, nonatomic) NSString *textFieldTitle;
+
 @property (assign, nonatomic) BOOL isDatePickerShowing;
 @property (assign, nonatomic) BOOL textFieldHasTitle;
 @property (assign, nonatomic) BOOL isTextFieldTapped;
@@ -41,6 +43,8 @@
 @property (strong, nonatomic) NSIndexPath *datePickerIndexPath;
 
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
+
+@property (strong, nonatomic) UITextField *textField;
 
 @end
 
@@ -111,8 +115,9 @@
 // The text field calls this method whenever the user taps the return button.
 // Use this method to implement any custom behavior when return is tapped (MUST make sure delegate is set in XIB).
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    if (![textField.text isEqual:@""]) {
+    if (textField.text.length != 0) {
         self.textFieldHasTitle = YES;
+        self.textFieldTitle = textField.text;
     }
     [textField resignFirstResponder];
     [self.eventTableView reloadData];
@@ -120,10 +125,18 @@
     return YES;
 }
 
+- (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason {
+    if (textField.text.length != 0) {
+        self.textFieldHasTitle = YES;
+        self.textFieldTitle = textField.text;
+    }
+    [self.eventTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+    self.textField = textField;
     self.isTextFieldTapped = YES;
     self.didPushRepeatAlertVC = NO;
-    self.eventTitle = nil;
     
     if (self.textFieldHasTitle) {
         self.textFieldHasTitle = NO;
@@ -141,16 +154,11 @@
     return YES;
 }
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    textField.text = @"";
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    textField.text = self.textFieldTitle;
 }
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
-{
-    if (!self.textFieldHasTitle) {
-        textField.text = @"";
-    }
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
     return YES;
 }
 
@@ -164,12 +172,16 @@
 
 - (void)saveEvent:(id)sender {
     EventManager *eventManager = [EventManager sharedManager];
-    // To create an EKEvent, we need a title, start date, end date, and a calendar
+    
     EKEvent *event = [EKEvent eventWithEventStore:eventManager.eventStore];
-    event.title = self.eventTitle;
+    if (self.eventTitle.length != 0) {
+        event.title = self.eventTitle;
+    } else if (self.textField.text.length != 0) {
+        event.title = self.textField.text;
+    }
     event.startDate = self.eventStartDate;
     event.endDate = self.eventEndDate;
-    event.calendar = eventManager.customCalendars[self.indexOfCalendar];
+    event.calendar = self.calendar;
     
     // Specify the recurrence frequency and interval values based on the repeat index in the tableview
     EKRecurrenceFrequency frequency;
@@ -264,7 +276,7 @@
                 eventTextFieldCell.detailLabel.text = self.eventTitle;
                 eventTextFieldCell.titleTextField.text = @"Title";
             } else if (self.textFieldHasTitle) {
-                eventTextFieldCell.detailLabel.text = eventTextFieldCell.titleTextField.text;
+                eventTextFieldCell.detailLabel.text = self.textFieldTitle;
                 eventTextFieldCell.titleTextField.text = @"Title";
                 self.eventTitle = eventTextFieldCell.detailLabel.text;
             } else {
@@ -587,7 +599,12 @@
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]
                                                     initWithTarget:self.view action:@selector(endEditing:)];
     tapGestureRecognizer.cancelsTouchesInView = NO;
+//    tapGestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:tapGestureRecognizer];
+}
+
+- (void)endEditingOfTextField {
+    [self.textField resignFirstResponder];
 }
 
 

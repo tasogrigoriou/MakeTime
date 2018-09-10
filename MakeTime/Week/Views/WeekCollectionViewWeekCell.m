@@ -14,8 +14,8 @@
 #import "WeekCollectionViewCell.h"
 #import "WeekCollectionReusableView.h"
 #import "EventComponents.h"
-
-#define NAME "Anthony"
+#import "MakeTimeCache.h"
+#import "WeekDayLineView.h"
 
 @interface WeekCollectionViewWeekCell () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, WeekCollectionViewLayoutDelegate>
 
@@ -51,6 +51,32 @@
 }
 
 - (void)didSetSelectedDate {
+    [self addWeekdayLineImageSubview];
+    [self loadEventData];
+}
+
+- (void)addWeekdayLineImageSubview {
+    for (UIView *view in self.subviews) {
+        if ([view isKindOfClass:[UIImageView class]]) {
+            [view removeFromSuperview];
+        }
+    }
+    MakeTimeCache *makeTimeCache = [MakeTimeCache sharedManager];
+    WeekDayLineView *weekDayLineView = [[WeekDayLineView alloc] initWithFrame:self.collectionView.frame];
+    weekDayLineView.backgroundColor = [UIColor clearColor];
+    
+    if (makeTimeCache.weekDayLineImage == nil) {
+        [weekDayLineView initWeekdayLinesWithCollectionView:self.collectionView];
+        makeTimeCache.weekDayLineImage = [weekDayLineView imageWithView:weekDayLineView size:self.bounds.size];
+    }
+    
+    UIImageView *weekDayLineImageView = [[UIImageView alloc] initWithImage:makeTimeCache.weekDayLineImage];
+    weekDayLineImageView.frame = self.bounds;
+    weekDayLineImageView.backgroundColor = [UIColor clearColor];
+    [self addSubview:weekDayLineImageView];
+}
+
+- (void)loadEventData {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self initDaysInWeek];
         [self loadCustomCalendarsAndEvents];
@@ -67,12 +93,11 @@
     NSDateComponents *comps = [NSDateComponents new];
     NSDate *startOfWeek = [self startOfWeekOfDate:self.selectedDate];
     
+    [self.dateFormatter setLocalizedDateFormatFromTemplate:@"E MMM d"];
+    
     for (NSInteger i = 0; i < 7; i++) {
         comps.day = i;
-        NSDate *weekDate = [self.calendar dateByAddingComponents:comps
-                                                          toDate:startOfWeek
-                                                         options:0];
-        [self.dateFormatter setLocalizedDateFormatFromTemplate:@"E MMM d"];
+        NSDate *weekDate = [self.calendar dateByAddingComponents:comps toDate:startOfWeek options:0];
         NSString *stringDate = [self.dateFormatter stringFromDate:weekDate];
         
         NSArray *foo = [stringDate componentsSeparatedByString:@" "];
@@ -124,10 +149,10 @@
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-    
     for (EKEvent *ekEvent in self.customEvents) {
         if ([ekEvent.eventIdentifier isEqualToString:eventComponent.identifier]) {
             [self.delegate weekCell:self didSelectEvent:ekEvent];
+            break;
         }
     }
 }
@@ -215,7 +240,7 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
 - (void)configureViewAndCollectionView {
    self.backgroundColor = [UIColor clearColor];
    
-   WeekCollectionViewLayout *layout = [WeekCollectionViewLayout new];
+    WeekCollectionViewLayout *layout = [WeekCollectionViewLayout new];
    CGRect frame = self.frame;
    frame.origin = CGPointZero;
    self.collectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:layout];
@@ -236,7 +261,11 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
 - (void)loadCustomCalendarsAndEvents {
    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"eventStoreGranted"]) {
       
-       self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
+       __weak WeekCollectionViewWeekCell *weakSelf = self;
+       [[EventManager sharedManager] loadCustomCalendars:^(NSArray *calendars) {
+           weakSelf.customCalendars = calendars;
+       }];
+       
        self.customEvents = [[EventManager sharedManager] getEventsOfAllCalendars:self.customCalendars
                                                                   thatFallInWeek:self.selectedDate];
       

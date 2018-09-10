@@ -7,6 +7,7 @@
 //
 
 #import "TodayCollectionViewCell.h"
+#import "UIColor+RBExtras.h"
 
 @implementation TodayCollectionViewCell
 
@@ -39,9 +40,10 @@
 }
 
 - (void)drawRoundedCorners {
-  self.layer.cornerRadius = 3.5f;
-  self.layer.borderWidth = 0.5f;
-  self.layer.borderColor = [UIColor clearColor].CGColor;
+  self.layer.cornerRadius = 3.0f;
+//  self.layer.borderWidth = 0.5f;
+//  self.layer.borderColor = [UIColor clearColor].CGColor;
+
 }
 
 - (void)setHighlighted:(BOOL)highlighted

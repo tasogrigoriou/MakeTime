@@ -21,19 +21,36 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mdv-J5-QC1" userLabel="EditEventTableView">
-                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="582"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="4q5-8q-u8K"/>
                         <outlet property="delegate" destination="-1" id="arj-bp-kLv"/>
                     </connections>
                 </tableView>
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="340-bv-GP3">
+                    <rect key="frame" x="0.0" y="602" width="375" height="65"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="65" id="8Pa-cy-IpT"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
+                    <state key="normal" title="Delete">
+                        <color key="titleColor" red="1" green="0.24464908460000001" blue="0.28149162529999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="deleteCalendarButtonPressed:" destination="-1" eventType="touchUpInside" id="SDc-9e-tO1"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="mdv-J5-QC1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6mX-cb-iY6"/>
+                <constraint firstItem="340-bv-GP3" firstAttribute="top" secondItem="mdv-J5-QC1" secondAttribute="bottom" id="9dx-Ln-wk1"/>
+                <constraint firstItem="340-bv-GP3" firstAttribute="bottom" secondItem="l6M-Z0-82u" secondAttribute="bottom" id="BRf-Yo-hme"/>
+                <constraint firstItem="340-bv-GP3" firstAttribute="leading" secondItem="l6M-Z0-82u" secondAttribute="leading" id="Bh8-fR-HEV"/>
                 <constraint firstItem="mdv-J5-QC1" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="FwK-if-PUp"/>
-                <constraint firstItem="mdv-J5-QC1" firstAttribute="bottom" secondItem="l6M-Z0-82u" secondAttribute="bottom" id="JRp-Ri-ecw"/>
+                <constraint firstItem="340-bv-GP3" firstAttribute="trailing" secondItem="l6M-Z0-82u" secondAttribute="trailing" id="O8D-Od-zRG"/>
                 <constraint firstItem="mdv-J5-QC1" firstAttribute="top" secondItem="l6M-Z0-82u" secondAttribute="top" id="mcf-sk-fOs"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="l6M-Z0-82u"/>

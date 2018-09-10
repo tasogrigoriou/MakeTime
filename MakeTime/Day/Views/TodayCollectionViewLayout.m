@@ -28,6 +28,10 @@ static CGFloat const TwoHoursViewWidth = 120.0f;
     return self.collectionView.bounds.size;
 }
 
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
+    return YES;
+}
+
 /* Calculate every layoutAttributes we will need to use.
  By getting the time of the event and its duration, we are able to compute the frame of every event.
  The supplementary view frames (every single "hour" block) are pretty straightforward too, since their height and width are fixed.

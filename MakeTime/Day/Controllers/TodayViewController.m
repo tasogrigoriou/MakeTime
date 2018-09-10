@@ -52,6 +52,8 @@
 
 @property (strong, nonatomic) NSDateComponents *dayComponents;
 
+@property (nonatomic) BOOL selectedLastViewController;
+
 @end
 
 
@@ -66,6 +68,7 @@
     
     [self configureViewAndCollectionView];
     [self calculateStartAndEndDateCaches];
+    [self addTabBarNotificationObserver];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -176,10 +179,9 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    for (TodayCollectionViewDayCell *dayCell in [self.collectionView visibleCells]) {
-        self.todayLabel.text = [self.dateFormatter stringFromDate:dayCell.selectedDate];
-        [[NSUserDefaults standardUserDefaults] setObject:dayCell.selectedDate forKey:@"dayDisplayed"];
-    }
+    TodayCollectionViewDayCell *dayCell = self.collectionView.visibleCells.firstObject;
+    self.todayLabel.text = [self.dateFormatter stringFromDate:dayCell.selectedDate];
+    [[NSUserDefaults standardUserDefaults] setObject:dayCell.selectedDate forKey:@"dayDisplayed"];
 }
 
 
@@ -187,9 +189,8 @@
 
 
 - (void)dayCell:(TodayCollectionViewDayCell *)cell didSelectEvent:(EKEvent *)ekEvent {
-    self.definesPresentationContext = true;
     EventPopUpViewController *eventPopUpVC = [[EventPopUpViewController alloc] initWithEvent:ekEvent delegate:self];
-    [self.navigationController presentViewController:eventPopUpVC animated:YES completion:nil];
+    [self presentViewController:eventPopUpVC animated:YES completion:nil];
 }
 
 - (CGFloat)sizeForSupplementaryView {
@@ -201,7 +202,11 @@
 
 
 - (void)didDismissViewController {
-    
+}
+
+- (void)editEventButtonPressedWithEvent:(EKEvent *)event {
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[[EditEventViewController alloc] initWithEvent:event]];
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 
@@ -238,7 +243,11 @@
     NSDateComponents *comps = [NSDateComponents new];
     comps.day = 1;
     
-    if (self.selectedDate) {
+    if (self.selectedLastViewController) {
+        self.dayDisplayed = [NSDate date];
+        self.selectedLastViewController = NO;
+    
+    } else if (self.selectedDate) {
         self.dayDisplayed = self.selectedDate;
         
     } else if (currentDayDisplayed && ![initialScroll boolValue]) {
@@ -268,6 +277,8 @@
             forCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class])];
     
     [self.view addSubview:self.collectionView];
+    
+    self.definesPresentationContext = true;
 }
 
 - (void)calculateStartAndEndDateCaches {
@@ -316,6 +327,22 @@
 
 - (void)setDayDisplayed:(NSDate *)dayDisplayed {
     [self setDayDisplayed:dayDisplayed animated:NO];
+}
+
+- (void)addTabBarNotificationObserver {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(scrollToToday)
+                                                 name:@"didSelectLastSelectedViewController"
+                                               object:nil];
+}
+
+- (void)scrollToToday {
+    NSDate *today = [NSDate date];
+    [self setDayDisplayed:today animated:YES];
+    self.selectedLastViewController = YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.todayLabel.text = [self.dateFormatter stringFromDate:today];
+    });
 }
 
 

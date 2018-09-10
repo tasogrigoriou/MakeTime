@@ -29,29 +29,32 @@
 #pragma mark - View Lifecycle
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     [self configureLabel];
     [self configureButtons];
     [self configureViewAndCollectionView];
-    
-    // Get a ref to the app delegate and load custom calendars (categories)
-    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)loadCalendarData {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [[EventManager sharedManager] loadCustomCalendars];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.customCalendars = [[EventManager sharedManager] customCalendars];
+            [self.calendarCollectionView reloadData];
+        });
+    });
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     //    self.navigationController.navigationBar.clipsToBounds = YES;
     //    self.navigationItem.hidesBackButton = NO;
     
     // Reload the collection view and the custom calendars when navigating back from AddCalendarVC
-    self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
-    [self.calendarCollectionView reloadData];
+    [self loadCalendarData];
 }
 
 
@@ -71,14 +74,12 @@
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section
-{
+     numberOfItemsInSection:(NSInteger)section {
     return [self.customCalendars count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     CalendarCollectionViewCell *calendarCell = (CalendarCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"CalendarCollectionViewCell" forIndexPath:indexPath];
     
     EKCalendar *cal = self.customCalendars[indexPath.item];
@@ -88,8 +89,7 @@
     return calendarCell;
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     self.selectedCalendar = self.customCalendars[indexPath.item];
     
     AddEventViewController *addEventVC = [[AddEventViewController alloc] initWithCalendar:self.selectedCalendar];
@@ -104,14 +104,12 @@
 // Override size of CalendarCollectionViewCell
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(collectionView.bounds.size.width / 3, collectionView.bounds.size.width / 6);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView
-didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
+didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     CalendarCollectionViewCell *cell = (CalendarCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     // Set background color of cell with animation
@@ -126,8 +124,7 @@ didHighlightItemAtIndexPath:(NSIndexPath *)indexPath
 
 
 - (void)collectionView:(UICollectionView *)collectionView
-didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
-{
+didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
     CalendarCollectionViewCell *cell = (CalendarCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     
     // Revert background color of cell to original CGColor of the EKCalendar
@@ -165,7 +162,6 @@ didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
                                                                       action:@selector(dismissViewController:)];
     leftButtonItem.tintColor = [UIColor blackColor];
     [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-//    [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateSelected];
     [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
@@ -175,7 +171,6 @@ didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath
                                                                        action:@selector(addCategory:)];
     rightButtonItem.tintColor = [UIColor blackColor];
     [rightButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-//    [rightButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateSelected];
     [rightButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
 }

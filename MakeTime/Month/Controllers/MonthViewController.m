@@ -42,6 +42,7 @@
     [super viewDidLoad];
     [self configureViewAndCalendarView];
     [self loadData];
+    [self addTabBarNotificationObserver];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -369,6 +370,17 @@
     
     [self.view bringSubviewToFront:self.leftButton];
     [self.view bringSubviewToFront:self.rightButton];
+}
+
+- (void)addTabBarNotificationObserver {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(scrollToToday)
+                                                 name:@"didSelectLastSelectedViewController"
+                                               object:nil];
+}
+
+- (void)scrollToToday {
+    [self.calendar setCurrentPage:[NSDate date] animated:YES];
 }
 
 

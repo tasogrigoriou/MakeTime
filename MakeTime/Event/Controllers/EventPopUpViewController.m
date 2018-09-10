@@ -59,9 +59,10 @@
 }
 
 - (IBAction)editButtonPressed:(id)sender {
-    EditEventViewController *editEventVC = [[EditEventViewController alloc] initWithEvent:self.event];
-    [self presentViewController:editEventVC animated:YES completion:nil];
-//    [self dismissViewControllerAnimated:NO completion:nil];
+    __weak EventPopUpViewController *weakSelf = self;
+    [self dismissViewControllerAnimated:YES completion:^{
+        [weakSelf.delegate editEventButtonPressedWithEvent:weakSelf.event];
+    }];
 }
 
 

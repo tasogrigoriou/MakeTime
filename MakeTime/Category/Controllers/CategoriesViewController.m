@@ -33,26 +33,32 @@
 #pragma mark - View Lifecycle
 
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     [self customizeLabel];
     [self configureViewAndTableView];
-    
-    self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
-    
-    // Assign calendarColors as UIColors and as NSStrings for the labels
-    [self assignCalendarColors];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)loadCalendarData {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            [self assignCalendarColors];
+        });
+        [[EventManager sharedManager] loadCustomCalendars];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.customCalendars = [[EventManager sharedManager] customCalendars];
+            [self.categoriesTableView reloadData];
+        });
+    });
+}
+
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
     // Reload table view and the custom calendars when navigating back from EditCategoriesVC
-    self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
-    [self.categoriesTableView reloadData];
+    [self loadCalendarData];
 }
 
 
@@ -106,8 +112,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - UITableViewDelegate
 
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     EditCategoriesViewController *editCategoriesVC = [EditCategoriesViewController new];
     editCategoriesVC.indexOfCategory = indexPath.row;
     
@@ -123,8 +128,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.navigationController pushViewController:editCategoriesVC animated:YES];
 }
 
-- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     CategoriesTableViewCell *cell = (CategoriesTableViewCell *)[tableView cellForRowAtIndexPath:indexPath];
     
     // Revert background color of cell to clear color.
@@ -141,8 +145,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 
 
-- (void)customizeLabel
-{
+- (void)customizeLabel {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont fontWithName:@"Avenir Next Condensed Regular" size:14.0f];
@@ -179,8 +182,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 //    self.categoriesTableView.alwaysBounceVertical = NO;
 }
 
-- (void)giveGradientBackgroundColor
-{
+- (void)giveGradientBackgroundColor {
     // Create an overlay view to give a gradient background color
     CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 3000);
     UIView *overlayView = [[UIView alloc] initWithFrame:frame];
@@ -191,8 +193,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self.view insertSubview:overlayView atIndex:0];
 }
 
-- (void)assignCalendarColors
-{
+- (void)assignCalendarColors {
     UIColor *hotPink = [UIColor colorWithRed:(238/255.0) green:(106/255.0) blue:(167/255.0) alpha:1.0];
     UIColor *turquoise = [UIColor colorWithRed:(64/255.0) green:(224/255.0) blue:(208/255.0) alpha:1.0];
     UIColor *darkOrchid = [UIColor colorWithRed:(154/255.0) green:(50/255.0) blue:(205/255.0) alpha:1.0];
@@ -208,8 +209,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Custom Getters
 
 
-- (AppDelegate *)appDelegate
-{
+- (AppDelegate *)appDelegate {
     if (!_appDelegate) {
         _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }

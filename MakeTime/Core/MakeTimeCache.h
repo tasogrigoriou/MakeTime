@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSMutableArray *hourViews;
 
 @property (nonatomic, strong) UIImage *todayDayImage;
+@property (nonatomic, strong) UIImage *weekDayLineImage;
 
 + (id)sharedManager;
 

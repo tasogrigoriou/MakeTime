@@ -112,7 +112,7 @@
     return isCustomCalendar;
 }
 
-- (NSArray *)loadCustomCalendars {
+- (void)loadCustomCalendars:(void (^)(NSArray *))completion {
     NSMutableArray *customCals = [NSMutableArray new];
     
     // Load default calendars (if we're on first launch of app)
@@ -121,7 +121,6 @@
         NSArray *defaultCals = [self loadDefaultCalendars];
         for (EKCalendar *cal in defaultCals) {
             if (![[NSUserDefaults standardUserDefaults] objectForKey:cal.calendarIdentifier]) {
-                NSLog(@"calendar %@ is not in User Defaults", cal.title);
                 [customCals addObject:cal];
             }
         }
@@ -143,7 +142,7 @@
     //     NSLog(@"NSUserDefaults: \n%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
     
     self.customCalendars = (NSArray *)customCals;
-    return self.customCalendars;
+    completion(self.customCalendars);
 }
 
 - (NSArray *)loadDefaultCalendars {

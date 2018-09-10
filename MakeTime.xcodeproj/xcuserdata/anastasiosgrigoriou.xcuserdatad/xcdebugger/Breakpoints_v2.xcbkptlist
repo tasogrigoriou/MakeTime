@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MakeTime/Day/Controllers/TodayViewController.m"
-            timestampString = "558044860.402832"
+            filePath = "MakeTime/Week/Controllers/WeekViewController.m"
+            timestampString = "558247063.047266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
+            landmarkName = "-setWeekDisplayed:animated:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MakeTime/Week/Controllers/WeekViewController.m"
-            timestampString = "558044860.402933"
+            filePath = "MakeTime/Core/MakeTimeTabBarController.m"
+            timestampString = "558247063.047331"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "-viewWillAppear:"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "-initViewControllers"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

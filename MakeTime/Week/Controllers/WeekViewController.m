@@ -20,6 +20,7 @@
 #import "EventKit/EventKit.h"
 #import "WeekCollectionViewLayout.h"
 #import "EventPopUpViewController.h"
+#import "EditEventViewController.h"
 
 
 @interface WeekViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, WeekCollectionViewWeekCellDelegate, EventPopUpDelegate>
@@ -44,6 +45,8 @@
 
 @property (strong, nonatomic) NSDateComponents *offsetComponents;
 
+@property (nonatomic) BOOL selectedLastViewController;
+
 @end
 
 
@@ -66,6 +69,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     [super viewDidLoad];
     [self configureViewAndCollectionView];
     [self calculateStartAndEndDateCaches];
+    [self addTabBarNotificationObserver];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -149,9 +153,8 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
 
 - (void)weekCell:(WeekCollectionViewWeekCell *)cell didSelectEvent:(EKEvent *)ekEvent {
-    self.definesPresentationContext = true;
     EventPopUpViewController *eventPopUpVC = [[EventPopUpViewController alloc] initWithEvent:ekEvent delegate:self];
-    [self.navigationController presentViewController:eventPopUpVC animated:YES completion:nil];
+    [self presentViewController:eventPopUpVC animated:YES completion:nil];
 }
 
 - (CGFloat)sizeForSupplementaryView {
@@ -163,6 +166,11 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
 
 - (void)didDismissViewController {
+}
+
+- (void)editEventButtonPressedWithEvent:(EKEvent *)event {
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[[EditEventViewController alloc] initWithEvent:event]];
+    [self presentViewController:navController animated:YES completion:nil];
 }
 
 
@@ -180,10 +188,9 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    for (WeekCollectionViewWeekCell *weekCell in [self.collectionView visibleCells]) {
-        self.weekLabel.text = [self.dateFormatter stringFromDate:weekCell.selectedDate];
-        [[NSUserDefaults standardUserDefaults] setObject:weekCell.selectedDate forKey:@"weekDisplayed"];
-    }
+    WeekCollectionViewWeekCell *weekCell = self.collectionView.visibleCells.firstObject;
+    self.weekLabel.text = [self.dateFormatter stringFromDate:weekCell.selectedDate];
+    [[NSUserDefaults standardUserDefaults] setObject:weekCell.selectedDate forKey:@"weekDisplayed"];
 }
 
 
@@ -202,11 +209,10 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     NSDateComponents *valueComponents = [NSDateComponents new];
     valueComponents.weekOfYear = value;
     
-    for (WeekCollectionViewWeekCell *weekCell in [self.collectionView visibleCells]) {
-        NSDate *valueDate = [self.calendar dateByAddingComponents:valueComponents toDate:weekCell.selectedDate options:0];
-        [self setWeekDisplayed:valueDate animated:YES];
-        weekCell.selectedDate = valueDate;
-    }
+    WeekCollectionViewWeekCell *weekCell = self.collectionView.visibleCells.firstObject;
+    NSDate *valueDate = [self.calendar dateByAddingComponents:valueComponents toDate:weekCell.selectedDate options:0];
+    [self setWeekDisplayed:valueDate animated:YES];
+    weekCell.selectedDate = valueDate;
 }
 
 
@@ -218,9 +224,13 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     NSNumber *initialScroll = [[NSUserDefaults standardUserDefaults] objectForKey:@"initialScrollDoneForWeek"];
     
     NSDateComponents *comps = [NSDateComponents new];
-    comps.day = 1;
+    comps.weekOfYear = 1;
     
-    if (self.selectedDate) {
+    if (self.selectedLastViewController) {
+        self.weekDisplayed = [NSDate date];
+        self.selectedLastViewController = NO;
+        
+    } else if (self.selectedDate) {
         self.weekDisplayed = self.selectedDate;
         
     } else if (currentWeekDisplayed && ![initialScroll boolValue]) {
@@ -239,6 +249,8 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     
     [[NSUserDefaults standardUserDefaults] setObject:self.weekDisplayed forKey:@"weekDisplayed"];
     [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"initialScrollDoneForWeek"];
+    
+    NSLog(@"self.selectedDate = %@", self.selectedDate);
 }
 
 - (void)configureViewAndCollectionView {
@@ -250,6 +262,8 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
             forCellWithReuseIdentifier:NSStringFromClass([WeekCollectionViewWeekCell class])];
     
     [self.view addSubview:self.collectionView];
+    
+    self.definesPresentationContext = true;
 }
 
 - (void)calculateStartAndEndDateCaches {
@@ -298,6 +312,18 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
 - (void)setWeekDisplayed:(NSDate *)weekDisplayed {
     [self setWeekDisplayed:weekDisplayed animated:NO];
+}
+
+- (void)addTabBarNotificationObserver {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(scrollToToday)
+                                                 name:@"didSelectLastSelectedViewController"
+                                               object:nil];
+}
+
+- (void)scrollToToday {
+    [self setWeekDisplayed:[NSDate date] animated:YES];
+    self.selectedLastViewController = YES;
 }
 
 

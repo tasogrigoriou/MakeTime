@@ -65,6 +65,12 @@ static const CGFloat TWENTY_FOUR_HOURS_HEIGHT = 24.0f * 60.0f; // mins in a day 
                 
                 attributesFrame.origin = CGPointMake((weekday - 1) * self.sizeForSupplementaryView, ypos);
                 attributesFrame.size = CGSizeMake(self.sizeForSupplementaryView, height);
+                
+                
+                // ADD IF YOU WANT SPACING BETWEEN LEFT AND RIGHT OF WEEKCELLS
+//                attributesFrame.origin = CGPointMake(((weekday - 1) * self.sizeForSupplementaryView) + 2.0, ypos);
+//                attributesFrame.size = CGSizeMake((self.sizeForSupplementaryView - 4.0), height);
+                
                 attributes.frame = attributesFrame;
                 
                 [self.cellAttributes addObject:attributes];

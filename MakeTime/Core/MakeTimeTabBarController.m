@@ -12,7 +12,10 @@
 #import "MonthViewController.h"
 #import "CategoriesViewController.h"
 
-@interface MakeTimeTabBarController ()
+@interface MakeTimeTabBarController () <UITabBarControllerDelegate>
+
+@property (nonatomic) NSUInteger lastSelectedIndex;
+@property (strong, nonatomic) UIViewController *lastSelectedViewController;
 
 @end
 
@@ -23,6 +26,9 @@
     if (self) {
         [self initViewControllers];
         [self setupTabBarItems];
+        
+        self.delegate = self;
+        self.lastSelectedIndex = 0;
     }
     return self;
 }
@@ -40,6 +46,22 @@
 //    self.tabBar.shadowImage = [[UIImage alloc] init];  // removes the border
 }
 
+
+#pragma mark - UITabBarControllerDelegate
+
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    if ([self.lastSelectedViewController isEqual:viewController]) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"didSelectLastSelectedViewController" object:nil];
+    } else {
+        self.lastSelectedViewController = viewController;
+    }
+}
+
+
+#pragma mark - Private methods
+
+
 - (void)initViewControllers {
     TodayViewController *todayViewController = [TodayViewController new];
     NSDateComponents *comps = [NSDateComponents new];
@@ -50,9 +72,15 @@
 
     WeekViewController *weekViewController = [WeekViewController new];
     NSDateComponents *comps2 = [NSDateComponents new];
-    comps2.weekOfYear = 1;
-    weekViewController.selectedDate = [[NSCalendar currentCalendar]
-                                       dateByAddingComponents:comps2 toDate:[NSDate date] options:0];
+    comps2.day = 2;
+    
+    NSDateComponents *testComps = [NSDateComponents new];
+    testComps.day = 0;
+    NSDate *testDate = [[NSCalendar currentCalendar] dateByAddingComponents:testComps toDate:[NSDate date] options:0];
+    weekViewController.selectedDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps2 toDate:testDate options:0];
+    
+    
+//    weekViewController.selectedDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps2 toDate:[NSDate date] options:0];
     UINavigationController *weekNavigationController = [[UINavigationController alloc] initWithRootViewController:weekViewController];
 
     MonthViewController *monthViewController = [MonthViewController new];
@@ -62,6 +90,8 @@
     UINavigationController *categoriesNavigationController = [[UINavigationController alloc] initWithRootViewController:categoriesViewController];
 
     self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, categoriesNavigationController];
+    self.selectedViewController = todayNavigationController;
+    self.lastSelectedViewController = todayNavigationController;
 }
 
 - (void)setupTabBarItems {

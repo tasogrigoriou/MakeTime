@@ -31,7 +31,7 @@
 - (void)removeCustomCalendarIdentifier:(NSString *)identifier;
 - (BOOL)isCalendarCustomWithIdentifier:(NSString *)identifier;
 
-- (NSArray *)loadCustomCalendars;
+- (void)loadCustomCalendars:(void (^)(NSArray *calendars))completion;
 - (NSArray *)loadDefaultCalendars;
 
 // Method that gets events of all custom calendars on a particular day
