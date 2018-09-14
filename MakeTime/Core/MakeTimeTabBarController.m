@@ -11,6 +11,7 @@
 #import "WeekViewController.h"
 #import "MonthViewController.h"
 #import "CategoriesViewController.h"
+#import "CalendarViewController.h"
 #import "ToDoListViewController.h"
 
 @interface MakeTimeTabBarController () <UITabBarControllerDelegate>
@@ -90,7 +91,7 @@
     MonthViewController *monthViewController = [MonthViewController new];
     UINavigationController *monthNavigationController = [[UINavigationController alloc] initWithRootViewController:monthViewController];
 
-    CategoriesViewController *categoriesViewController = [CategoriesViewController new];
+    CategoriesViewController *categoriesViewController = [[CategoriesViewController alloc] init];
     UINavigationController *categoriesNavigationController = [[UINavigationController alloc]
                                                               initWithRootViewController:categoriesViewController];
     ToDoListViewController *toDoListViewController = [ToDoListViewController new];
@@ -126,7 +127,8 @@
     self.tabBar.items[4].image = [UIImage imageNamed:@"menu.png"];
     self.tabBar.items[4].selectedImage = [UIImage imageNamed:@"menu.png"];
     self.tabBar.items[4].title = @"To Do List";
-    self.tabBar.items[4].tag = 3;
+    self.tabBar.items[4].tag = 4;
 }
+
 
 @end

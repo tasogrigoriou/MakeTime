@@ -278,6 +278,10 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
     
     [self.collectionView registerClass:[WeekCollectionViewCell class] forCellWithReuseIdentifier:@"WeekCollectionViewCell"];
     [self.collectionView registerClass:[WeekCollectionReusableView class] forSupplementaryViewOfKind:@"WeekCollectionReusableView" withReuseIdentifier:@"WeekCollectionReusableView"];
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isFirstTimeLoadingWeekCell"]) {
+        [self.collectionView setHidden:YES duration:0.0 completion:nil];
+    }
 }
 
 - (void)loadCustomCalendarsAndEvents {

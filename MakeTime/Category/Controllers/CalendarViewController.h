@@ -14,4 +14,6 @@
 @property (strong, nonatomic) NSArray<EKCalendar *> *customCalendars;
 @property (strong, nonatomic) EKCalendar *selectedCalendar;
 
+- (instancetype)initFromTabBar;
+
 @end

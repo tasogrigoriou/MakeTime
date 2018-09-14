@@ -112,6 +112,8 @@
 		9FB96D031EF342CC00BDC3BA /* CategoriesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB96D011EF342CC00BDC3BA /* CategoriesViewController.xib */; };
 		9FB96D071EF3497800BDC3BA /* CategoriesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FB96D051EF3497800BDC3BA /* CategoriesTableViewCell.m */; };
 		9FB96D081EF3497800BDC3BA /* CategoriesTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FB96D061EF3497800BDC3BA /* CategoriesTableViewCell.xib */; };
+		9FBA3299214B6E790013C300 /* EventsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FBA3297214B6E790013C300 /* EventsViewController.m */; };
+		9FBA329A214B6E790013C300 /* EventsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FBA3298214B6E790013C300 /* EventsViewController.xib */; };
 		9FBA79351DCC5CF1000AE696 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FBA79341DCC5CF1000AE696 /* main.m */; };
 		9FBA79381DCC5CF1000AE696 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FBA79371DCC5CF1000AE696 /* AppDelegate.m */; };
 		9FBA79411DCC5CF1000AE696 /* MakeTime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9FBA793F1DCC5CF1000AE696 /* MakeTime.xcdatamodeld */; };
@@ -343,6 +345,9 @@
 		9FB96D041EF3497800BDC3BA /* CategoriesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategoriesTableViewCell.h; sourceTree = "<group>"; };
 		9FB96D051EF3497800BDC3BA /* CategoriesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategoriesTableViewCell.m; sourceTree = "<group>"; };
 		9FB96D061EF3497800BDC3BA /* CategoriesTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoriesTableViewCell.xib; sourceTree = "<group>"; };
+		9FBA3296214B6E790013C300 /* EventsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsViewController.h; sourceTree = "<group>"; };
+		9FBA3297214B6E790013C300 /* EventsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventsViewController.m; sourceTree = "<group>"; };
+		9FBA3298214B6E790013C300 /* EventsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsViewController.xib; sourceTree = "<group>"; };
 		9FBA79301DCC5CF1000AE696 /* MakeTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FBA79341DCC5CF1000AE696 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9FBA79361DCC5CF1000AE696 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -714,9 +719,9 @@
 		9F9D2C4A1EDE1044006167EB /* Day */ = {
 			isa = PBXGroup;
 			children = (
-				9F9D2C491EDE102B006167EB /* Controllers */,
 				9F9D2C471EDE1018006167EB /* Models */,
 				9F9D2C481EDE1020006167EB /* Views */,
+				9F9D2C491EDE102B006167EB /* Controllers */,
 			);
 			path = Day;
 			sourceTree = "<group>";
@@ -952,9 +957,9 @@
 		9FD948811F31B86700483302 /* Event */ = {
 			isa = PBXGroup;
 			children = (
-				9FD948821F31B87900483302 /* Controllers */,
 				9FD948841F31B88D00483302 /* Models */,
 				9FD948831F31B88500483302 /* Views */,
+				9FD948821F31B87900483302 /* Controllers */,
 			);
 			path = Event;
 			sourceTree = "<group>";
@@ -974,6 +979,9 @@
 				9F4D5C1A212BE485008E047E /* EventPopUpViewController.h */,
 				9F4D5C1B212BE485008E047E /* EventPopUpViewController.m */,
 				9F4D5C1C212BE485008E047E /* EventPopUpViewController.xib */,
+				9FBA3296214B6E790013C300 /* EventsViewController.h */,
+				9FBA3297214B6E790013C300 /* EventsViewController.m */,
+				9FBA3298214B6E790013C300 /* EventsViewController.xib */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1144,6 +1152,7 @@
 				9F0930701E1DDAB7007A33F6 /* refresh.png in Resources */,
 				9F1C8E651F1CB38B00268023 /* DatePickerTableViewCell.xib in Resources */,
 				9F4035B91F1365A000EA1B16 /* checkmark.png in Resources */,
+				9FBA329A214B6E790013C300 /* EventsViewController.xib in Resources */,
 				9F14B8971DEBE45000ADBE0C /* MonthViewController.xib in Resources */,
 				9F09306E1E1DDA98007A33F6 /* magic-wand.png in Resources */,
 				9FCA32F4214AF5260062ABCF /* ToDoTableViewCell.xib in Resources */,
@@ -1184,6 +1193,7 @@
 				9FEDC02A2148E1CD0016B39D /* EventsModel.m in Sources */,
 				9FCA32F3214AF5260062ABCF /* ToDoTableViewCell.m in Sources */,
 				9F76F4731E5FCEB100641875 /* FSCalendar.m in Sources */,
+				9FBA3299214B6E790013C300 /* EventsViewController.m in Sources */,
 				9F71EF411E23784B00CD23DA /* RearCollectionViewCell.m in Sources */,
 				9F1B5BBF1F4AB58F00F20370 /* WeekCollectionViewCell.m in Sources */,
 				9FCA3EF21E4851E400A016FF /* CalendarHeaderView.m in Sources */,

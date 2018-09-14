@@ -88,7 +88,7 @@
 }
 
 - (void)loadTableViewData {
-    self.eventsModel = [[EventsModel alloc] initWithDateEvents:self.dateEvents daysInMonth:self.daysInMonth];
+    self.eventsModel = [[EventsModel alloc] initWithDateEvents:self.dateEvents days:self.daysInMonth];
     __weak MonthViewController *weakSelf = self;
     [self.eventsModel loadEventsModelDataWithCompletion:^{
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -388,7 +388,9 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.eventsModel.dateEvents count];
+//    return [self.eventsModel.dateEvents count];
+    return [self.eventsModel.indexedEvents count];
+
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -457,8 +459,7 @@
 - (void)configureViewAndCalendarView {
     self.view.backgroundColor = [UIColor whiteColor];
     
-    UINib *nib = [UINib nibWithNibName:@"EventsTableViewCell" bundle:nil];
-    [self.eventsTableView registerNib:nib forCellReuseIdentifier:@"EventsTableViewCell"];
+    [self.eventsTableView registerNib:[UINib nibWithNibName:@"EventsTableViewCell" bundle:nil] forCellReuseIdentifier:@"EventsTableViewCell"];
     
     self.calendar.appearance.titleFont = [UIFont fontWithName:@"AvenirNext-Medium" size:12.0f]; // day text font
     self.calendar.appearance.weekdayFont = [UIFont fontWithName:@"AvenirNext-Regular" size:14.0f]; // weekday text font

@@ -12,6 +12,8 @@
 #import "Chameleon.h"
 #import "AppDelegate.h"
 #import "EditCategoriesViewController.h"
+#import "AddCalendarViewController.h"
+#import "EventsViewController.h"
 #import "UIColor+Converter.h"
 
 @interface CategoriesViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -37,6 +39,7 @@
     [super viewDidLoad];
     
     [self customizeLabel];
+    [self configureButtonsForTabBar];
     [self configureViewAndTableView];
 }
 
@@ -56,8 +59,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    // Reload table view and the custom calendars when navigating back from EditCategoriesVC
+    // Reload table view and the custom calendars when navigating back from AddCalendarVC
     [self loadCalendarData];
+}
+
+
+#pragma mark - Selectors
+
+
+- (void)pushAddCategoryVC {
+    [self.navigationController pushViewController:[AddCalendarViewController new] animated:YES];
 }
 
 
@@ -74,7 +85,7 @@
     
     EKCalendar *cal = self.customCalendars[indexPath.row];
     cell.categoriesLabel.text = cal.title;
-    cell.categoriesLabel.font = [UIFont fontWithName:@"Avenir Next Condensed Medium" size:15.0f];
+    cell.categoriesLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0f];
     
     UIColor *calendarColor = [UIColor colorWithCGColor:cal.CGColor];
     CALayer *layer = [CALayer layer];
@@ -97,7 +108,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [eventManager removeCustomCalendarIdentifier:cal.calendarIdentifier];
         if (![eventManager.eventStore removeCalendar:cal commit:YES error:&error]) {
             NSLog(@"%@", [error localizedDescription]);
-        } else NSLog(@"Successfully deleted calendar titled %@", cal.title);
+        } else {
+            NSLog(@"Successfully deleted calendar titled %@", cal.title);
+        }
     }
     
     // Re-load all calendars, delete the row with an animation (which also refreshes the table view)
@@ -112,21 +125,26 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - UITableViewDelegate
 
 
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    EKCalendar *cal = self.customCalendars[indexPath.row];
+//
+//    EditCategoriesViewController *editCategoriesVC = [[EditCategoriesViewController alloc] initWithCalendar:cal];
+//    editCategoriesVC.indexOfCategory = indexPath.row;
+//
+//    // Assign the checked row value to the index of the calendar's color
+//    UIColor *colorOfCal = [UIColor colorWithCGColor:cal.CGColor];
+//    for (NSInteger i = 0; i < [self.calendarUIColors count]; i++) {
+//        if ([colorOfCal isEqualToColor:self.calendarUIColors[i]]) {
+//            editCategoriesVC.checkedRow = i;
+//        }
+//    }
+//
+//    [self.navigationController pushViewController:editCategoriesVC animated:YES];
+//}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    EKCalendar *cal = self.customCalendars[indexPath.row];
-    
-    EditCategoriesViewController *editCategoriesVC = [[EditCategoriesViewController alloc] initWithCalendar:cal];
-    editCategoriesVC.indexOfCategory = indexPath.row;
-    
-    // Assign the checked row value to the index of the calendar's color
-    UIColor *colorOfCal = [UIColor colorWithCGColor:cal.CGColor];
-    for (NSInteger i = 0; i < [self.calendarUIColors count]; i++) {
-        if ([colorOfCal isEqualToColor:self.calendarUIColors[i]]) {
-            editCategoriesVC.checkedRow = i;
-        }
-    }
-    
-    [self.navigationController pushViewController:editCategoriesVC animated:YES];
+    EventsViewController *eventsViewController = [[EventsViewController alloc] initWithCalendar:self.customCalendars[indexPath.row]];
+    [self.navigationController pushViewController:eventsViewController animated:YES];
 }
 
 - (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -149,12 +167,33 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)customizeLabel {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"Avenir Next Condensed Regular" size:14.0f];
+    label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
     label.text = @"Categories";
     [label sizeToFit];
     self.navigationItem.titleView = label;
+}
+
+- (void)configureButtonsForTabBar {
+    NSDictionary *textAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0], NSForegroundColorAttributeName : [UIColor blackColor] };
+    //    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
+    //                                                                       style:UIBarButtonItemStylePlain
+    //                                                                      target:self
+    //                                                                      action:@selector(pushEditEventVC)];
+    //    leftButtonItem.tintColor = [UIColor blackColor];
+    //    [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    //    [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    //    self.navigationItem.leftBarButtonItem = leftButtonItem;
+    
+    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                                        style:UIBarButtonItemStylePlain
+                                                                       target:self
+                                                                       action:@selector(pushAddCategoryVC)];
+    rightButtonItem.tintColor = [UIColor blackColor];
+    [rightButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [rightButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    self.navigationItem.rightBarButtonItem = rightButtonItem;
 }
 
 - (void)configureViewAndTableView {

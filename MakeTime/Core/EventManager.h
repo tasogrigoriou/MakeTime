@@ -45,4 +45,9 @@
 - (void)loadDateEventsInMonth:(NSDate *)month
                    completion:(void (^)(NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents, NSArray<NSDate *> *daysInMonth))completion;
 
+- (void)loadDateEventsFromStartDate:(NSDate *)startDate
+                            endDate:(NSDate *)endDate
+                           calendar:(EKCalendar *)calendar
+                         completion:(void (^)(NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents, NSArray<NSDate *> *days))completion;
+
 @end

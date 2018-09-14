@@ -199,6 +199,7 @@
 
 - (void)setupTableView {
     [self.tableView registerNib:[UINib nibWithNibName:@"ToDoTableViewCell" bundle:nil] forCellReuseIdentifier:@"ToDoTableViewCell"];
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
 }
 
 - (void)setupNavBarTitle {

@@ -11,6 +11,7 @@
 #import "CalendarCollectionViewCell.h"
 #import "AddCalendarViewController.h"
 #import "AddEventViewController.h"
+#import "EditCategoriesViewController.h"
 #import "UIColor+RBExtras.h"
 #import "Chameleon.h"
 #import "SwipeBack.h"
@@ -19,6 +20,8 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *calendarCollectionView;
 @property (strong, nonatomic) AppDelegate *appDelegate;
+
+@property (nonatomic) BOOL isFromTabBar;
 
 @end
 
@@ -29,11 +32,25 @@
 #pragma mark - View Lifecycle
 
 
+- (instancetype)initFromTabBar {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        self.isFromTabBar = YES;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self configureLabel];
-    [self configureButtons];
+    
+    if (self.isFromTabBar) {
+        [self configureButtonsForTabBar];
+    } else {
+        [self configureButtons];
+    }
+    
     [self configureViewAndCollectionView];
 }
 
@@ -107,42 +124,11 @@
     return CGSizeMake(collectionView.bounds.size.width / 3, collectionView.bounds.size.width / 6);
 }
 
-//- (void)collectionView:(UICollectionView *)collectionView
-//didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-//    CalendarCollectionViewCell *cell = (CalendarCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-//    
-//    // Set background color of cell with animation
-//    [UIView animateWithDuration:0.1
-//                          delay:0
-//                        options:UIViewAnimationOptionAllowUserInteraction
-//                     animations:^{
-//                         cell.backgroundColor = [UIColor clearColor];
-//                     }
-//                     completion:nil];
-//}
-//
-//
-//- (void)collectionView:(UICollectionView *)collectionView
-//didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-//    CalendarCollectionViewCell *cell = (CalendarCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-//    
-//    // Revert background color of cell to original CGColor of the EKCalendar
-//    [UIView animateWithDuration:0.1
-//                          delay:0
-//                        options:UIViewAnimationOptionAllowUserInteraction
-//                     animations:^{
-//                         EKCalendar *cal = self.customCalendars[indexPath.item];
-//                         cell.backgroundColor = [UIColor colorWithCGColor:cal.CGColor];
-//                     }
-//                     completion:nil];
-//}
-
 
 #pragma mark - Private Methods
 
 
 - (void)configureLabel {
-    // Customize title on nav bar
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
@@ -163,6 +149,27 @@
     [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
+    
+    UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
+                                                                        style:UIBarButtonItemStylePlain
+                                                                       target:self
+                                                                       action:@selector(addCategory:)];
+    rightButtonItem.tintColor = [UIColor blackColor];
+    [rightButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+    [rightButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+    self.navigationItem.rightBarButtonItem = rightButtonItem;
+}
+
+- (void)configureButtonsForTabBar {
+    NSDictionary *textAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0], NSForegroundColorAttributeName : [UIColor blackColor] };
+//    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
+//                                                                       style:UIBarButtonItemStylePlain
+//                                                                      target:self
+//                                                                      action:@selector(pushEditEventVC)];
+//    leftButtonItem.tintColor = [UIColor blackColor];
+//    [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+//    [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+//    self.navigationItem.leftBarButtonItem = leftButtonItem;
     
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
                                                                         style:UIBarButtonItemStylePlain

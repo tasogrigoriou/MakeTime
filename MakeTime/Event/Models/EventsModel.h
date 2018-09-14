@@ -15,10 +15,15 @@
 @property (strong, nonatomic) NSArray<NSArray<EKEvent *> *> *indexedEvents;
 @property (strong, nonatomic) NSDictionary<NSDate *, NSNumber *> *indexedDates;
 
-@property (strong, nonatomic) NSArray<NSDate *> *daysInMonth;
+@property (strong, nonatomic) NSArray<NSDate *> *days;
 
-- (instancetype)initWithDateEvents:(NSDictionary<NSDate *, NSArray<EKEvent *> *> *)dateEvents daysInMonth:(NSArray<NSDate *> *)daysInMonth;
+- (instancetype)initWithDateEvents:(NSDictionary<NSDate *, NSArray<EKEvent *> *> *)dateEvents days:(NSArray<NSDate *> *)days;
 
 - (void)loadEventsModelDataWithCompletion:(void (^)(void))completion;
+
+- (void)loadEventsDataWithStartDate:(NSDate *)startDate
+                            endDate:(NSDate *)endDate
+                          calendars:(NSArray<EKCalendar *> *)calendars
+                         completion:(void (^)(NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents, NSArray<NSDate *> *sortedDays))completion;
 
 @end

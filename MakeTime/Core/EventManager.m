@@ -299,6 +299,24 @@
     completion(self.dateEvents, daysInMonth);
 }
 
+- (void)loadDateEventsFromStartDate:(NSDate *)startDate
+                            endDate:(NSDate *)endDate
+                           calendar:(EKCalendar *)calendar
+                         completion:(void (^)(NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents, NSArray<NSDate *> *days))completion {
+    NSMutableDictionary<NSDate *, NSArray<EKEvent *> *> *mutableDateEvents = [[NSMutableDictionary alloc] init];
+    NSArray<NSDate *> *days = [self getDaysFromStartDate:startDate endDate:endDate];
+    for (NSDate *day in days) {
+        NSArray<EKEvent *> *eventsOnDay = [self getEventsOfAllCalendars:@[calendar]
+                                                         thatFallOnDate:day];
+        if ([eventsOnDay count] > 0) {
+            mutableDateEvents[day] = eventsOnDay;
+        }
+    }
+    
+    self.dateEvents = (NSDictionary<NSDate *, NSArray<EKEvent *> *> *)mutableDateEvents;
+    completion(self.dateEvents, days);
+}
+
 - (NSArray<NSDate *> *)getDaysInMonth:(NSDate *)month {
     NSMutableArray *result = [NSMutableArray array];
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -320,6 +338,23 @@
     }
     
     return (NSArray *)result;
+}
+
+- (NSArray<NSDate *> *)getDaysFromStartDate:(NSDate *)startDate endDate:(NSDate *)endDate {
+    NSMutableArray<NSDate *> *result = [NSMutableArray array];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDateComponents *comps = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
+                                          fromDate:startDate];
+    NSDate *date = [calendar dateFromComponents:comps];
+    
+    while (![date isEqualToDate:endDate]) {
+        [result addObject:date];
+        comps.day += 1;
+        date = [calendar dateFromComponents:comps];
+    }
+    
+    return (NSArray<NSDate *> *)result;
 }
 
 
