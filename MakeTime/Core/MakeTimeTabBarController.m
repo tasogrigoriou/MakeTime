@@ -90,13 +90,13 @@
     MonthViewController *monthViewController = [MonthViewController new];
     UINavigationController *monthNavigationController = [[UINavigationController alloc] initWithRootViewController:monthViewController];
 
-//    CategoriesViewController *categoriesViewController = [CategoriesViewController new];
-//    UINavigationController *categoriesNavigationController = [[UINavigationController alloc] initWithRootViewController:categoriesViewController];
+    CategoriesViewController *categoriesViewController = [CategoriesViewController new];
+    UINavigationController *categoriesNavigationController = [[UINavigationController alloc]
+                                                              initWithRootViewController:categoriesViewController];
     ToDoListViewController *toDoListViewController = [ToDoListViewController new];
     UINavigationController *toDoListNavigationController = [[UINavigationController alloc] initWithRootViewController:toDoListViewController];
 
-//    self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, categoriesNavigationController];
-    self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, toDoListNavigationController];
+    self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, categoriesNavigationController, toDoListNavigationController];
 
     self.selectedViewController = todayNavigationController;
     self.lastSelectedViewController = todayNavigationController;
@@ -118,14 +118,15 @@
     self.tabBar.items[2].title = @"Month";
     self.tabBar.items[2].tag = 2;
     
-//    self.tabBar.items[3].image = [UIImage imageNamed:@"menu.png"];
-//    self.tabBar.items[3].selectedImage = [UIImage imageNamed:@"menu.png"];
-//    self.tabBar.items[3].title = @"Categories";
-//    self.tabBar.items[3].tag = 3;
     self.tabBar.items[3].image = [UIImage imageNamed:@"menu.png"];
     self.tabBar.items[3].selectedImage = [UIImage imageNamed:@"menu.png"];
-    self.tabBar.items[3].title = @"To Do List";
+    self.tabBar.items[3].title = @"Categories";
     self.tabBar.items[3].tag = 3;
+    
+    self.tabBar.items[4].image = [UIImage imageNamed:@"menu.png"];
+    self.tabBar.items[4].selectedImage = [UIImage imageNamed:@"menu.png"];
+    self.tabBar.items[4].title = @"To Do List";
+    self.tabBar.items[4].tag = 3;
 }
 
 @end

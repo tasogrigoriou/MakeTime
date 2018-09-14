@@ -123,6 +123,8 @@
 		9FCA32F3214AF5260062ABCF /* ToDoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA32F1214AF5260062ABCF /* ToDoTableViewCell.m */; };
 		9FCA32F4214AF5260062ABCF /* ToDoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FCA32F2214AF5260062ABCF /* ToDoTableViewCell.xib */; };
 		9FCA32F8214B334D0062ABCF /* PersistenceService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA32F7214B334D0062ABCF /* PersistenceService.m */; };
+		9FCA3309214B3E5B0062ABCF /* Task+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA3307214B3E5B0062ABCF /* Task+CoreDataClass.m */; };
+		9FCA330A214B3E5B0062ABCF /* Task+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA3308214B3E5B0062ABCF /* Task+CoreDataProperties.m */; };
 		9FCA3EEF1E48510B00A016FF /* CalendarViewDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA3EEE1E48510B00A016FF /* CalendarViewDayCell.m */; };
 		9FCA3EF21E4851E400A016FF /* CalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA3EF11E4851E400A016FF /* CalendarHeaderView.m */; };
 		9FCA3EF51E4858BC00A016FF /* CollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA3EF41E4858BC00A016FF /* CollectionViewFlowLayout.m */; };
@@ -359,6 +361,10 @@
 		9FCA32F2214AF5260062ABCF /* ToDoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToDoTableViewCell.xib; sourceTree = "<group>"; };
 		9FCA32F6214B334D0062ABCF /* PersistenceService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersistenceService.h; sourceTree = "<group>"; };
 		9FCA32F7214B334D0062ABCF /* PersistenceService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersistenceService.m; sourceTree = "<group>"; };
+		9FCA3305214B3E5B0062ABCF /* Task+CoreDataProperties.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Task+CoreDataProperties.h"; sourceTree = "<group>"; };
+		9FCA3306214B3E5B0062ABCF /* Task+CoreDataClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Task+CoreDataClass.h"; sourceTree = "<group>"; };
+		9FCA3307214B3E5B0062ABCF /* Task+CoreDataClass.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Task+CoreDataClass.m"; sourceTree = "<group>"; };
+		9FCA3308214B3E5B0062ABCF /* Task+CoreDataProperties.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "Task+CoreDataProperties.m"; sourceTree = "<group>"; };
 		9FCA3EED1E48510B00A016FF /* CalendarViewDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewDayCell.h; sourceTree = "<group>"; };
 		9FCA3EEE1E48510B00A016FF /* CalendarViewDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewDayCell.m; sourceTree = "<group>"; };
 		9FCA3EF01E4851E400A016FF /* CalendarHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarHeaderView.h; sourceTree = "<group>"; };
@@ -515,6 +521,10 @@
 			isa = PBXGroup;
 			children = (
 				9FBA793F1DCC5CF1000AE696 /* MakeTime.xcdatamodeld */,
+				9FCA3305214B3E5B0062ABCF /* Task+CoreDataProperties.h */,
+				9FCA3306214B3E5B0062ABCF /* Task+CoreDataClass.h */,
+				9FCA3307214B3E5B0062ABCF /* Task+CoreDataClass.m */,
+				9FCA3308214B3E5B0062ABCF /* Task+CoreDataProperties.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -611,10 +621,6 @@
 				9F44175B213D180A009FD17D /* MakeTimeCache.m */,
 				9F9D2C571EDE1287006167EB /* EventManager.h */,
 				9F9D2C581EDE1287006167EB /* EventManager.m */,
-				9FEDC00821470BBE0016B39D /* UIView+Extras.h */,
-				9FEDC00921470BBE0016B39D /* UIView+Extras.m */,
-				9FEDC00521470A710016B39D /* UIImage+Extras.h */,
-				9FEDC00621470A710016B39D /* UIImage+Extras.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -818,6 +824,7 @@
 			isa = PBXGroup;
 			children = (
 				9F60B8CB2134CB6B00E300BF /* Core */,
+				9FD6FD38214B674600F2BCFF /* Extensions */,
 				9F32CF541ED482AB00922048 /* Calendar */,
 				9FD9487D1F31B74900483302 /* Category */,
 				9F9D2C4A1EDE1044006167EB /* Day */,
@@ -868,6 +875,17 @@
 				9FCB504A1EEA0667001A7A3D /* UIViewController+SwipeBack.m */,
 			);
 			path = SwipeBack;
+			sourceTree = "<group>";
+		};
+		9FD6FD38214B674600F2BCFF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9FEDC00821470BBE0016B39D /* UIView+Extras.h */,
+				9FEDC00921470BBE0016B39D /* UIView+Extras.m */,
+				9FEDC00521470A710016B39D /* UIImage+Extras.h */,
+				9FEDC00621470A710016B39D /* UIImage+Extras.m */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		9FD9487B1F3115A100483302 /* UIColorConverter */ = {
@@ -1184,6 +1202,7 @@
 				9F76F47E1E5FCEB100641875 /* FSCalendarScopeHandle.m in Sources */,
 				9FBC52F91EFE13C4001BF4CD /* AddCalendarViewController.m in Sources */,
 				9FBA79411DCC5CF1000AE696 /* MakeTime.xcdatamodeld in Sources */,
+				9FCA3309214B3E5B0062ABCF /* Task+CoreDataClass.m in Sources */,
 				9F78CB281E48302D00D70867 /* CalendarViewMonthCell.m in Sources */,
 				9FD948881F325DC800483302 /* TodayCollectionReusableView.m in Sources */,
 				9F76F47A1E5FCEB100641875 /* FSCalendarDelegationFactory.m in Sources */,
@@ -1201,6 +1220,7 @@
 				9F76F4801E5FCEB100641875 /* FSCalendarTransitionCoordinator.m in Sources */,
 				9F56171F1E3D62AF00C92525 /* NSArray+Chameleon.m in Sources */,
 				9F76F4771E5FCEB100641875 /* FSCalendarCollectionView.m in Sources */,
+				9FCA330A214B3E5B0062ABCF /* Task+CoreDataProperties.m in Sources */,
 				9F441766213D9D05009FD17D /* TodayDayView.m in Sources */,
 				9F76F4811E5FCEB100641875 /* FSCalendarWeekdayView.m in Sources */,
 				9F1ED88E1FF8B06E006FF015 /* EditEventViewController.m in Sources */,

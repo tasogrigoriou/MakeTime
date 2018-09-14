@@ -7,52 +7,46 @@
 //
 
 #import "ToDoListViewController.h"
-#import "AppDelegate.h"
 #import "ToDoTableViewCell.h"
+#import "PersistenceService.h"
+#import "Task+CoreDataClass.h"
 
 @interface ToDoListViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 
-@property (strong, nonatomic) AppDelegate *appDelegate;
+@property (strong, nonatomic) NSArray<Task *> *fetchedTasks;
 
-@property (strong, nonatomic) NSArray<NSManagedObject *> *tasks;
+@property (strong, nonatomic) NSMutableArray<Task *> *currentTasks;
+@property (strong, nonatomic) NSMutableArray<Task *> *completedTasks;
+
+@property (nonatomic) BOOL keyboardIsShowing;
 
 @end
 
 
 @implementation ToDoListViewController
 
+
+#pragma mark - View Lifecycle
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupTableView];
+    [self setupNavBarTitle];
+    [self addTapGestureRecognizer];
     [self loadData];
 }
 
-- (void)loadData {
-    __weak ToDoListViewController *weakSelf = self;
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self fetchTasks:^(BOOL success) {
-            if (success) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [weakSelf.tableView reloadData];
-                });
-            }
-        }];
-    });
-}
 
 #pragma mark - Core Data Methods
 
 
 - (void)fetchTasks:(void (^)(BOOL success))completion {
-    NSManagedObjectContext *context = self.appDelegate.persistentContainer.viewContext;
-    
-    NSFetchRequest<NSManagedObject *> *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Task"];
-    
     NSError *error;
-    self.tasks = [context executeFetchRequest:fetchRequest error:&error];
+    self.fetchedTasks = [[[PersistenceService sharedService] context] executeFetchRequest:[Task fetchRequest] error:&error];
     if (error != nil) {
         NSLog(@"Could not fetch - %@", [error localizedDescription]);
         completion(NO);
@@ -61,39 +55,46 @@
     }
 }
 
-- (void)saveTask:(NSString *)name completion:(void (^)(BOOL success))completion {
-    NSManagedObjectContext *context = self.appDelegate.persistentContainer.viewContext;
+- (void)saveNewTask:(NSString *)name completion:(void (^)(BOOL success))completion {
+    Task *newTask = [[Task alloc] initWithContext:[[PersistenceService sharedService] context]];
+    newTask.name = name;
+    newTask.date = [NSDate date];
+    newTask.isComplete = NO;
     
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Task" inManagedObjectContext:context];
-    NSManagedObject *task = [[NSManagedObject alloc] initWithEntity:entity insertIntoManagedObjectContext:context];
-    
-    [task setValue:name forKeyPath:@"name"];
-    
-    NSError *error;
-    [context save:&error];
-    if (error != nil) {
-        NSLog(@"Could not save task - %@", [error localizedDescription]);
-        completion(NO);
-    } else {
-        completion(YES);
-    }
+    [self.currentTasks addObject:newTask];
+
+    [[PersistenceService sharedService] saveContext:completion];
 }
 
-- (void)saveTaskAndRefreshTableView:(NSString *)task {
-    __weak ToDoListViewController *weakSelf = self;
+- (void)setTaskToCompleted:(Task *)task {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self saveTask:task completion:^(BOOL success) {
+        task.isComplete = YES;
+        [self.currentTasks removeObject:task];
+        [self.completedTasks insertObject:task atIndex:0];
+        
+        [[PersistenceService sharedService] saveContext:nil];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.tableView reloadData];
+        });
+    });
+}
+
+
+#pragma mark - IBActions
+
+
+- (IBAction)addButtonPressed:(UIButton *)sender {
+    if (self.textField.text.length != 0) {
+        __weak ToDoListViewController *weakSelf = self;
+        [self saveNewTask:self.textField.text completion:^(BOOL success) {
             if (success) {
-                [weakSelf fetchTasks:^(BOOL success) {
-                    if (success) {
-                        dispatch_async(dispatch_get_main_queue(), ^{
-                            [weakSelf.tableView reloadData];
-                        });
-                    }
-                }];
+                [weakSelf.tableView reloadData];
             }
         }];
-    });
+    }
+    [self.textField resignFirstResponder];
+    self.textField.text = @"";
 }
 
 
@@ -105,14 +106,13 @@
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.tasks count];
+    return [self.currentTasks count];
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     ToDoTableViewCell *cell = (ToDoTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"ToDoTableViewCell" forIndexPath:indexPath];
     
-    NSString *taskName = [self.tasks[indexPath.row] valueForKeyPath:@"name"];
-    cell.textLabel.text = taskName;
+    cell.textLabel.text = self.currentTasks[indexPath.row].name;
     
     return cell;
 }
@@ -121,8 +121,16 @@
 #pragma mark - UITableViewDelegate
 
 
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.keyboardIsShowing) {
+        self.keyboardIsShowing = NO;
+        return NO;
+    }
+    return YES;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [self setTaskToCompleted:self.currentTasks[indexPath.row]];
 }
 
 
@@ -133,7 +141,12 @@
 // Use this method to implement any custom behavior when return is tapped (MUST make sure delegate is set in XIB).
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField.text.length != 0) {
-        [self saveTaskAndRefreshTableView:textField.text];
+        __weak ToDoListViewController *weakSelf = self;
+        [self saveNewTask:textField.text completion:^(BOOL success) {
+            if (success) {
+                [weakSelf.tableView reloadData];
+            }
+        }];
     }
     
     [textField resignFirstResponder];
@@ -142,13 +155,14 @@
     return YES;
 }
 
-- (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason {
-    
-}
-
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
     self.textField = textField;
+    self.keyboardIsShowing = YES;
     return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason {
+    
 }
 
 - (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
@@ -159,19 +173,62 @@
 #pragma mark - Private Methods
 
 
+- (void)loadData {
+    __weak ToDoListViewController *weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self fetchTasks:^(BOOL success) {
+            if (success) {
+                [weakSelf setupCurrentAndCompletedTasks];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.tableView reloadData];
+                });
+            }
+        }];
+    });
+}
+
+- (void)setupCurrentAndCompletedTasks {
+    for (Task *task in self.fetchedTasks) {
+        if (task.isComplete) {
+            [self.completedTasks addObject:task];
+        } else {
+            [self.currentTasks addObject:task];
+        }
+    }
+}
+
 - (void)setupTableView {
     [self.tableView registerNib:[UINib nibWithNibName:@"ToDoTableViewCell" bundle:nil] forCellReuseIdentifier:@"ToDoTableViewCell"];
 }
 
-
-#pragma mark - Custom Getters
-
-
-- (AppDelegate *)appDelegate {
-    if (!_appDelegate) {
-        _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    }
-    return _appDelegate;
+- (void)setupNavBarTitle {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    label.text = @"To Do List";
+    [label sizeToFit];
+    self.navigationItem.titleView = label;
 }
+
+- (void)addTapGestureRecognizer {
+    UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]
+                                                    initWithTarget:self.view action:@selector(endEditing:)];
+    tapGestureRecognizer.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:tapGestureRecognizer];
+}
+
+
+#pragma mark - Custom Accessors
+
+
+- (NSMutableArray<Task *> *)currentTasks {
+    if (!_currentTasks) {
+        _currentTasks = [NSMutableArray array];
+    }
+    return _currentTasks;
+}
+
 
 @end

@@ -12,9 +12,10 @@
 @interface PersistenceService : NSObject
 
 @property (readonly, strong) NSPersistentContainer *persistentContainer;
+@property (readonly, strong) NSManagedObjectContext *context;
 
 + (id)sharedService;
 
-- (void)saveContext;
+- (void)saveContext:(void (^)(BOOL success))completion;
 
 @end
