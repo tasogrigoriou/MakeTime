@@ -27,8 +27,8 @@
 @property (strong, nonatomic) NSDateFormatter *tableViewHeaderFormatter;
 @property (strong, nonatomic) NSDateFormatter *cellDateFormatter;
 
-@property (strong, nonatomic) NSMutableDictionary<NSDate *, NSMutableArray<EKEvent *> *> *dateEvents;
-@property (strong, nonatomic) NSArray<NSDate *> *sortedDays;
+//@property (strong, nonatomic) NSMutableDictionary<NSDate *, NSMutableArray<EKEvent *> *> *dateEvents;
+//@property (strong, nonatomic) NSArray<NSDate *> *sortedDays;
 
 @end
 
@@ -49,12 +49,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self configureViewAndCalendarView];
     [self setTableViewContentInset];
     [self addDataDidChangeNotificationObserver];
     
     [self loadData];
 }
+
+
+#pragma mark - Loading Data
+
 
 - (void)loadData {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
@@ -63,113 +68,44 @@
 }
 
 - (void)loadEventsData {
-    EventsModel *eventsModel = [[EventsModel alloc] init];
-    [eventsModel loadEventsDataWithStartDate:]
+    NSDate *startDate = [NSDate date];
+    NSDateComponents *comps = [NSDateComponents new];
+    comps.year = 1;
+    NSDate *endDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:startDate options:0];
+    
+    __weak EventsViewController *weakSelf = self;
+    [self.eventsModel loadEventsDataWithStartDate:startDate endDate:endDate calendars:@[self.calendar] completion:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.tableView reloadData];
+        });
+    }];
 }
-
-//- (void)loadEventsData {
-//    EventManager *eventManager = [EventManager sharedManager];
-//    NSDate *startDate = [[NSCalendar currentCalendar] startOfDayForDate:[NSDate date]];
-//    //    NSDate *endDate = [NSDate dateWithTimeIntervalSinceNow:[[NSDate distantFuture] timeIntervalSinceReferenceDate]];
-//
-//    NSDateComponents *comps = [NSDateComponents new];
-//    comps.year = 1;
-//    NSDate *compsDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:startDate options:0];
-//
-//    NSDate *endDate = [[NSCalendar currentCalendar] startOfDayForDate:compsDate];
-//
-//
-//    __weak EventsViewController *weakSelf = self;
-//    [eventManager loadDateEventsFromStartDate:startDate
-//                                      endDate:endDate
-//                                     calendar:self.calendar
-//                                   completion:^(NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents, NSArray<NSDate *> *days) {
-//                                       weakSelf.dateEvents = dateEvents;
-//                                       weakSelf.days = days;
-//                                       [weakSelf loadTableViewData];
-//                                   }];
-//
-//    //    NSArray *calendarArray = [NSArray arrayWithObject:self.calendar];
-//    //    NSPredicate *fetchCalendarEvents = [eventManager.eventStore predicateForEventsWithStartDate:[NSDate date] endDate:endDate calendars:calendarArray];
-//    //    self.events = [eventManager.eventStore eventsMatchingPredicate:fetchCalendarEvents];
-//}
-//
-//- (void)loadTableViewData {
-//    self.eventsModel = [[EventsModel alloc] initWithDateEvents:self.dateEvents days:self.days];
-//    __weak EventsViewController *weakSelf = self;
-//    [self.eventsModel loadEventsModelDataWithCompletion:^{
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            [weakSelf refreshTableView];
-//        });
-//    }];
-//}
-//
-//- (void)refreshTableView {
-//    [UIView transitionWithView:self.tableView
-//                      duration:0.25
-//                       options:UIViewAnimationOptionTransitionCrossDissolve
-//                    animations:^{
-//                        [self.tableView reloadData];
-//                    }
-//                    completion:nil];
-//}
 
 
 #pragma mark - UITableViewDataSource
 
 
-//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    //    return [self.eventsModel.dateEvents count];
-//    return [self.eventsModel.indexedEvents count];
-//
-//}
-//
-//- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    return [self.eventsModel.indexedEvents[section] count];
-//}
-//
-//- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-//    return [self.tableViewHeaderFormatter stringFromDate:[self.eventsModel.indexedEvents[section] firstObject].startDate];
-//}
-//
-//- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-//    EventsTableViewCell *cell = (EventsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventsTableViewCell" forIndexPath:indexPath];
-//
-//    EKEvent *event = [self.eventsModel.indexedEvents[indexPath.section] objectAtIndex:indexPath.row];
-//
-//    cell.textLabel.text = event.calendar.title;
-//    cell.textLabel.textColor = [UIColor colorWithCGColor:event.calendar.CGColor];
-//
-//    NSString *eventTitle = event.title.length != 0 ? event.title : @"No title";
-//    NSString *startDateTitle = [self.cellDateFormatter stringFromDate:event.startDate];
-//    NSString *endDateTitle = [self.cellDateFormatter stringFromDate:event.endDate];
-//
-//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@  |  %@ - %@", eventTitle, startDateTitle, endDateTitle];
-//
-//    return cell;
-//}
-
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return [self.dateEvents count];
+    return [self.eventsModel.dateEvents count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSDate *dateRepresentingThisDay = [self.sortedDays objectAtIndex:section];
-    NSArray *eventsOnThisDay = [self.dateEvents objectForKey:dateRepresentingThisDay];
+    NSDate *dateRepresentingThisDay = [self.eventsModel.sortedDays objectAtIndex:section];
+    NSArray *eventsOnThisDay = [self.eventsModel.dateEvents objectForKey:dateRepresentingThisDay];
     return [eventsOnThisDay count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    NSDate *dateRepresentingThisDay = [self.sortedDays objectAtIndex:section];
+    NSDate *dateRepresentingThisDay = [self.eventsModel.sortedDays objectAtIndex:section];
     return [self.tableViewHeaderFormatter stringFromDate:dateRepresentingThisDay];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    EventsTableViewCell *cell = (EventsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventsTableViewCell" forIndexPath:indexPath];
+    EventsTableViewCell *cell = (EventsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventsTableViewCell"
+                                                                                       forIndexPath:indexPath];
     
-    NSDate *dateRepresentingThisDay = [self.sortedDays objectAtIndex:indexPath.section];
-    NSArray *eventsOnThisDay = [self.dateEvents objectForKey:dateRepresentingThisDay];
+    NSDate *dateRepresentingThisDay = [self.eventsModel.sortedDays objectAtIndex:indexPath.section];
+    NSArray *eventsOnThisDay = [self.eventsModel.dateEvents objectForKey:dateRepresentingThisDay];
     EKEvent *event = [eventsOnThisDay objectAtIndex:indexPath.row];
     
     cell.textLabel.text = event.calendar.title;
@@ -189,7 +125,10 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    EKEvent *event = [self.eventsModel.indexedEvents[indexPath.section] objectAtIndex:indexPath.row];
+    NSDate *dateRepresentingThisDay = [self.eventsModel.sortedDays objectAtIndex:indexPath.section];
+    NSArray *eventsOnThisDay = [self.eventsModel.dateEvents objectForKey:dateRepresentingThisDay];
+    EKEvent *event = [eventsOnThisDay objectAtIndex:indexPath.row];
+    
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[[EditEventViewController alloc] initWithEvent:event]];
     [self presentViewController:navController animated:YES completion:^{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -240,7 +179,7 @@
     if (!_tableViewHeaderFormatter) {
         _tableViewHeaderFormatter = [NSDateFormatter new];
         _tableViewHeaderFormatter.locale = [NSLocale currentLocale];
-        _tableViewHeaderFormatter.dateFormat = @"E, MMMM d";
+        _tableViewHeaderFormatter.dateFormat = @"E, MMMM d, yyyy";
     }
     return _tableViewHeaderFormatter;
 }
@@ -252,6 +191,13 @@
         _cellDateFormatter.dateFormat = @"h:mm a";
     }
     return _cellDateFormatter;
+}
+
+- (EventsModel *)eventsModel {
+    if (!_eventsModel) {
+        _eventsModel = [[EventsModel alloc] init];
+    }
+    return _eventsModel;
 }
 
 

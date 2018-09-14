@@ -17,6 +17,8 @@
 
 @property (strong, nonatomic) NSArray<NSDate *> *days;
 
+@property (strong, nonatomic) NSArray<NSDate *> *sortedDays;
+
 - (instancetype)initWithDateEvents:(NSDictionary<NSDate *, NSArray<EKEvent *> *> *)dateEvents days:(NSArray<NSDate *> *)days;
 
 - (void)loadEventsModelDataWithCompletion:(void (^)(void))completion;
@@ -24,6 +26,6 @@
 - (void)loadEventsDataWithStartDate:(NSDate *)startDate
                             endDate:(NSDate *)endDate
                           calendars:(NSArray<EKCalendar *> *)calendars
-                         completion:(void (^)(NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents, NSArray<NSDate *> *sortedDays))completion;
+                         completion:(void (^)(void))completion;
 
 @end

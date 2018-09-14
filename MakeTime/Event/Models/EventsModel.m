@@ -72,8 +72,7 @@
 - (void)loadEventsDataWithStartDate:(NSDate *)startDate
                             endDate:(NSDate *)endDate
                           calendars:(NSArray<EKCalendar *> *)calendars
-                         completion:(void (^)(NSDictionary<NSDate *,NSArray<EKEvent *> *> *, NSArray<NSDate *> *))completion {
-    
+                         completion:(void (^)(void))completion {
     EventManager *eventManager = [EventManager sharedManager];
     NSDate *start = [[NSCalendar currentCalendar] startOfDayForDate:startDate];
     NSDate *end = [[NSCalendar currentCalendar] startOfDayForDate:[NSDate dateWithTimeIntervalSinceNow:[[NSDate distantFuture] timeIntervalSinceReferenceDate]]];
@@ -82,27 +81,30 @@
                                                                                       calendars:calendars];
     NSArray<EKEvent *> *events = [eventManager.eventStore eventsMatchingPredicate:fetchCalendarEvents];
     
-    self.dateEvents = [NSMutableDictionary dictionary];
+    NSMutableDictionary<NSDate *, NSMutableArray<EKEvent *> *> *mutableDateEvents = [NSMutableDictionary dictionary];
     for (EKEvent *event in events) {
         // Reduce event start date to date components (year, month, day)
         NSDate *dateRepresentingThisDay = [[NSCalendar currentCalendar] startOfDayForDate:event.startDate];
         
         // If we don't yet have an array to hold the events for this day, create one
-        NSMutableArray *eventsOnThisDay = [self.dateEvents objectForKey:dateRepresentingThisDay];
+        NSMutableArray *eventsOnThisDay = [mutableDateEvents objectForKey:dateRepresentingThisDay];
         if (eventsOnThisDay == nil) {
             eventsOnThisDay = [NSMutableArray array];
             
             // Use the reduced date as dictionary key to later retrieve the event list this day
-            [self.dateEvents setObject:eventsOnThisDay forKey:dateRepresentingThisDay];
+            [mutableDateEvents setObject:eventsOnThisDay forKey:dateRepresentingThisDay];
         }
         
         // Add the event to the list for this day
         [eventsOnThisDay addObject:event];
     }
+    self.dateEvents = (NSDictionary<NSDate *, NSArray<EKEvent *> *> *)mutableDateEvents;
     
     // Create a sorted list of days
     NSArray *unsortedDays = [self.dateEvents allKeys];
     self.sortedDays = [unsortedDays sortedArrayUsingSelector:@selector(compare:)];
+    
+    completion();
 }
 
 @end
