@@ -22,6 +22,8 @@
 #import "EventComponents.h"
 #import "MakeTimeCache.h"
 #import "TodayDayView.h"
+#import "UIImage+Extras.h"
+#import "UIView+Extras.h"
 
 @interface TodayCollectionViewDayCell () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, TodayCollectionViewLayoutDelegate>
 
@@ -55,6 +57,7 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         [self configureViewAndCollectionView];
+        [self hideCollectionView];
     }
     return self;
 }
@@ -62,6 +65,21 @@
 - (void)didSetSelectedDate {
     [self addTodayDayImageSubview];
     [self loadEventData];
+}
+
+- (void)hideCollectionView {
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"loadedDayCellCount"] integerValue] == 1) {
+        [self.collectionView setHidden:YES duration:0.0 completion:nil];
+    }
+}
+
+- (void)showCollectionView {
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"loadedDayCellCount"] integerValue] == 2) {
+        [self.collectionView setHidden:NO duration:0.3 completion:nil];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:3] forKey:@"loadedDayCellCount"];
+    } else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"loadedDayCellCount"] integerValue] == 3) {
+        [self.collectionView setHidden:NO duration:0.0 completion:nil];
+    }
 }
 
 - (void)addTodayDayImageSubview {
@@ -77,7 +95,7 @@
     
     if (makeTimeCache.todayDayImage == nil) {
         [todayDayView initHourLabelsWithCollectionView:self.collectionView sizeForView:size];
-        makeTimeCache.todayDayImage = [todayDayView imageWithView:todayDayView size:self.bounds.size];
+        makeTimeCache.todayDayImage = [UIImage imageWithView:todayDayView size:self.bounds.size];
     }
     
     UIImageView *todayDayImageView = [[UIImageView alloc] initWithImage:makeTimeCache.todayDayImage];
@@ -92,6 +110,10 @@
         [self loadConvertedEventComponents];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.collectionView reloadData];
+            [self showCollectionView];
+            if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"loadedDayCellCount"] integerValue] == 1) {
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:2] forKey:@"loadedDayCellCount"];
+            }
         });
     });
 }
@@ -115,22 +137,6 @@
     
     return cell;
 }
-
-
-//    TodayCollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"TodayCollectionReusableView" forIndexPath:indexPath];
-//    view.backgroundColor = [UIColor clearColor];
-//
-//    MakeTimeCache *makeTimeCache = [MakeTimeCache sharedManager];
-//    view.hourLabel.text = makeTimeCache.reusableViewsText[indexPath.row];
-//
-//    // Make sure the ReusableView is brought to the front of the subview hierarchy (on top of the cell)
-//    [self.collectionView bringSubviewToFront:view];
-//
-//    // Disable user interaction to allow selection of the cell underneath the reusable view
-//    view.userInteractionEnabled = NO;
-//
-//    return view;
-//}
 
 
 #pragma mark - UICollectionViewDelegate
@@ -267,6 +273,10 @@
     
     [self.collectionView registerClass:[TodayCollectionViewCell class] forCellWithReuseIdentifier:@"TodayCell"];
     [self.collectionView registerClass:[TodayCollectionReusableView class] forSupplementaryViewOfKind:@"TodayCollectionReusableView" withReuseIdentifier:@"TodayCollectionReusableView"];
+    
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"isFirstTimeLoadingDayCell"]) {
+        [self.collectionView setHidden:YES duration:0.0 completion:nil];
+    }
 }
 
 - (void)initEveryTwoHourDateArray {
@@ -294,7 +304,10 @@
 - (void)loadConvertedEventComponents {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"eventStoreGranted"]) {
         
-        self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
+        __weak TodayCollectionViewDayCell *weakSelf = self;
+        [[EventManager sharedManager] loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
+            weakSelf.customCalendars = calendars;
+        }];
         self.customEvents = [[EventManager sharedManager] getEventsOfAllCalendars:self.customCalendars
                                                                    thatFallOnDate:self.selectedDate];
         

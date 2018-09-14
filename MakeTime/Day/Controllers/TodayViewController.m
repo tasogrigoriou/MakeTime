@@ -23,8 +23,9 @@
 #import "EditEventViewController.h"
 #import "EventPopUpViewController.h"
 #import "TodayDayView.h"
+#import "UIView+Extras.h"
 
-@interface TodayViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, TodayCollectionViewDayCellDelegate, EventPopUpDelegate>
+@interface TodayViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDataSourcePrefetching, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, TodayCollectionViewDayCellDelegate, EventPopUpDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UILabel *todayLabel;
@@ -52,6 +53,7 @@
 
 @property (strong, nonatomic) NSDateComponents *dayComponents;
 
+@property (nonatomic) BOOL isFirstTimeLoadingView;
 @property (nonatomic) BOOL selectedLastViewController;
 
 @end
@@ -68,23 +70,20 @@
     
     [self configureViewAndCollectionView];
     [self calculateStartAndEndDateCaches];
+    
     [self addTabBarNotificationObserver];
+    [self addDataDidChangeNotificationObserver];
+    
+    [self setupLoadedDayCellCount];
+}
+
+- (void)setupLoadedDayCellCount {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:1] forKey:@"loadedDayCellCount"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [super updateAuthorizationStatusToAccessEventStore];
-    [self.collectionView reloadData];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self customizeDayLabelText];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    self.selectedDate = nil;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
@@ -98,40 +97,6 @@
     //    NSLog(@"self.currentIndexPath = %li", self.currentIndexPath.item);
 //    TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:self.currentIndexPath];
 //    [dayCell.collectionView.collectionViewLayout invalidateLayout];
-}
-
-- (void)updateAuthorizationStatusToAccessEventStore {
-    EKAuthorizationStatus authorizationStatus = [EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent];
-    switch (authorizationStatus) {
-        case EKAuthorizationStatusDenied: {
-        case EKAuthorizationStatusRestricted: {
-            self.isAccessToEventStoreGranted = NO;
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Access Denied"
-                                                                           message:@"This app doesn't have access to your Calendars. Please allow access in Settings"
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
-                                                                  handler:^(UIAlertAction *action) {}];
-            [alert addAction:defaultAction];
-            [self presentViewController:alert animated:YES completion:nil];
-            break;
-        }
-        }
-        case EKAuthorizationStatusAuthorized: {
-            self.isAccessToEventStoreGranted = YES;
-            [[NSUserDefaults standardUserDefaults] setObject:@(self.isAccessToEventStoreGranted) forKey:@"eventStoreGranted"];
-            break;
-        }
-        case EKAuthorizationStatusNotDetermined: {
-            __weak TodayViewController *weakSelf = self;
-            [[[EventManager sharedManager] eventStore] requestAccessToEntityType:EKEntityTypeEvent
-                                                                      completion:^(BOOL granted, NSError *error) {
-                                                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                                                              weakSelf.isAccessToEventStoreGranted = granted;
-                                                                          });
-                                                                      }];
-            break;
-        }
-    }
 }
 
 
@@ -158,8 +123,17 @@
                                                           toDate:self.startDateCache
                                                          options:0];
     [dayCell didSetSelectedDate];
+    [self customizeDayLabelText];
     
     return dayCell;
+}
+
+
+#pragma mark - UICollectionViewDataSourcePrefetching
+
+
+- (void)collectionView:(UICollectionView *)collectionView prefetchItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths {
+    
 }
 
 
@@ -237,35 +211,39 @@
 
 
 - (void)customizeDayLabelText {
-    NSDate *currentDayDisplayed = [[NSUserDefaults standardUserDefaults] objectForKey:@"dayDisplayed"];
-    NSNumber *initialScroll = [[NSUserDefaults standardUserDefaults] objectForKey:@"initialScrollDone"];
-    
-    NSDateComponents *comps = [NSDateComponents new];
-    comps.day = 1;
-    
-    if (self.selectedLastViewController) {
-        self.dayDisplayed = [NSDate date];
-        self.selectedLastViewController = NO;
-    
-    } else if (self.selectedDate) {
-        self.dayDisplayed = self.selectedDate;
+    if (self.isFirstTimeLoadingView) {
+        NSDate *currentDayDisplayed = [[NSUserDefaults standardUserDefaults] objectForKey:@"dayDisplayed"];
+        NSNumber *initialScroll = [[NSUserDefaults standardUserDefaults] objectForKey:@"initialScrollDone"];
         
-    } else if (currentDayDisplayed && ![initialScroll boolValue]) {
-        self.dayDisplayed = [self.calendar dateByAddingComponents:comps toDate:currentDayDisplayed options:0];
+        NSDateComponents *comps = [NSDateComponents new];
+        comps.day = 1;
         
-    } else if (currentDayDisplayed) {
-        self.dayDisplayed = currentDayDisplayed;
+        if (self.selectedLastViewController) {
+            self.dayDisplayed = [NSDate date];
+            self.selectedLastViewController = NO;
+            
+        } else if (self.selectedDate) {
+            self.dayDisplayed = self.selectedDate;
+            
+        } else if (currentDayDisplayed && ![initialScroll boolValue]) {
+            self.dayDisplayed = [self.calendar dateByAddingComponents:comps toDate:currentDayDisplayed options:0];
+            
+        } else if (currentDayDisplayed) {
+            self.dayDisplayed = currentDayDisplayed;
+            
+        } else {
+            // add an extra day to account for the UIScrollView offset
+            self.dayDisplayed = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+        }
         
-    } else {
-        // add an extra day to account for the UIScrollView offset
-        self.dayDisplayed = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+        self.selectedDate = self.dayDisplayed;
+        self.todayLabel.text = [self.dateFormatter stringFromDate:self.dayDisplayed];
+        
+        [[NSUserDefaults standardUserDefaults] setObject:self.dayDisplayed forKey:@"dayDisplayed"];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"initialScrollDone"];
+        
+        self.isFirstTimeLoadingView = NO;
     }
-    
-    self.selectedDate = self.dayDisplayed;
-    self.todayLabel.text = [self.dateFormatter stringFromDate:self.dayDisplayed];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:self.dayDisplayed forKey:@"dayDisplayed"];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:@"initialScrollDone"];
 }
 
 - (void)configureViewAndCollectionView {
@@ -278,7 +256,9 @@
     
     [self.view addSubview:self.collectionView];
     
-    self.definesPresentationContext = true;
+    self.definesPresentationContext = YES;
+    self.isFirstTimeLoadingView = YES;
+    self.collectionView.prefetchDataSource = self;
 }
 
 - (void)calculateStartAndEndDateCaches {
@@ -345,6 +325,17 @@
     });
 }
 
+- (void)addDataDidChangeNotificationObserver {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dataDidChange)
+                                                 name:@"calendarOrEventDataDidChange"
+                                               object:nil];
+}
+
+- (void)dataDidChange {
+    [self.collectionView reloadData];
+}
+
 
 #pragma mark - Custom Getters
 
@@ -353,7 +344,7 @@
     if (!_dateFormatter) {
         _dateFormatter = [NSDateFormatter new];
         _dateFormatter.locale = [NSLocale currentLocale];
-        [_dateFormatter setLocalizedDateFormatFromTemplate:@"MMMMdYYYY"];
+        [_dateFormatter setLocalizedDateFormatFromTemplate:@"E, MMM dYYYY"];
     }
     return _dateFormatter;
 }

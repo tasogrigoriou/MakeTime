@@ -39,19 +39,18 @@
 
 - (void)loadCalendarData {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [[EventManager sharedManager] loadCustomCalendars];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.customCalendars = [[EventManager sharedManager] customCalendars];
-            [self.calendarCollectionView reloadData];
-        });
+        __weak CalendarViewController *weakSelf = self;
+        [[EventManager sharedManager] loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.customCalendars = calendars;
+                [weakSelf.calendarCollectionView reloadData];
+            });
+        }];
     });
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    //    self.navigationController.navigationBar.clipsToBounds = YES;
-    //    self.navigationItem.hidesBackButton = NO;
     
     // Reload the collection view and the custom calendars when navigating back from AddCalendarVC
     [self loadCalendarData];
@@ -108,35 +107,35 @@
     return CGSizeMake(collectionView.bounds.size.width / 3, collectionView.bounds.size.width / 6);
 }
 
-- (void)collectionView:(UICollectionView *)collectionView
-didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-    CalendarCollectionViewCell *cell = (CalendarCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
-    // Set background color of cell with animation
-    [UIView animateWithDuration:0.1
-                          delay:0
-                        options:UIViewAnimationOptionAllowUserInteraction
-                     animations:^{
-                         cell.backgroundColor = [UIColor clearColor];
-                     }
-                     completion:nil];
-}
-
-
-- (void)collectionView:(UICollectionView *)collectionView
-didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-    CalendarCollectionViewCell *cell = (CalendarCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
-    
-    // Revert background color of cell to original CGColor of the EKCalendar
-    [UIView animateWithDuration:0.1
-                          delay:0
-                        options:UIViewAnimationOptionAllowUserInteraction
-                     animations:^{
-                         EKCalendar *cal = self.customCalendars[indexPath.item];
-                         cell.backgroundColor = [UIColor colorWithCGColor:cal.CGColor];
-                     }
-                     completion:nil];
-}
+//- (void)collectionView:(UICollectionView *)collectionView
+//didHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+//    CalendarCollectionViewCell *cell = (CalendarCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+//    
+//    // Set background color of cell with animation
+//    [UIView animateWithDuration:0.1
+//                          delay:0
+//                        options:UIViewAnimationOptionAllowUserInteraction
+//                     animations:^{
+//                         cell.backgroundColor = [UIColor clearColor];
+//                     }
+//                     completion:nil];
+//}
+//
+//
+//- (void)collectionView:(UICollectionView *)collectionView
+//didUnhighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+//    CalendarCollectionViewCell *cell = (CalendarCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
+//    
+//    // Revert background color of cell to original CGColor of the EKCalendar
+//    [UIView animateWithDuration:0.1
+//                          delay:0
+//                        options:UIViewAnimationOptionAllowUserInteraction
+//                     animations:^{
+//                         EKCalendar *cal = self.customCalendars[indexPath.item];
+//                         cell.backgroundColor = [UIColor colorWithCGColor:cal.CGColor];
+//                     }
+//                     completion:nil];
+//}
 
 
 #pragma mark - Private Methods

@@ -47,15 +47,4 @@
     self.lineViews = (NSArray *)lineViews;
 }
 
-- (UIImage *)imageWithView:(UIView *)view size:(CGSize)size {
-    UIGraphicsBeginImageContextWithOptions(size, NO, 0.0);
-    [view.layer renderInContext:UIGraphicsGetCurrentContext()];
-    
-    UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    return img;
-}
-
 @end

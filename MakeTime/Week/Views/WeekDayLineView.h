@@ -14,6 +14,4 @@
 
 - (void)initWeekdayLinesWithCollectionView:(UICollectionView *)collectionView;
 
-- (UIImage *)imageWithView:(UIView *)view size:(CGSize)size;
-
 @end

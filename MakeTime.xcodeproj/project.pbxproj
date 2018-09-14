@@ -56,6 +56,8 @@
 		9F47B8371F44C8C00044700E /* EventComponents.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F47B8361F44C8C00044700E /* EventComponents.m */; };
 		9F4D5C1D212BE485008E047E /* EventPopUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4D5C1B212BE485008E047E /* EventPopUpViewController.m */; };
 		9F4D5C1E212BE485008E047E /* EventPopUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F4D5C1C212BE485008E047E /* EventPopUpViewController.xib */; };
+		9F4DBDFC214AEBD80077CEF6 /* ToDoListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4DBDFA214AEBD80077CEF6 /* ToDoListViewController.m */; };
+		9F4DBDFD214AEBD80077CEF6 /* ToDoListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F4DBDFB214AEBD80077CEF6 /* ToDoListViewController.xib */; };
 		9F56171D1E3D62AF00C92525 /* Chameleon_.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5617041E3D62AF00C92525 /* Chameleon_.m */; };
 		9F56171E1E3D62AF00C92525 /* ChameleonConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5617061E3D62AF00C92525 /* ChameleonConstants.m */; };
 		9F56171F1E3D62AF00C92525 /* NSArray+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F56170A1E3D62AF00C92525 /* NSArray+Chameleon.m */; };
@@ -118,6 +120,9 @@
 		9FBC52FA1EFE13C4001BF4CD /* AddCalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FBC52F81EFE13C4001BF4CD /* AddCalendarViewController.xib */; };
 		9FC695E01F266B2600006F13 /* EventTextFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FC695DE1F266B2600006F13 /* EventTextFieldTableViewCell.m */; };
 		9FC695E11F266B2600006F13 /* EventTextFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FC695DF1F266B2600006F13 /* EventTextFieldTableViewCell.xib */; };
+		9FCA32F3214AF5260062ABCF /* ToDoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA32F1214AF5260062ABCF /* ToDoTableViewCell.m */; };
+		9FCA32F4214AF5260062ABCF /* ToDoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FCA32F2214AF5260062ABCF /* ToDoTableViewCell.xib */; };
+		9FCA32F8214B334D0062ABCF /* PersistenceService.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA32F7214B334D0062ABCF /* PersistenceService.m */; };
 		9FCA3EEF1E48510B00A016FF /* CalendarViewDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA3EEE1E48510B00A016FF /* CalendarViewDayCell.m */; };
 		9FCA3EF21E4851E400A016FF /* CalendarHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA3EF11E4851E400A016FF /* CalendarHeaderView.m */; };
 		9FCA3EF51E4858BC00A016FF /* CollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA3EF41E4858BC00A016FF /* CollectionViewFlowLayout.m */; };
@@ -130,10 +135,39 @@
 		9FD948891F325DC800483302 /* TodayCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FD948871F325DC800483302 /* TodayCollectionReusableView.xib */; };
 		9FDF6CA91F6B78FE0026ED15 /* WeekCollectionViewWeekCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FDF6CA81F6B78FE0026ED15 /* WeekCollectionViewWeekCell.m */; };
 		9FE19E8C1E14D2AC00CB8439 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE19E8B1E14D2AC00CB8439 /* home.png */; };
+		9FEDC00721470A710016B39D /* UIImage+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEDC00621470A710016B39D /* UIImage+Extras.m */; };
+		9FEDC00A21470BBE0016B39D /* UIView+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEDC00921470BBE0016B39D /* UIView+Extras.m */; };
+		9FEDC0262148DF130016B39D /* EventsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEDC0242148DF130016B39D /* EventsTableViewCell.m */; };
+		9FEDC0272148DF130016B39D /* EventsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FEDC0252148DF130016B39D /* EventsTableViewCell.xib */; };
+		9FEDC02A2148E1CD0016B39D /* EventsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEDC0292148E1CD0016B39D /* EventsModel.m */; };
 		9FF1FA871F54A5E80090F33E /* TodayCollectionViewDayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF1FA861F54A5E80090F33E /* TodayCollectionViewDayCell.m */; };
 		9FF7442D1E1307A400816F8D /* UIColor+RBExtras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FF7442C1E1307A400816F8D /* UIColor+RBExtras.m */; };
 		9FFA42031E92015C00832C31 /* TodayCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFA42021E92015C00832C31 /* TodayCollectionViewLayout.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9FEDC01021471C840016B39D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9FEDC00B21471C840016B39D /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 65AD9E95D9ED4DC0BD73A743;
+			remoteInfo = Charts;
+		};
+		9FEDC01221471C840016B39D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9FEDC00B21471C840016B39D /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1CBBC58C6CE1EBEE9852CE41;
+			remoteInfo = ChartsTests;
+		};
+		9FEDC01421471C950016B39D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9FEDC00B21471C840016B39D /* Charts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A58A4ED274A941CA248EA921;
+			remoteInfo = Charts;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		9F09306B1E1CB787007A33F6 /* write.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = write.png; sourceTree = "<group>"; };
@@ -205,6 +239,9 @@
 		9F4D5C1A212BE485008E047E /* EventPopUpViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventPopUpViewController.h; sourceTree = "<group>"; };
 		9F4D5C1B212BE485008E047E /* EventPopUpViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventPopUpViewController.m; sourceTree = "<group>"; };
 		9F4D5C1C212BE485008E047E /* EventPopUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventPopUpViewController.xib; sourceTree = "<group>"; };
+		9F4DBDF9214AEBD80077CEF6 /* ToDoListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDoListViewController.h; sourceTree = "<group>"; };
+		9F4DBDFA214AEBD80077CEF6 /* ToDoListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToDoListViewController.m; sourceTree = "<group>"; };
+		9F4DBDFB214AEBD80077CEF6 /* ToDoListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToDoListViewController.xib; sourceTree = "<group>"; };
 		9F5617021E3D62AF00C92525 /* Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon.h; sourceTree = "<group>"; };
 		9F5617031E3D62AF00C92525 /* Chameleon_.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chameleon_.h; sourceTree = "<group>"; };
 		9F5617041E3D62AF00C92525 /* Chameleon_.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chameleon_.m; sourceTree = "<group>"; };
@@ -317,6 +354,11 @@
 		9FC695DD1F266B2600006F13 /* EventTextFieldTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventTextFieldTableViewCell.h; sourceTree = "<group>"; };
 		9FC695DE1F266B2600006F13 /* EventTextFieldTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventTextFieldTableViewCell.m; sourceTree = "<group>"; };
 		9FC695DF1F266B2600006F13 /* EventTextFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EventTextFieldTableViewCell.xib; sourceTree = "<group>"; };
+		9FCA32F0214AF5260062ABCF /* ToDoTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDoTableViewCell.h; sourceTree = "<group>"; };
+		9FCA32F1214AF5260062ABCF /* ToDoTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ToDoTableViewCell.m; sourceTree = "<group>"; };
+		9FCA32F2214AF5260062ABCF /* ToDoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToDoTableViewCell.xib; sourceTree = "<group>"; };
+		9FCA32F6214B334D0062ABCF /* PersistenceService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersistenceService.h; sourceTree = "<group>"; };
+		9FCA32F7214B334D0062ABCF /* PersistenceService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersistenceService.m; sourceTree = "<group>"; };
 		9FCA3EED1E48510B00A016FF /* CalendarViewDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewDayCell.h; sourceTree = "<group>"; };
 		9FCA3EEE1E48510B00A016FF /* CalendarViewDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewDayCell.m; sourceTree = "<group>"; };
 		9FCA3EF01E4851E400A016FF /* CalendarHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarHeaderView.h; sourceTree = "<group>"; };
@@ -339,6 +381,16 @@
 		9FDF6CA71F6B78FE0026ED15 /* WeekCollectionViewWeekCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekCollectionViewWeekCell.h; sourceTree = "<group>"; };
 		9FDF6CA81F6B78FE0026ED15 /* WeekCollectionViewWeekCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekCollectionViewWeekCell.m; sourceTree = "<group>"; };
 		9FE19E8B1E14D2AC00CB8439 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		9FEDC00521470A710016B39D /* UIImage+Extras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extras.h"; sourceTree = "<group>"; };
+		9FEDC00621470A710016B39D /* UIImage+Extras.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extras.m"; sourceTree = "<group>"; };
+		9FEDC00821470BBE0016B39D /* UIView+Extras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Extras.h"; sourceTree = "<group>"; };
+		9FEDC00921470BBE0016B39D /* UIView+Extras.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extras.m"; sourceTree = "<group>"; };
+		9FEDC00B21471C840016B39D /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../Downloads/Github/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
+		9FEDC0232148DF130016B39D /* EventsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsTableViewCell.h; sourceTree = "<group>"; };
+		9FEDC0242148DF130016B39D /* EventsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventsTableViewCell.m; sourceTree = "<group>"; };
+		9FEDC0252148DF130016B39D /* EventsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsTableViewCell.xib; sourceTree = "<group>"; };
+		9FEDC0282148E1CD0016B39D /* EventsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsModel.h; sourceTree = "<group>"; };
+		9FEDC0292148E1CD0016B39D /* EventsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventsModel.m; sourceTree = "<group>"; };
 		9FF1FA851F54A5E80090F33E /* TodayCollectionViewDayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayCollectionViewDayCell.h; sourceTree = "<group>"; };
 		9FF1FA861F54A5E80090F33E /* TodayCollectionViewDayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TodayCollectionViewDayCell.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		9FF7442B1E1307A400816F8D /* UIColor+RBExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+RBExtras.h"; sourceTree = "<group>"; };
@@ -475,6 +527,43 @@
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
+		9F4DBDF7214AEBA40077CEF6 /* ToDoList */ = {
+			isa = PBXGroup;
+			children = (
+				9F4DBDFE214AEBE60077CEF6 /* Models */,
+				9F4DBDFF214AEBF70077CEF6 /* Views */,
+				9F4DBE00214AEBFD0077CEF6 /* Controllers */,
+			);
+			path = ToDoList;
+			sourceTree = "<group>";
+		};
+		9F4DBDFE214AEBE60077CEF6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9F4DBDFF214AEBF70077CEF6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9FCA32F0214AF5260062ABCF /* ToDoTableViewCell.h */,
+				9FCA32F1214AF5260062ABCF /* ToDoTableViewCell.m */,
+				9FCA32F2214AF5260062ABCF /* ToDoTableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9F4DBE00214AEBFD0077CEF6 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9F4DBDF9214AEBD80077CEF6 /* ToDoListViewController.h */,
+				9F4DBDFA214AEBD80077CEF6 /* ToDoListViewController.m */,
+				9F4DBDFB214AEBD80077CEF6 /* ToDoListViewController.xib */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		9F5617011E3D62AF00C92525 /* Chameleon */ = {
 			isa = PBXGroup;
 			children = (
@@ -514,12 +603,18 @@
 			children = (
 				9FBA79361DCC5CF1000AE696 /* AppDelegate.h */,
 				9FBA79371DCC5CF1000AE696 /* AppDelegate.m */,
+				9FCA32F6214B334D0062ABCF /* PersistenceService.h */,
+				9FCA32F7214B334D0062ABCF /* PersistenceService.m */,
 				9F60B8CC2135138B00E300BF /* MakeTimeTabBarController.h */,
 				9F60B8CD2135138B00E300BF /* MakeTimeTabBarController.m */,
 				9F44175A213D180A009FD17D /* MakeTimeCache.h */,
 				9F44175B213D180A009FD17D /* MakeTimeCache.m */,
 				9F9D2C571EDE1287006167EB /* EventManager.h */,
 				9F9D2C581EDE1287006167EB /* EventManager.m */,
+				9FEDC00821470BBE0016B39D /* UIView+Extras.h */,
+				9FEDC00921470BBE0016B39D /* UIView+Extras.m */,
+				9FEDC00521470A710016B39D /* UIImage+Extras.h */,
+				9FEDC00621470A710016B39D /* UIImage+Extras.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -704,6 +799,7 @@
 		9FBA79271DCC5CF1000AE696 = {
 			isa = PBXGroup;
 			children = (
+				9FEDC00B21471C840016B39D /* Charts.xcodeproj */,
 				9FA26DD92127E3F40053F628 /* LaunchScreen2.storyboard */,
 				9F32CF5B1ED4839100922048 /* Assets */,
 				9FBA79321DCC5CF1000AE696 /* MakeTime */,
@@ -729,6 +825,7 @@
 				9F9D2C4C1EDE1108006167EB /* Month */,
 				9F32CF531ED480ED00922048 /* Rear */,
 				9F9D2C4B1EDE1102006167EB /* Week */,
+				9F4DBDF7214AEBA40077CEF6 /* ToDoList */,
 			);
 			path = MakeTime;
 			sourceTree = "<group>";
@@ -866,6 +963,9 @@
 		9FD948831F31B88500483302 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9FEDC0232148DF130016B39D /* EventsTableViewCell.h */,
+				9FEDC0242148DF130016B39D /* EventsTableViewCell.m */,
+				9FEDC0252148DF130016B39D /* EventsTableViewCell.xib */,
 				9F1C8E611F1CB38B00268023 /* DatePickerTableViewCell.h */,
 				9F1C8E621F1CB38B00268023 /* DatePickerTableViewCell.m */,
 				9F1C8E631F1CB38B00268023 /* DatePickerTableViewCell.xib */,
@@ -882,8 +982,19 @@
 		9FD948841F31B88D00483302 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9FEDC0282148E1CD0016B39D /* EventsModel.h */,
+				9FEDC0292148E1CD0016B39D /* EventsModel.m */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		9FEDC00C21471C840016B39D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9FEDC01121471C840016B39D /* Charts.framework */,
+				9FEDC01321471C840016B39D /* ChartsTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -900,6 +1011,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				9FEDC01521471C950016B39D /* PBXTargetDependency */,
 			);
 			name = MakeTime;
 			productName = MakeTime;
@@ -938,12 +1050,35 @@
 			mainGroup = 9FBA79271DCC5CF1000AE696;
 			productRefGroup = 9FBA79311DCC5CF1000AE696 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 9FEDC00C21471C840016B39D /* Products */;
+					ProjectRef = 9FEDC00B21471C840016B39D /* Charts.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				9FBA792F1DCC5CF1000AE696 /* MakeTime */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		9FEDC01121471C840016B39D /* Charts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Charts.framework;
+			remoteRef = 9FEDC01021471C840016B39D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9FEDC01321471C840016B39D /* ChartsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ChartsTests.xctest;
+			remoteRef = 9FEDC01221471C840016B39D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9FBA792E1DCC5CF1000AE696 /* Resources */ = {
@@ -981,6 +1116,7 @@
 				9F0930761E1EF010007A33F6 /* watch2.png in Resources */,
 				9F0930741E1EECA8007A33F6 /* watch.png in Resources */,
 				9F1C8E601F1CB37300268023 /* EventTableViewCell.xib in Resources */,
+				9FEDC0272148DF130016B39D /* EventsTableViewCell.xib in Resources */,
 				9FB96D081EF3497800BDC3BA /* CategoriesTableViewCell.xib in Resources */,
 				9FE19E8C1E14D2AC00CB8439 /* home.png in Resources */,
 				9FAE9A751EE83F31002F247F /* CalendarViewController.xib in Resources */,
@@ -992,7 +1128,9 @@
 				9F4035B91F1365A000EA1B16 /* checkmark.png in Resources */,
 				9F14B8971DEBE45000ADBE0C /* MonthViewController.xib in Resources */,
 				9F09306E1E1DDA98007A33F6 /* magic-wand.png in Resources */,
+				9FCA32F4214AF5260062ABCF /* ToDoTableViewCell.xib in Resources */,
 				9FA26DDA2127E3F40053F628 /* LaunchScreen2.storyboard in Resources */,
+				9F4DBDFD214AEBD80077CEF6 /* ToDoListViewController.xib in Resources */,
 				9F0930781E1EF0C6007A33F6 /* menu2.png in Resources */,
 				9F1B5BC01F4AB58F00F20370 /* WeekCollectionViewCell.xib in Resources */,
 				9FD948891F325DC800483302 /* TodayCollectionReusableView.xib in Resources */,
@@ -1006,6 +1144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9F4DBDFC214AEBD80077CEF6 /* ToDoListViewController.m in Sources */,
 				9FF1FA871F54A5E80090F33E /* TodayCollectionViewDayCell.m in Sources */,
 				9F4035B61F13577C00EA1B16 /* EditCategoriesTableViewCell.m in Sources */,
 				9FAE9A811EE9D224002F247F /* CalendarCollectionViewCell.m in Sources */,
@@ -1020,9 +1159,12 @@
 				9FD948791F2D4C1300483302 /* RepeatAlertViewController.m in Sources */,
 				9F9D2C591EDE1287006167EB /* EventManager.m in Sources */,
 				9F56171D1E3D62AF00C92525 /* Chameleon_.m in Sources */,
+				9FEDC00721470A710016B39D /* UIImage+Extras.m in Sources */,
 				9F21FD0F1E1B4FD200BBE626 /* CustomViewController.m in Sources */,
 				9F5617211E3D62AF00C92525 /* UIButton+Chameleon.m in Sources */,
 				9FDF6CA91F6B78FE0026ED15 /* WeekCollectionViewWeekCell.m in Sources */,
+				9FEDC02A2148E1CD0016B39D /* EventsModel.m in Sources */,
+				9FCA32F3214AF5260062ABCF /* ToDoTableViewCell.m in Sources */,
 				9F76F4731E5FCEB100641875 /* FSCalendar.m in Sources */,
 				9F71EF411E23784B00CD23DA /* RearCollectionViewCell.m in Sources */,
 				9F1B5BBF1F4AB58F00F20370 /* WeekCollectionViewCell.m in Sources */,
@@ -1035,6 +1177,7 @@
 				9FC695E01F266B2600006F13 /* EventTextFieldTableViewCell.m in Sources */,
 				9F5617271E3D62AF00C92525 /* UIView+ChameleonPrivate.m in Sources */,
 				9F853301214468C0007B55CA /* WeekDayLineView.m in Sources */,
+				9FCA32F8214B334D0062ABCF /* PersistenceService.m in Sources */,
 				9F1B5BC31F4AB60A00F20370 /* WeekCollectionViewLayout.m in Sources */,
 				9FCB504B1EEA0667001A7A3D /* UINavigationController+SwipeBack.m in Sources */,
 				9F60B8CE2135138B00E300BF /* MakeTimeTabBarController.m in Sources */,
@@ -1051,6 +1194,7 @@
 				9F76F47F1E5FCEB100641875 /* FSCalendarStickyHeader.m in Sources */,
 				9F4D5C1D212BE485008E047E /* EventPopUpViewController.m in Sources */,
 				9F76F4761E5FCEB100641875 /* FSCalendarCell.m in Sources */,
+				9FEDC00A21470BBE0016B39D /* UIView+Extras.m in Sources */,
 				9F441761213D984E009FD17D /* TodayHourLabelView.m in Sources */,
 				9F5617261E3D62AF00C92525 /* UINavigationController+Chameleon.m in Sources */,
 				9FCB504C1EEA0667001A7A3D /* UIViewController+SwipeBack.m in Sources */,
@@ -1074,6 +1218,7 @@
 				9F5617201E3D62AF00C92525 /* UIAppearance+Swift.m in Sources */,
 				9F76F47B1E5FCEB100641875 /* FSCalendarDelegationProxy.m in Sources */,
 				9F1C8E5F1F1CB37300268023 /* EventTableViewCell.m in Sources */,
+				9FEDC0262148DF130016B39D /* EventsTableViewCell.m in Sources */,
 				9F1C8E641F1CB38B00268023 /* DatePickerTableViewCell.m in Sources */,
 				9F9B426C2138770100B8C2B8 /* ReusableViewCache.m in Sources */,
 				9F76F4721E5FCEB100641875 /* FSCalendar+Deprecated.m in Sources */,
@@ -1089,6 +1234,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9FEDC01521471C950016B39D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Charts;
+			targetProxy = 9FEDC01421471C950016B39D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		9FBA79481DCC5CF1000AE696 /* Debug */ = {

@@ -21,6 +21,7 @@
 #import "WeekCollectionViewLayout.h"
 #import "EventPopUpViewController.h"
 #import "EditEventViewController.h"
+#import "UIView+Extras.h"
 
 
 @interface WeekViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate, WeekCollectionViewWeekCellDelegate, EventPopUpDelegate>
@@ -38,24 +39,22 @@
 @property (strong, nonatomic) NSArray *customEvents;
 
 @property (assign, nonatomic) NSUInteger cellDisplayedIndex;
-
 @property (strong, nonatomic) NSIndexPath *currentIndexPath;
-
 @property (assign, nonatomic) CGFloat lastContentOffset;
 
 @property (strong, nonatomic) NSDateComponents *offsetComponents;
 
+@property (nonatomic) BOOL isFirstTimeLoadingView;
 @property (nonatomic) BOOL selectedLastViewController;
 
 @end
 
 
-typedef NS_ENUM(NSInteger, ScrollDirection) {
-    ScrollDirectionNone,
-    ScrollDirectionRight,
-    ScrollDirectionLeft,
-    ScrollDirectionUp,
-    ScrollDirectionDown,
+typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
+    LoadedWeekCellNever,
+    LoadedWeekCellOnce,
+    LoadedWeekCellTwice,
+    LoadedWeekCellMoreThanTwice,
 };
 
 
@@ -69,22 +68,15 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     [super viewDidLoad];
     [self configureViewAndCollectionView];
     [self calculateStartAndEndDateCaches];
+    
     [self addTabBarNotificationObserver];
+    [self addDataDidChangeNotificationObserver];
+    
+    [self setupLoadedWeekCellCount];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.collectionView reloadData];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self customizeWeekLabelText];
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-    [super viewDidDisappear:animated];
-    self.selectedDate = nil;
+- (void)setupLoadedWeekCellCount {
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:1] forKey:@"loadedWeekCellCount"];
 }
 
 //- (void)viewWillTransitionToSize:(CGSize)size
@@ -134,6 +126,7 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
                                                            toDate:self.startDateCache
                                                           options:0];
     [weekCell didSetSelectedDate];
+    [self customizeWeekLabelText];
     
     return weekCell;
 }
@@ -220,37 +213,43 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 
 
 - (void)customizeWeekLabelText {
-    NSDate *currentWeekDisplayed = [[NSUserDefaults standardUserDefaults] objectForKey:@"weekDisplayed"];
-    NSNumber *initialScroll = [[NSUserDefaults standardUserDefaults] objectForKey:@"initialScrollDoneForWeek"];
-    
-    NSDateComponents *comps = [NSDateComponents new];
-    comps.weekOfYear = 1;
-    
-    if (self.selectedLastViewController) {
-        self.weekDisplayed = [NSDate date];
-        self.selectedLastViewController = NO;
+    if (self.isFirstTimeLoadingView) {
+        NSDate *currentWeekDisplayed = [[NSUserDefaults standardUserDefaults] objectForKey:@"weekDisplayed"];
+        NSNumber *initialScroll = [[NSUserDefaults standardUserDefaults] objectForKey:@"initialScrollDoneForWeek"];
         
-    } else if (self.selectedDate) {
-        self.weekDisplayed = self.selectedDate;
+        NSDateComponents *comps = [NSDateComponents new];
+        comps.weekOfYear = 1;
         
-    } else if (currentWeekDisplayed && ![initialScroll boolValue]) {
-        self.weekDisplayed = [self.calendar dateByAddingComponents:comps toDate:currentWeekDisplayed options:0];
+        if (self.selectedLastViewController) {
+            NSDateComponents *offsetComps = [NSDateComponents new];
+            offsetComps.day = 2;
+            self.weekDisplayed = [self.calendar dateByAddingComponents:offsetComps toDate:[NSDate date] options:0];
+            self.selectedLastViewController = NO;
+            
+        } else if (self.selectedDate) {
+            self.weekDisplayed = self.selectedDate;
+            
+        } else if (currentWeekDisplayed && ![initialScroll boolValue]) {
+            self.weekDisplayed = [self.calendar dateByAddingComponents:comps toDate:currentWeekDisplayed options:0];
+            
+        } else if (currentWeekDisplayed) {
+            self.weekDisplayed = currentWeekDisplayed;
+            
+        } else {
+            // add an extra day to account for the UIScrollView offset
+            self.weekDisplayed = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+        }
         
-    } else if (currentWeekDisplayed) {
-        self.weekDisplayed = currentWeekDisplayed;
+        self.selectedDate = self.weekDisplayed;
+        self.weekLabel.text = [self.dateFormatter stringFromDate:self.weekDisplayed];
         
-    } else {
-        // add an extra day to account for the UIScrollView offset
-        self.weekDisplayed = [self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0];
+        [[NSUserDefaults standardUserDefaults] setObject:self.weekDisplayed forKey:@"weekDisplayed"];
+        [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"initialScrollDoneForWeek"];
+        
+        NSLog(@"self.selectedDate = %@", self.selectedDate);
+        
+        self.isFirstTimeLoadingView = NO;
     }
-    
-    self.selectedDate = self.weekDisplayed;
-    self.weekLabel.text = [self.dateFormatter stringFromDate:self.weekDisplayed];
-    
-    [[NSUserDefaults standardUserDefaults] setObject:self.weekDisplayed forKey:@"weekDisplayed"];
-    [[NSUserDefaults standardUserDefaults] setObject:@YES forKey:@"initialScrollDoneForWeek"];
-    
-    NSLog(@"self.selectedDate = %@", self.selectedDate);
 }
 
 - (void)configureViewAndCollectionView {
@@ -263,7 +262,8 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
     
     [self.view addSubview:self.collectionView];
     
-    self.definesPresentationContext = true;
+    self.definesPresentationContext = YES;
+    self.isFirstTimeLoadingView = YES;
 }
 
 - (void)calculateStartAndEndDateCaches {
@@ -297,6 +297,8 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 }
 
 - (void)setWeekDisplayed:(NSDate *)weekDisplayed animated:(BOOL)animated {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"hideWeekCell" object:nil];
+    
     NSDateComponents *differenceComponents = [self.calendar components:NSCalendarUnitWeekOfYear
                                                               fromDate:self.startDateCache
                                                                 toDate:weekDisplayed
@@ -322,8 +324,24 @@ typedef NS_ENUM(NSInteger, ScrollDirection) {
 }
 
 - (void)scrollToToday {
-    [self setWeekDisplayed:[NSDate date] animated:YES];
+    NSDateComponents *comps = [NSDateComponents new];
+    comps.day = 2;
+    [self setWeekDisplayed:[self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0] animated:YES];
     self.selectedLastViewController = YES;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.weekLabel.text = [self.dateFormatter stringFromDate:[self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0]];
+    });
+}
+
+- (void)addDataDidChangeNotificationObserver {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(dataDidChange)
+                                                 name:@"calendarOrEventDataDidChange"
+                                               object:nil];
+}
+
+- (void)dataDidChange {
+    [self.collectionView reloadData];
 }
 
 

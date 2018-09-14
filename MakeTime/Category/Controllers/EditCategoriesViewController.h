@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EventKit/EventKit.h"
 
 @interface EditCategoriesViewController : UIViewController
 
@@ -16,5 +17,7 @@
 
 @property (strong, nonatomic) NSArray<UIColor *> *calendarUIColors;
 @property (strong, nonatomic) NSArray<NSString *> *calendarStringColors;
+
+- (instancetype)initWithCalendar:(EKCalendar *)calendar;
 
 @end

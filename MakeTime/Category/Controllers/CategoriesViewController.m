@@ -42,15 +42,14 @@
 
 - (void)loadCalendarData {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [self assignCalendarColors];
-        });
-        [[EventManager sharedManager] loadCustomCalendars];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.customCalendars = [[EventManager sharedManager] customCalendars];
-            [self.categoriesTableView reloadData];
-        });
+        [self assignCalendarColors];
+        __weak CategoriesViewController *weakSelf = self;
+        [[EventManager sharedManager] loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.customCalendars = calendars;
+                [weakSelf.categoriesTableView reloadData];
+            });
+        }];
     });
 }
 
@@ -65,8 +64,7 @@
 #pragma mark - UITableViewDataSource
 
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.customCalendars count];
 }
 
@@ -103,9 +101,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     // Re-load all calendars, delete the row with an animation (which also refreshes the table view)
-    self.customCalendars =  [eventManager loadCustomCalendars];
-    [self.categoriesTableView deleteRowsAtIndexPaths:@[indexPath]
-                                    withRowAnimation:UITableViewRowAnimationFade];
+    __weak CategoriesViewController *weakSelf = self;
+    [eventManager loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
+        weakSelf.customCalendars = calendars;
+        [weakSelf.categoriesTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }];
 }
 
 
@@ -113,11 +113,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    EditCategoriesViewController *editCategoriesVC = [EditCategoriesViewController new];
+    EKCalendar *cal = self.customCalendars[indexPath.row];
+    
+    EditCategoriesViewController *editCategoriesVC = [[EditCategoriesViewController alloc] initWithCalendar:cal];
     editCategoriesVC.indexOfCategory = indexPath.row;
     
     // Assign the checked row value to the index of the calendar's color
-    EKCalendar *cal = self.customCalendars[indexPath.row];
     UIColor *colorOfCal = [UIColor colorWithCGColor:cal.CGColor];
     for (NSInteger i = 0; i < [self.calendarUIColors count]; i++) {
         if ([colorOfCal isEqualToColor:self.calendarUIColors[i]]) {

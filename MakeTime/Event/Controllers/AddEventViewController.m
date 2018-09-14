@@ -55,20 +55,6 @@
 #pragma mark - View Lifecycle
 
 
-- (instancetype)initWithEvent:(EKEvent *)event {
-    self = [super initWithNibName:nil bundle:nil];
-    
-    if (self) {
-        self.eventTitle = event.title;
-        self.eventStartDate = event.startDate;
-        self.eventEndDate = event.endDate;
-        if (event.hasRecurrenceRules) self.eventHasRepeat = YES;
-        if (event.hasAlarms) self.eventHasAlarm = YES;
-    }
-    
-    return self;
-}
-
 - (instancetype)initWithCalendar:(EKCalendar *)calendar {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
@@ -82,17 +68,22 @@
     
     [self configureViewAndEventTableView];
     
-    // Get a reference to the app delegate for access to the instance of the EventManager's event store
-    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
+    [self loadData];
     
     [self customizeTitle];
     [self customizeBarButtonItems];
     
     [self registerCellSubclasses];
     [self addTapGestureRecognizer];
-    
-    [self customizeDatesAndOptions];
+}
+
+- (void)loadData {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self customizeDatesAndOptions];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.eventTableView reloadData];
+        });
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -216,6 +207,7 @@
         case 3: timeInterval = -600.0; break;
         case 4: timeInterval = -1800.0; break;
         case 5: timeInterval = -3600.0; break;
+        case 6: timeInterval = -86400.0; break;
         default: timeInterval = 0.0; wantsAlarm = NO; break;
     }
     
@@ -229,8 +221,9 @@
         NSLog(@"error: %@", [error localizedDescription]);
     } else {
         NSLog(@"%@", event);
-        [self dismissViewControllerAnimated:YES completion:nil];
         
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"calendarOrEventDataDidChange" object:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -285,7 +278,7 @@
             
         } else if (indexPath.row == 1) {
             eventCell.textLabel.text = @"Category";
-            EKCalendar *cal = self.customCalendars[self.indexOfCalendar];
+            EKCalendar *cal = self.calendar;
             eventCell.detailTextLabel.text = cal.title;
             return eventCell;
         }
@@ -568,18 +561,7 @@
     self.eventEndDate = [NSDate dateWithTimeIntervalSinceReferenceDate:endSeconds];
     
     self.repeatOptions = @[@"Never", @"Daily", @"Weekly", @"Monthly", @"Yearly"];
-    self.alarmOptions = @[@"None", @"At time of event", @"5 minutes before", @"10 minutes before", @"30 minutes before", @"1 hour before"];
-}
-
-- (void)giveGradientBackgroundColor {
-    // Create an overlay view to give a gradient background color
-    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 3000);
-    UIView *overlayView = [[UIView alloc] initWithFrame:frame];
-    UIColor *skyBlueLight = [UIColor colorWithHue:0.57 saturation:0.90 brightness:0.98 alpha:1.0];
-    overlayView.backgroundColor = [UIColor colorWithGradientStyle:UIGradientStyleTopToBottom
-                                                        withFrame:frame
-                                                        andColors:@[[UIColor whiteColor], skyBlueLight]];
-    [self.view insertSubview:overlayView atIndex:0];
+    self.alarmOptions = @[@"None", @"At time of event", @"5 minutes before", @"10 minutes before", @"30 minutes before", @"1 hour before", @"1 day before"];
 }
 
 - (void)registerCellSubclasses {
@@ -599,12 +581,7 @@
     UITapGestureRecognizer *tapGestureRecognizer = [[UITapGestureRecognizer alloc]
                                                     initWithTarget:self.view action:@selector(endEditing:)];
     tapGestureRecognizer.cancelsTouchesInView = NO;
-//    tapGestureRecognizer.delegate = self;
     [self.view addGestureRecognizer:tapGestureRecognizer];
-}
-
-- (void)endEditingOfTextField {
-    [self.textField resignFirstResponder];
 }
 
 

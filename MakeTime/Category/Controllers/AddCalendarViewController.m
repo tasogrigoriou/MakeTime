@@ -47,12 +47,9 @@
 
 - (void)loadCalendarData {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            [self assignCalendarColors];
-        });
+        [self assignCalendarColors];
         __weak AddCalendarViewController *weakSelf = self;
-        [[EventManager sharedManager] loadCustomCalendars:^(NSArray *calendars) {
+        [[EventManager sharedManager] loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.customCalendars = calendars;
                 [weakSelf.addCalendarTableView reloadData];
@@ -139,6 +136,7 @@
     } else {
         NSLog(@"Successfully saved calendar - %@", newCalendar.title);
         [eventManager saveCustomCalendarIdentifier:newCalendar.calendarIdentifier];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"calendarOrEventDataDidChange" object:nil];
     }
     
     [self.navigationController popViewControllerAnimated:YES];

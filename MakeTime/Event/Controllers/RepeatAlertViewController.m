@@ -33,12 +33,10 @@
    [self configureViewAndTableView];
    
    [self customizeNavBarTitle];
-//   [self giveGradientBackgroundColor];
-    self.view.backgroundColor = [UIColor whiteColor];
    [self customizeLeftBarButtonItem];
    
    self.repeatOptions = @[@"Never", @"Every day", @"Every week", @"Every month", @"Every year"];
-   self.alarmOptions = @[@"None", @"At time of event", @"5 minutes before", @"10 minutes before", @"30 minutes before", @"1 hour before"];
+   self.alarmOptions = @[@"None", @"At time of event", @"5 minutes before", @"10 minutes before", @"30 minutes before", @"1 hour before", @"1 day before"];
    
    // Call delegate method here to ensure that when we push the RepeatAlertVC, the boolean gets assigned to YES.
    [self.delegate didPushRepeatAlertViewController:YES];
@@ -119,7 +117,7 @@
    UINib *nib = [UINib nibWithNibName:@"CategoriesTableViewCell" bundle:nil];
    [self.repeatAlertTableView registerNib:nib forCellReuseIdentifier:@"CategoriesTableViewCell"];
    
-   self.view.backgroundColor = [UIColor clearColor];
+   self.view.backgroundColor = [UIColor whiteColor];
    self.repeatAlertTableView.backgroundColor = [UIColor clearColor];
    
    // Insert a dummy footer view which will only show amount of cells you returned in tableView:numberOfRowsInSection:

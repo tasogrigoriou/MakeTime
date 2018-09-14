@@ -12,6 +12,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MonthViewController">
             <connections>
                 <outlet property="calendar" destination="2yP-Oq-M0k" id="UT1-C9-uf9"/>
+                <outlet property="eventsTableView" destination="pO3-zT-bfL" id="w2D-SN-kj9"/>
                 <outlet property="leftButton" destination="PIX-ty-Fc3" id="TW2-g6-Uhb"/>
                 <outlet property="rightButton" destination="abH-hp-tz3" id="b13-ie-dCj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="aRf-OG-7P2"/>
@@ -45,10 +46,10 @@
                     </connections>
                 </button>
                 <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2yP-Oq-M0k" customClass="FSCalendar">
-                    <rect key="frame" x="0.0" y="10" width="375" height="340"/>
+                    <rect key="frame" x="0.0" y="10" width="375" height="300"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="340" id="ZO7-EI-g2X"/>
+                        <constraint firstAttribute="height" constant="300" id="ZO7-EI-g2X"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="color" keyPath="headerTitleColor">
@@ -57,23 +58,48 @@
                         <userDefinedRuntimeAttribute type="number" keyPath="headerMinimumDissolvedAlpha">
                             <real key="value" value="0.0"/>
                         </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="weekdayTextColor">
+                            <color key="value" red="0.31823925746533949" green="0.0064946787237824162" blue="0.62998383620689657" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="iBh-cC-M39"/>
                         <outlet property="delegate" destination="-1" id="wxf-ao-hdm"/>
                     </connections>
                 </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" contentInsetAdjustmentBehavior="never" style="grouped" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="10" contentViewInsetsToSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pO3-zT-bfL" userLabel="EventsTableView">
+                    <rect key="frame" x="0.0" y="310" width="375" height="357"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="WNL-xF-fQe"/>
+                        <outlet property="delegate" destination="-1" id="wr3-6I-5dN"/>
+                    </connections>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WiR-tL-Nxo" userLabel="Line View">
+                    <rect key="frame" x="0.0" y="310" width="375" height="1"/>
+                    <color key="backgroundColor" white="0.84642650460000002" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="0.5" id="FOj-Gc-DtF"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="2yP-Oq-M0k" secondAttribute="trailing" id="1rf-oF-5bF"/>
+                <constraint firstItem="WiR-tL-Nxo" firstAttribute="leading" secondItem="ISg-0N-9N0" secondAttribute="leading" id="9Qe-dk-IMj"/>
                 <constraint firstItem="PIX-ty-Fc3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JXR-C2-NyG"/>
                 <constraint firstAttribute="trailing" secondItem="abH-hp-tz3" secondAttribute="trailing" id="KhD-aN-sB8"/>
                 <constraint firstItem="abH-hp-tz3" firstAttribute="top" secondItem="ISg-0N-9N0" secondAttribute="top" id="P2Z-6U-su7"/>
+                <constraint firstItem="ISg-0N-9N0" firstAttribute="bottom" secondItem="pO3-zT-bfL" secondAttribute="bottom" id="PFw-8j-2t6"/>
+                <constraint firstItem="pO3-zT-bfL" firstAttribute="leading" secondItem="ISg-0N-9N0" secondAttribute="leading" id="QcE-9r-ipE"/>
                 <constraint firstItem="2yP-Oq-M0k" firstAttribute="top" secondItem="ISg-0N-9N0" secondAttribute="top" constant="-10" id="SIg-B6-Tyv"/>
+                <constraint firstItem="WiR-tL-Nxo" firstAttribute="top" secondItem="2yP-Oq-M0k" secondAttribute="bottom" id="UZH-JY-Bc2"/>
                 <constraint firstItem="PIX-ty-Fc3" firstAttribute="top" secondItem="ISg-0N-9N0" secondAttribute="top" id="XNj-Kn-D3T"/>
+                <constraint firstItem="pO3-zT-bfL" firstAttribute="top" secondItem="2yP-Oq-M0k" secondAttribute="bottom" id="ZHd-gE-taC"/>
                 <constraint firstItem="2yP-Oq-M0k" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ioe-3Y-emx"/>
+                <constraint firstItem="ISg-0N-9N0" firstAttribute="trailing" secondItem="pO3-zT-bfL" secondAttribute="trailing" id="ldA-yK-Pyu"/>
+                <constraint firstItem="ISg-0N-9N0" firstAttribute="trailing" secondItem="WiR-tL-Nxo" secondAttribute="trailing" id="ow1-Ry-N6a"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ISg-0N-9N0"/>
             <point key="canvasLocation" x="33.5" y="54.5"/>

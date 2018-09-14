@@ -112,7 +112,7 @@
     return isCustomCalendar;
 }
 
-- (void)loadCustomCalendars:(void (^)(NSArray *))completion {
+- (void)loadCustomCalendarsWithCompletion:(void (^)(NSArray *))completion {
     NSMutableArray *customCals = [NSMutableArray new];
     
     // Load default calendars (if we're on first launch of app)
@@ -281,6 +281,45 @@
     if (![self.eventStore removeEvent:event span:EKSpanFutureEvents error:&error]) {
         NSLog(@"%@", [error localizedDescription]);
     }
+}
+
+- (void)loadDateEventsInMonth:(NSDate *)month
+                   completion:(void (^)(NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents, NSArray<NSDate *> *daysInMonth))completion {
+    NSMutableDictionary<NSDate *, NSArray<EKEvent *> *> *mutableDateEvents = [[NSMutableDictionary alloc] init];
+    NSArray<NSDate *> *daysInMonth = [self getDaysInMonth:month];
+    for (NSDate *day in daysInMonth) {
+        NSArray<EKEvent *> *eventsOnDay = [self getEventsOfAllCalendars:self.customCalendars
+                                                         thatFallOnDate:day];
+        if ([eventsOnDay count] > 0) {
+            mutableDateEvents[day] = eventsOnDay;
+        }
+    }
+    
+    self.dateEvents = (NSDictionary<NSDate *, NSArray<EKEvent *> *> *)mutableDateEvents;
+    completion(self.dateEvents, daysInMonth);
+}
+
+- (NSArray<NSDate *> *)getDaysInMonth:(NSDate *)month {
+    NSMutableArray *result = [NSMutableArray array];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    
+    NSDate *startDate = month;
+    
+    NSDateComponents *endComps = [NSDateComponents new];
+    endComps.month = 1;
+    NSDate *endDate = [calendar dateByAddingComponents:endComps toDate:month options:0];
+    
+    NSDateComponents *comps = [calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay
+                                          fromDate:startDate];
+    NSDate *date = [calendar dateFromComponents:comps];
+    
+    while (![date isEqualToDate:endDate]) {
+        [result addObject:date];
+        comps.day += 1;
+        date = [calendar dateFromComponents:comps];
+    }
+    
+    return (NSArray *)result;
 }
 
 

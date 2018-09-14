@@ -115,6 +115,10 @@
                     self.alarmString = @"1 hour before";
                     self.alarmIndex = 5;
                 }
+                else if (alarm.relativeOffset == -86400.0) {
+                    self.alarmString = @"1 day before";
+                    self.alarmIndex = 6;
+                }
             }
         }
         
@@ -128,17 +132,22 @@
     
     [self configureViewAndEventTableView];
     
-    // Get a reference to the app delegate for access to the instance of the EventManager's event store
-    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    self.customCalendars = [[EventManager sharedManager] loadCustomCalendars];
+    [self loadData];
     
     [self customizeTitle];
     [self customizeBarButtonItems];
     
     [self registerCellSubclasses];
     [self addTapGestureRecognizer];
-    
-    [self customizeDatesAndOptions];
+}
+
+- (void)loadData {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+        [self customizeDatesAndOptions];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.editEventTableView reloadData];
+        });
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -212,8 +221,8 @@
 
 #pragma mark - IBActions
 
-- (IBAction)deleteCalendarButtonPressed:(id)sender {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Delete Calendar"
+- (IBAction)deleteEventButtonPressed:(id)sender {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Delete Event"
                                                                              message:@"Are you sure?"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
@@ -230,7 +239,7 @@
     [alertController addAction:noAction];
     [alertController addAction:yesAction];
     [self presentViewController:alertController animated:YES completion:nil];
-
+    
 }
 
 
@@ -296,6 +305,7 @@
         case 3: timeInterval = -600.0; break;
         case 4: timeInterval = -1800.0; break;
         case 5: timeInterval = -3600.0; break;
+        case 6: timeInterval = -86400.0; break;
         default: timeInterval = 0.0; wantsAlarm = NO; break;
     }
     
@@ -309,6 +319,8 @@
         NSLog(@"error: %@", [error localizedDescription]);
     } else {
         NSLog(@"Successfully saved event %@", event);
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"calendarOrEventDataDidChange" object:nil];
         [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
@@ -322,6 +334,7 @@
         NSLog(@"Successfully removed event");
     }
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"calendarOrEventDataDidChange" object:nil];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -615,7 +628,7 @@
     label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor colorWithCGColor:self.currentEvent.calendar.CGColor];
-//    label.text = self.eventTitle;
+    //    label.text = self.eventTitle;
     label.text = @"Edit Event";
     [label sizeToFit];
     self.navigationItem.titleView = label;

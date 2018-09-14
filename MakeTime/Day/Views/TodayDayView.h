@@ -16,6 +16,4 @@
 - (void)initHourLabelsWithCollectionView:(UICollectionView *)collectionView
                              sizeForView:(CGFloat)sizeForView;
 
-- (UIImage *)imageWithView:(UIView *)view size:(CGSize)size;
-
 @end

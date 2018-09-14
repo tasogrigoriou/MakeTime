@@ -25,13 +25,15 @@
 // Assigns the range (location, length) of the event within a particular day.
 @property (assign, nonatomic) NSRange *timespanOfEvent;
 
+@property (strong, nonatomic) NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents;
+
 + (id)sharedManager;
 
 - (void)saveCustomCalendarIdentifier:(NSString *)identifier;
 - (void)removeCustomCalendarIdentifier:(NSString *)identifier;
 - (BOOL)isCalendarCustomWithIdentifier:(NSString *)identifier;
 
-- (void)loadCustomCalendars:(void (^)(NSArray *calendars))completion;
+- (void)loadCustomCalendarsWithCompletion:(void (^)(NSArray *calendars))completion;
 - (NSArray *)loadDefaultCalendars;
 
 // Method that gets events of all custom calendars on a particular day
@@ -39,5 +41,8 @@
 - (NSArray *)getEventsOfAllCalendars:(NSArray<EKCalendar *> *)calendars thatFallInWeek:(NSDate *)date;
 
 - (void)deleteEventWithIdentifier:(NSString *)identifier;
+
+- (void)loadDateEventsInMonth:(NSDate *)month
+                   completion:(void (^)(NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents, NSArray<NSDate *> *daysInMonth))completion;
 
 @end

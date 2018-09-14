@@ -11,6 +11,7 @@
 #import "WeekViewController.h"
 #import "MonthViewController.h"
 #import "CategoriesViewController.h"
+#import "ToDoListViewController.h"
 
 @interface MakeTimeTabBarController () <UITabBarControllerDelegate>
 
@@ -24,13 +25,16 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        [self commonInit];
         [self initViewControllers];
         [self setupTabBarItems];
-        
-        self.delegate = self;
-        self.lastSelectedIndex = 0;
     }
     return self;
+}
+
+- (void)commonInit {
+    self.delegate = self;
+    self.lastSelectedIndex = 0;
 }
 
 - (void)viewDidLoad {
@@ -86,10 +90,14 @@
     MonthViewController *monthViewController = [MonthViewController new];
     UINavigationController *monthNavigationController = [[UINavigationController alloc] initWithRootViewController:monthViewController];
 
-    CategoriesViewController *categoriesViewController = [CategoriesViewController new];
-    UINavigationController *categoriesNavigationController = [[UINavigationController alloc] initWithRootViewController:categoriesViewController];
+//    CategoriesViewController *categoriesViewController = [CategoriesViewController new];
+//    UINavigationController *categoriesNavigationController = [[UINavigationController alloc] initWithRootViewController:categoriesViewController];
+    ToDoListViewController *toDoListViewController = [ToDoListViewController new];
+    UINavigationController *toDoListNavigationController = [[UINavigationController alloc] initWithRootViewController:toDoListViewController];
 
-    self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, categoriesNavigationController];
+//    self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, categoriesNavigationController];
+    self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, toDoListNavigationController];
+
     self.selectedViewController = todayNavigationController;
     self.lastSelectedViewController = todayNavigationController;
 }
@@ -110,9 +118,13 @@
     self.tabBar.items[2].title = @"Month";
     self.tabBar.items[2].tag = 2;
     
+//    self.tabBar.items[3].image = [UIImage imageNamed:@"menu.png"];
+//    self.tabBar.items[3].selectedImage = [UIImage imageNamed:@"menu.png"];
+//    self.tabBar.items[3].title = @"Categories";
+//    self.tabBar.items[3].tag = 3;
     self.tabBar.items[3].image = [UIImage imageNamed:@"menu.png"];
     self.tabBar.items[3].selectedImage = [UIImage imageNamed:@"menu.png"];
-    self.tabBar.items[3].title = @"Categories";
+    self.tabBar.items[3].title = @"To Do List";
     self.tabBar.items[3].tag = 3;
 }
 

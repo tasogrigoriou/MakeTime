@@ -89,7 +89,13 @@
     NSString *startDateTitle = [formatter stringFromDate:self.event.startDate];
     NSString *endDateTitle = [formatter stringFromDate:self.event.endDate];
     
-    self.textView.text = [NSString stringWithFormat:@"Calendar: %@ \nEvent: %@ \nStart: %@ \nEnd: %@", self.event.calendar.title, self.event.title, startDateTitle, endDateTitle];
+    NSString *noEventTitle = @"No Title";
+    
+    if (self.event.title.length != 0) {
+        self.textView.text = [NSString stringWithFormat:@"Calendar: %@ \nEvent: %@ \nStart: %@ \nEnd: %@", self.event.calendar.title, self.event.title, startDateTitle, endDateTitle];
+    } else {
+        self.textView.text = [NSString stringWithFormat:@"Calendar: %@ \nEvent: %@ \nStart: %@ \nEnd: %@", self.event.calendar.title, noEventTitle, startDateTitle, endDateTitle];
+    }
 }
 
 - (void)setupTapRecognizer {
