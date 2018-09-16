@@ -70,6 +70,33 @@
 		9F5617261E3D62AF00C92525 /* UINavigationController+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5617181E3D62AF00C92525 /* UINavigationController+Chameleon.m */; };
 		9F5617271E3D62AF00C92525 /* UIView+ChameleonPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F56171A1E3D62AF00C92525 /* UIView+ChameleonPrivate.m */; };
 		9F5617281E3D62AF00C92525 /* UIViewController+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F56171C1E3D62AF00C92525 /* UIViewController+Chameleon.m */; };
+		9F594DF0214CE91E00FB5949 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FEDC01121471C840016B39D /* Charts.framework */; };
+		9F594DF1214CE91E00FB5949 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9FEDC01121471C840016B39D /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9F594DF8214CED9600FB5949 /* PieChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594DF6214CED9600FB5949 /* PieChartViewController.swift */; };
+		9F594DF9214CED9600FB5949 /* PieChartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F594DF7214CED9600FB5949 /* PieChartViewController.xib */; };
+		9F594E2A214CF65500FB5949 /* PieSliceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E05214CF65400FB5949 /* PieSliceDelegate.swift */; };
+		9F594E2B214CF65500FB5949 /* PieSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E06214CF65400FB5949 /* PieSlice.swift */; };
+		9F594E2C214CF65500FB5949 /* PieSliceLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E07214CF65400FB5949 /* PieSliceLayer.swift */; };
+		9F594E2D214CF65500FB5949 /* PieChartDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E09214CF65400FB5949 /* PieChartDelegate.swift */; };
+		9F594E2E214CF65500FB5949 /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E0A214CF65400FB5949 /* PieChart.swift */; };
+		9F594E2F214CF65500FB5949 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E0C214CF65400FB5949 /* Globals.swift */; };
+		9F594E30214CF65500FB5949 /* CGSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E0E214CF65400FB5949 /* CGSize.swift */; };
+		9F594E31214CF65500FB5949 /* FloatingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E0F214CF65400FB5949 /* FloatingPoint.swift */; };
+		9F594E32214CF65500FB5949 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E10214CF65400FB5949 /* Int.swift */; };
+		9F594E33214CF65500FB5949 /* CGPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E11214CF65400FB5949 /* CGPoint.swift */; };
+		9F594E34214CF65500FB5949 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E12214CF65400FB5949 /* CGRect.swift */; };
+		9F594E35214CF65500FB5949 /* PiePlainTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E16214CF65400FB5949 /* PiePlainTextLayer.swift */; };
+		9F594E36214CF65500FB5949 /* AlphaPieLineTextLayerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E19214CF65400FB5949 /* AlphaPieLineTextLayerAnimator.swift */; };
+		9F594E37214CF65500FB5949 /* PieLineTextLayerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E1A214CF65400FB5949 /* PieLineTextLayerAnimator.swift */; };
+		9F594E38214CF65500FB5949 /* PieLineTextLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E1B214CF65400FB5949 /* PieLineTextLayer.swift */; };
+		9F594E39214CF65500FB5949 /* PieChartLabelSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E1D214CF65400FB5949 /* PieChartLabelSettings.swift */; };
+		9F594E3A214CF65500FB5949 /* PieViewLayerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E20214CF65400FB5949 /* PieViewLayerAnimator.swift */; };
+		9F594E3B214CF65500FB5949 /* AlphaPieViewLayerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E21214CF65400FB5949 /* AlphaPieViewLayerAnimator.swift */; };
+		9F594E3C214CF65500FB5949 /* PieCustomViewsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E22214CF65400FB5949 /* PieCustomViewsLayer.swift */; };
+		9F594E3D214CF65500FB5949 /* PieChartLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E23214CF65400FB5949 /* PieChartLayer.swift */; };
+		9F594E3E214CF65500FB5949 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F594E26214CF65400FB5949 /* Info.plist */; };
+		9F594E3F214CF65500FB5949 /* PieSliceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E28214CF65400FB5949 /* PieSliceModel.swift */; };
+		9F594E40214CF65500FB5949 /* PieSliceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E29214CF65400FB5949 /* PieSliceData.swift */; };
 		9F60B8CE2135138B00E300BF /* MakeTimeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F60B8CD2135138B00E300BF /* MakeTimeTabBarController.m */; };
 		9F71EF3C1E21A22C00CD23DA /* TodayCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F71EF3A1E21A22C00CD23DA /* TodayCollectionViewCell.m */; };
 		9F71EF3D1E21A22C00CD23DA /* TodayCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F71EF3B1E21A22C00CD23DA /* TodayCollectionViewCell.xib */; };
@@ -150,6 +177,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		9F594DF2214CE91E00FB5949 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9FEDC00B21471C840016B39D /* Charts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A58A4ED274A941CA248EA921;
+			remoteInfo = Charts;
+		};
 		9FEDC01021471C840016B39D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9FEDC00B21471C840016B39D /* Charts.xcodeproj */;
@@ -164,14 +198,21 @@
 			remoteGlobalIDString = 1CBBC58C6CE1EBEE9852CE41;
 			remoteInfo = ChartsTests;
 		};
-		9FEDC01421471C950016B39D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9FEDC00B21471C840016B39D /* Charts.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A58A4ED274A941CA248EA921;
-			remoteInfo = Charts;
-		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9F594DF4214CE91E00FB5949 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				9F594DF1214CE91E00FB5949 /* Charts.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		9F09306B1E1CB787007A33F6 /* write.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = write.png; sourceTree = "<group>"; };
@@ -273,6 +314,57 @@
 		9F56171A1E3D62AF00C92525 /* UIView+ChameleonPrivate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ChameleonPrivate.m"; sourceTree = "<group>"; };
 		9F56171B1E3D62AF00C92525 /* UIViewController+Chameleon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Chameleon.h"; sourceTree = "<group>"; };
 		9F56171C1E3D62AF00C92525 /* UIViewController+Chameleon.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Chameleon.m"; sourceTree = "<group>"; };
+		9F594DF5214CED9600FB5949 /* MakeTime-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MakeTime-Bridging-Header.h"; sourceTree = "<group>"; };
+		9F594DF6214CED9600FB5949 /* PieChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartViewController.swift; sourceTree = "<group>"; };
+		9F594DF7214CED9600FB5949 /* PieChartViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PieChartViewController.xib; sourceTree = "<group>"; };
+		9F594E05214CF65400FB5949 /* PieSliceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieSliceDelegate.swift; sourceTree = "<group>"; };
+		9F594E06214CF65400FB5949 /* PieSlice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieSlice.swift; sourceTree = "<group>"; };
+		9F594E07214CF65400FB5949 /* PieSliceLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieSliceLayer.swift; sourceTree = "<group>"; };
+		9F594E09214CF65400FB5949 /* PieChartDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartDelegate.swift; sourceTree = "<group>"; };
+		9F594E0A214CF65400FB5949 /* PieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
+		9F594E0C214CF65400FB5949 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		9F594E0E214CF65400FB5949 /* CGSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
+		9F594E0F214CF65400FB5949 /* FloatingPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatingPoint.swift; sourceTree = "<group>"; };
+		9F594E10214CF65400FB5949 /* Int.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
+		9F594E11214CF65400FB5949 /* CGPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
+		9F594E12214CF65400FB5949 /* CGRect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
+		9F594E16214CF65400FB5949 /* PiePlainTextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PiePlainTextLayer.swift; sourceTree = "<group>"; };
+		9F594E19214CF65400FB5949 /* AlphaPieLineTextLayerAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaPieLineTextLayerAnimator.swift; sourceTree = "<group>"; };
+		9F594E1A214CF65400FB5949 /* PieLineTextLayerAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieLineTextLayerAnimator.swift; sourceTree = "<group>"; };
+		9F594E1B214CF65400FB5949 /* PieLineTextLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieLineTextLayer.swift; sourceTree = "<group>"; };
+		9F594E1D214CF65400FB5949 /* PieChartLabelSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartLabelSettings.swift; sourceTree = "<group>"; };
+		9F594E20214CF65400FB5949 /* PieViewLayerAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieViewLayerAnimator.swift; sourceTree = "<group>"; };
+		9F594E21214CF65400FB5949 /* AlphaPieViewLayerAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlphaPieViewLayerAnimator.swift; sourceTree = "<group>"; };
+		9F594E22214CF65400FB5949 /* PieCustomViewsLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieCustomViewsLayer.swift; sourceTree = "<group>"; };
+		9F594E23214CF65400FB5949 /* PieChartLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartLayer.swift; sourceTree = "<group>"; };
+		9F594E25214CF65400FB5949 /* PieCharts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieCharts.h; sourceTree = "<group>"; };
+		9F594E26214CF65400FB5949 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F594E28214CF65400FB5949 /* PieSliceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieSliceModel.swift; sourceTree = "<group>"; };
+		9F594E29214CF65400FB5949 /* PieSliceData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieSliceData.swift; sourceTree = "<group>"; };
+		9F594E44214CF84C00FB5949 /* PieSliceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSliceDelegate.swift; sourceTree = "<group>"; };
+		9F594E45214CF84C00FB5949 /* PieSlice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSlice.swift; sourceTree = "<group>"; };
+		9F594E46214CF84C00FB5949 /* PieSliceLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSliceLayer.swift; sourceTree = "<group>"; };
+		9F594E48214CF84C00FB5949 /* PieChartDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartDelegate.swift; sourceTree = "<group>"; };
+		9F594E49214CF84C00FB5949 /* PieChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
+		9F594E4B214CF84C00FB5949 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		9F594E4D214CF84C00FB5949 /* CGSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGSize.swift; sourceTree = "<group>"; };
+		9F594E4E214CF84C00FB5949 /* FloatingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPoint.swift; sourceTree = "<group>"; };
+		9F594E4F214CF84C00FB5949 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
+		9F594E50214CF84C00FB5949 /* CGPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGPoint.swift; sourceTree = "<group>"; };
+		9F594E51214CF84C00FB5949 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
+		9F594E55214CF84C00FB5949 /* PiePlainTextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PiePlainTextLayer.swift; sourceTree = "<group>"; };
+		9F594E58214CF84C00FB5949 /* AlphaPieLineTextLayerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphaPieLineTextLayerAnimator.swift; sourceTree = "<group>"; };
+		9F594E59214CF84C00FB5949 /* PieLineTextLayerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieLineTextLayerAnimator.swift; sourceTree = "<group>"; };
+		9F594E5A214CF84C00FB5949 /* PieLineTextLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieLineTextLayer.swift; sourceTree = "<group>"; };
+		9F594E5C214CF84C00FB5949 /* PieChartLabelSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartLabelSettings.swift; sourceTree = "<group>"; };
+		9F594E5F214CF84C00FB5949 /* PieViewLayerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieViewLayerAnimator.swift; sourceTree = "<group>"; };
+		9F594E60214CF84C00FB5949 /* AlphaPieViewLayerAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlphaPieViewLayerAnimator.swift; sourceTree = "<group>"; };
+		9F594E61214CF84C00FB5949 /* PieCustomViewsLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieCustomViewsLayer.swift; sourceTree = "<group>"; };
+		9F594E62214CF84C00FB5949 /* PieChartLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartLayer.swift; sourceTree = "<group>"; };
+		9F594E64214CF84C00FB5949 /* PieCharts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PieCharts.h; sourceTree = "<group>"; };
+		9F594E65214CF84C00FB5949 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F594E67214CF84C00FB5949 /* PieSliceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSliceModel.swift; sourceTree = "<group>"; };
+		9F594E68214CF84C00FB5949 /* PieSliceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSliceData.swift; sourceTree = "<group>"; };
 		9F60B8CC2135138B00E300BF /* MakeTimeTabBarController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MakeTimeTabBarController.h; sourceTree = "<group>"; };
 		9F60B8CD2135138B00E300BF /* MakeTimeTabBarController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MakeTimeTabBarController.m; sourceTree = "<group>"; };
 		9F71EF391E21A22C00CD23DA /* TodayCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TodayCollectionViewCell.h; sourceTree = "<group>"; };
@@ -416,6 +508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F37B2671E47046100C8443C /* EventKit.framework in Frameworks */,
+				9F594DF0214CE91E00FB5949 /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,6 +704,351 @@
 				9F56171C1E3D62AF00C92525 /* UIViewController+Chameleon.m */,
 			);
 			path = Chameleon;
+			sourceTree = "<group>";
+		};
+		9F594DE4214CC29000FB5949 /* Pie Chart */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E41214CF84C00FB5949 /* PieCharts */,
+				9F594DE8214CC2BA00FB5949 /* Models */,
+				9F594DE7214CC2B400FB5949 /* Views */,
+				9F594DE6214CC2AA00FB5949 /* Controllers */,
+			);
+			path = "Pie Chart";
+			sourceTree = "<group>";
+		};
+		9F594DE6214CC2AA00FB5949 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				9F594DF6214CED9600FB5949 /* PieChartViewController.swift */,
+				9F594DF7214CED9600FB5949 /* PieChartViewController.xib */,
+				9F594DF5214CED9600FB5949 /* MakeTime-Bridging-Header.h */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		9F594DE7214CC2B400FB5949 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9F594DE8214CC2BA00FB5949 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9F594DEE214CE7F900FB5949 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9F594E02214CF65400FB5949 /* PieCharts */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E03214CF65400FB5949 /* Core */,
+				9F594E0B214CF65400FB5949 /* Util */,
+				9F594E0D214CF65400FB5949 /* Extensions */,
+				9F594E13214CF65400FB5949 /* Layer */,
+				9F594E24214CF65400FB5949 /* Supporting files */,
+				9F594E27214CF65400FB5949 /* Model */,
+			);
+			name = PieCharts;
+			path = "../Downloads/PieCharts-master/PieCharts";
+			sourceTree = "<group>";
+		};
+		9F594E03214CF65400FB5949 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E04214CF65400FB5949 /* Slice */,
+				9F594E08214CF65400FB5949 /* Chart */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		9F594E04214CF65400FB5949 /* Slice */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E05214CF65400FB5949 /* PieSliceDelegate.swift */,
+				9F594E06214CF65400FB5949 /* PieSlice.swift */,
+				9F594E07214CF65400FB5949 /* PieSliceLayer.swift */,
+			);
+			path = Slice;
+			sourceTree = "<group>";
+		};
+		9F594E08214CF65400FB5949 /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E09214CF65400FB5949 /* PieChartDelegate.swift */,
+				9F594E0A214CF65400FB5949 /* PieChart.swift */,
+			);
+			path = Chart;
+			sourceTree = "<group>";
+		};
+		9F594E0B214CF65400FB5949 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E0C214CF65400FB5949 /* Globals.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		9F594E0D214CF65400FB5949 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E0E214CF65400FB5949 /* CGSize.swift */,
+				9F594E0F214CF65400FB5949 /* FloatingPoint.swift */,
+				9F594E10214CF65400FB5949 /* Int.swift */,
+				9F594E11214CF65400FB5949 /* CGPoint.swift */,
+				9F594E12214CF65400FB5949 /* CGRect.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9F594E13214CF65400FB5949 /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E14214CF65400FB5949 /* Impl */,
+				9F594E23214CF65400FB5949 /* PieChartLayer.swift */,
+			);
+			path = Layer;
+			sourceTree = "<group>";
+		};
+		9F594E14214CF65400FB5949 /* Impl */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E15214CF65400FB5949 /* PlainText */,
+				9F594E17214CF65400FB5949 /* LineText */,
+				9F594E1C214CF65400FB5949 /* Common */,
+				9F594E1E214CF65400FB5949 /* View */,
+			);
+			path = Impl;
+			sourceTree = "<group>";
+		};
+		9F594E15214CF65400FB5949 /* PlainText */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E16214CF65400FB5949 /* PiePlainTextLayer.swift */,
+			);
+			path = PlainText;
+			sourceTree = "<group>";
+		};
+		9F594E17214CF65400FB5949 /* LineText */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E18214CF65400FB5949 /* Anim */,
+				9F594E1B214CF65400FB5949 /* PieLineTextLayer.swift */,
+			);
+			path = LineText;
+			sourceTree = "<group>";
+		};
+		9F594E18214CF65400FB5949 /* Anim */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E19214CF65400FB5949 /* AlphaPieLineTextLayerAnimator.swift */,
+				9F594E1A214CF65400FB5949 /* PieLineTextLayerAnimator.swift */,
+			);
+			path = Anim;
+			sourceTree = "<group>";
+		};
+		9F594E1C214CF65400FB5949 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E1D214CF65400FB5949 /* PieChartLabelSettings.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		9F594E1E214CF65400FB5949 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E1F214CF65400FB5949 /* Anim */,
+				9F594E22214CF65400FB5949 /* PieCustomViewsLayer.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9F594E1F214CF65400FB5949 /* Anim */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E20214CF65400FB5949 /* PieViewLayerAnimator.swift */,
+				9F594E21214CF65400FB5949 /* AlphaPieViewLayerAnimator.swift */,
+			);
+			path = Anim;
+			sourceTree = "<group>";
+		};
+		9F594E24214CF65400FB5949 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E25214CF65400FB5949 /* PieCharts.h */,
+				9F594E26214CF65400FB5949 /* Info.plist */,
+			);
+			path = "Supporting files";
+			sourceTree = "<group>";
+		};
+		9F594E27214CF65400FB5949 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E28214CF65400FB5949 /* PieSliceModel.swift */,
+				9F594E29214CF65400FB5949 /* PieSliceData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		9F594E41214CF84C00FB5949 /* PieCharts */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E42214CF84C00FB5949 /* Core */,
+				9F594E4A214CF84C00FB5949 /* Util */,
+				9F594E4C214CF84C00FB5949 /* Extensions */,
+				9F594E52214CF84C00FB5949 /* Layer */,
+				9F594E63214CF84C00FB5949 /* Supporting files */,
+				9F594E66214CF84C00FB5949 /* Model */,
+			);
+			path = PieCharts;
+			sourceTree = "<group>";
+		};
+		9F594E42214CF84C00FB5949 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E43214CF84C00FB5949 /* Slice */,
+				9F594E47214CF84C00FB5949 /* Chart */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		9F594E43214CF84C00FB5949 /* Slice */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E44214CF84C00FB5949 /* PieSliceDelegate.swift */,
+				9F594E45214CF84C00FB5949 /* PieSlice.swift */,
+				9F594E46214CF84C00FB5949 /* PieSliceLayer.swift */,
+			);
+			path = Slice;
+			sourceTree = "<group>";
+		};
+		9F594E47214CF84C00FB5949 /* Chart */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E48214CF84C00FB5949 /* PieChartDelegate.swift */,
+				9F594E49214CF84C00FB5949 /* PieChart.swift */,
+			);
+			path = Chart;
+			sourceTree = "<group>";
+		};
+		9F594E4A214CF84C00FB5949 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E4B214CF84C00FB5949 /* Globals.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		9F594E4C214CF84C00FB5949 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E4D214CF84C00FB5949 /* CGSize.swift */,
+				9F594E4E214CF84C00FB5949 /* FloatingPoint.swift */,
+				9F594E4F214CF84C00FB5949 /* Int.swift */,
+				9F594E50214CF84C00FB5949 /* CGPoint.swift */,
+				9F594E51214CF84C00FB5949 /* CGRect.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9F594E52214CF84C00FB5949 /* Layer */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E53214CF84C00FB5949 /* Impl */,
+				9F594E62214CF84C00FB5949 /* PieChartLayer.swift */,
+			);
+			path = Layer;
+			sourceTree = "<group>";
+		};
+		9F594E53214CF84C00FB5949 /* Impl */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E54214CF84C00FB5949 /* PlainText */,
+				9F594E56214CF84C00FB5949 /* LineText */,
+				9F594E5B214CF84C00FB5949 /* Common */,
+				9F594E5D214CF84C00FB5949 /* View */,
+			);
+			path = Impl;
+			sourceTree = "<group>";
+		};
+		9F594E54214CF84C00FB5949 /* PlainText */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E55214CF84C00FB5949 /* PiePlainTextLayer.swift */,
+			);
+			path = PlainText;
+			sourceTree = "<group>";
+		};
+		9F594E56214CF84C00FB5949 /* LineText */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E57214CF84C00FB5949 /* Anim */,
+				9F594E5A214CF84C00FB5949 /* PieLineTextLayer.swift */,
+			);
+			path = LineText;
+			sourceTree = "<group>";
+		};
+		9F594E57214CF84C00FB5949 /* Anim */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E58214CF84C00FB5949 /* AlphaPieLineTextLayerAnimator.swift */,
+				9F594E59214CF84C00FB5949 /* PieLineTextLayerAnimator.swift */,
+			);
+			path = Anim;
+			sourceTree = "<group>";
+		};
+		9F594E5B214CF84C00FB5949 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E5C214CF84C00FB5949 /* PieChartLabelSettings.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		9F594E5D214CF84C00FB5949 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E5E214CF84C00FB5949 /* Anim */,
+				9F594E61214CF84C00FB5949 /* PieCustomViewsLayer.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		9F594E5E214CF84C00FB5949 /* Anim */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E5F214CF84C00FB5949 /* PieViewLayerAnimator.swift */,
+				9F594E60214CF84C00FB5949 /* AlphaPieViewLayerAnimator.swift */,
+			);
+			path = Anim;
+			sourceTree = "<group>";
+		};
+		9F594E63214CF84C00FB5949 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E64214CF84C00FB5949 /* PieCharts.h */,
+				9F594E65214CF84C00FB5949 /* Info.plist */,
+			);
+			path = "Supporting files";
+			sourceTree = "<group>";
+		};
+		9F594E66214CF84C00FB5949 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9F594E67214CF84C00FB5949 /* PieSliceModel.swift */,
+				9F594E68214CF84C00FB5949 /* PieSliceData.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		9F60B8CB2134CB6B00E300BF /* Core */ = {
@@ -810,10 +1248,12 @@
 		9FBA79271DCC5CF1000AE696 = {
 			isa = PBXGroup;
 			children = (
+				9F594E02214CF65400FB5949 /* PieCharts */,
 				9FEDC00B21471C840016B39D /* Charts.xcodeproj */,
 				9FA26DD92127E3F40053F628 /* LaunchScreen2.storyboard */,
 				9F32CF5B1ED4839100922048 /* Assets */,
 				9FBA79321DCC5CF1000AE696 /* MakeTime */,
+				9F594DEE214CE7F900FB5949 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -838,6 +1278,7 @@
 				9F32CF531ED480ED00922048 /* Rear */,
 				9F9D2C4B1EDE1102006167EB /* Week */,
 				9F4DBDF7214AEBA40077CEF6 /* ToDoList */,
+				9F594DE4214CC29000FB5949 /* Pie Chart */,
 			);
 			path = MakeTime;
 			sourceTree = "<group>";
@@ -1033,11 +1474,12 @@
 				9FBA792C1DCC5CF1000AE696 /* Sources */,
 				9FBA792D1DCC5CF1000AE696 /* Frameworks */,
 				9FBA792E1DCC5CF1000AE696 /* Resources */,
+				9F594DF4214CE91E00FB5949 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				9FEDC01521471C950016B39D /* PBXTargetDependency */,
+				9F594DF3214CE91E00FB5949 /* PBXTargetDependency */,
 			);
 			name = MakeTime;
 			productName = MakeTime;
@@ -1056,6 +1498,7 @@
 					9FBA792F1DCC5CF1000AE696 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 6X7DGG368N;
+						LastSwiftMigration = 0940;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.DataProtection = {
@@ -1123,6 +1566,7 @@
 				9F14B88D1DEBE43700ADBE0C /* TodayViewController.xib in Resources */,
 				9F4035B21F11F4C200EA1B16 /* EditCategoriesViewController.xib in Resources */,
 				9F17EC861E39B78700019CDC /* jadecolor.jpg in Resources */,
+				9F594E3E214CF65500FB5949 /* Info.plist in Resources */,
 				9F0930811E1EF319007A33F6 /* menu@2x.png in Resources */,
 				9F09306C1E1CB787007A33F6 /* write.png in Resources */,
 				9F71EF3D1E21A22C00CD23DA /* TodayCollectionViewCell.xib in Resources */,
@@ -1146,6 +1590,7 @@
 				9FB96D081EF3497800BDC3BA /* CategoriesTableViewCell.xib in Resources */,
 				9FE19E8C1E14D2AC00CB8439 /* home.png in Resources */,
 				9FAE9A751EE83F31002F247F /* CalendarViewController.xib in Resources */,
+				9F594DF9214CED9600FB5949 /* PieChartViewController.xib in Resources */,
 				9F1B5BC81F4AB61D00F20370 /* WeekCollectionReusableView.xib in Resources */,
 				9F14B8921DEBE44800ADBE0C /* WeekViewController.xib in Resources */,
 				9F21FD091E188A3D00BBE626 /* clock.png in Resources */,
@@ -1172,11 +1617,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F4DBDFC214AEBD80077CEF6 /* ToDoListViewController.m in Sources */,
+				9F594E36214CF65500FB5949 /* AlphaPieLineTextLayerAnimator.swift in Sources */,
 				9FF1FA871F54A5E80090F33E /* TodayCollectionViewDayCell.m in Sources */,
 				9F4035B61F13577C00EA1B16 /* EditCategoriesTableViewCell.m in Sources */,
 				9FAE9A811EE9D224002F247F /* CalendarCollectionViewCell.m in Sources */,
+				9F594E31214CF65500FB5949 /* FloatingPoint.swift in Sources */,
 				9FFA42031E92015C00832C31 /* TodayCollectionViewLayout.m in Sources */,
+				9F594E35214CF65500FB5949 /* PiePlainTextLayer.swift in Sources */,
 				9F76F47D1E5FCEB100641875 /* FSCalendarHeaderView.m in Sources */,
+				9F594DF8214CED9600FB5949 /* PieChartViewController.swift in Sources */,
 				9F76F4741E5FCEB100641875 /* FSCalendarAppearance.m in Sources */,
 				9FCA3EF81E48594E00A016FF /* CalendarLineReusableView.m in Sources */,
 				9FBA79381DCC5CF1000AE696 /* AppDelegate.m in Sources */,
@@ -1193,28 +1642,38 @@
 				9FEDC02A2148E1CD0016B39D /* EventsModel.m in Sources */,
 				9FCA32F3214AF5260062ABCF /* ToDoTableViewCell.m in Sources */,
 				9F76F4731E5FCEB100641875 /* FSCalendar.m in Sources */,
+				9F594E2B214CF65500FB5949 /* PieSlice.swift in Sources */,
+				9F594E30214CF65500FB5949 /* CGSize.swift in Sources */,
 				9FBA3299214B6E790013C300 /* EventsViewController.m in Sources */,
 				9F71EF411E23784B00CD23DA /* RearCollectionViewCell.m in Sources */,
 				9F1B5BBF1F4AB58F00F20370 /* WeekCollectionViewCell.m in Sources */,
 				9FCA3EF21E4851E400A016FF /* CalendarHeaderView.m in Sources */,
 				9F14B8911DEBE44800ADBE0C /* WeekViewController.m in Sources */,
+				9F594E2E214CF65500FB5949 /* PieChart.swift in Sources */,
 				9F14B8A31DEBF54800ADBE0C /* RearViewController.m in Sources */,
 				9FAE9A791EE84997002F247F /* AddEventViewController.m in Sources */,
 				9F5617281E3D62AF00C92525 /* UIViewController+Chameleon.m in Sources */,
+				9F594E40214CF65500FB5949 /* PieSliceData.swift in Sources */,
+				9F594E3D214CF65500FB5949 /* PieChartLayer.swift in Sources */,
 				9F76F4791E5FCEB100641875 /* FSCalendarConstants.m in Sources */,
 				9FC695E01F266B2600006F13 /* EventTextFieldTableViewCell.m in Sources */,
 				9F5617271E3D62AF00C92525 /* UIView+ChameleonPrivate.m in Sources */,
 				9F853301214468C0007B55CA /* WeekDayLineView.m in Sources */,
 				9FCA32F8214B334D0062ABCF /* PersistenceService.m in Sources */,
 				9F1B5BC31F4AB60A00F20370 /* WeekCollectionViewLayout.m in Sources */,
+				9F594E2A214CF65500FB5949 /* PieSliceDelegate.swift in Sources */,
 				9FCB504B1EEA0667001A7A3D /* UINavigationController+SwipeBack.m in Sources */,
 				9F60B8CE2135138B00E300BF /* MakeTimeTabBarController.m in Sources */,
 				9F76F47E1E5FCEB100641875 /* FSCalendarScopeHandle.m in Sources */,
 				9FBC52F91EFE13C4001BF4CD /* AddCalendarViewController.m in Sources */,
+				9F594E2F214CF65500FB5949 /* Globals.swift in Sources */,
 				9FBA79411DCC5CF1000AE696 /* MakeTime.xcdatamodeld in Sources */,
+				9F594E33214CF65500FB5949 /* CGPoint.swift in Sources */,
 				9FCA3309214B3E5B0062ABCF /* Task+CoreDataClass.m in Sources */,
 				9F78CB281E48302D00D70867 /* CalendarViewMonthCell.m in Sources */,
 				9FD948881F325DC800483302 /* TodayCollectionReusableView.m in Sources */,
+				9F594E32214CF65500FB5949 /* Int.swift in Sources */,
+				9F594E34214CF65500FB5949 /* CGRect.swift in Sources */,
 				9F76F47A1E5FCEB100641875 /* FSCalendarDelegationFactory.m in Sources */,
 				9F4035B11F11F4C200EA1B16 /* EditCategoriesViewController.m in Sources */,
 				9F1B5BC71F4AB61D00F20370 /* WeekCollectionReusableView.m in Sources */,
@@ -1228,36 +1687,45 @@
 				9F5617261E3D62AF00C92525 /* UINavigationController+Chameleon.m in Sources */,
 				9FCB504C1EEA0667001A7A3D /* UIViewController+SwipeBack.m in Sources */,
 				9F76F4801E5FCEB100641875 /* FSCalendarTransitionCoordinator.m in Sources */,
+				9F594E3F214CF65500FB5949 /* PieSliceModel.swift in Sources */,
 				9F56171F1E3D62AF00C92525 /* NSArray+Chameleon.m in Sources */,
 				9F76F4771E5FCEB100641875 /* FSCalendarCollectionView.m in Sources */,
+				9F594E2D214CF65500FB5949 /* PieChartDelegate.swift in Sources */,
 				9FCA330A214B3E5B0062ABCF /* Task+CoreDataProperties.m in Sources */,
 				9F441766213D9D05009FD17D /* TodayDayView.m in Sources */,
 				9F76F4811E5FCEB100641875 /* FSCalendarWeekdayView.m in Sources */,
 				9F1ED88E1FF8B06E006FF015 /* EditEventViewController.m in Sources */,
 				9F47B8371F44C8C00044700E /* EventComponents.m in Sources */,
+				9F594E39214CF65500FB5949 /* PieChartLabelSettings.swift in Sources */,
 				9FB96D071EF3497800BDC3BA /* CategoriesTableViewCell.m in Sources */,
 				9F14B8961DEBE45000ADBE0C /* MonthViewController.m in Sources */,
+				9F594E3A214CF65500FB5949 /* PieViewLayerAnimator.swift in Sources */,
 				9F56171E1E3D62AF00C92525 /* ChameleonConstants.m in Sources */,
 				9F74EB581E36E14900DECF21 /* HeaderCollectionReusableView.m in Sources */,
 				9F5617241E3D62AF00C92525 /* UIImage+ChameleonPrivate.m in Sources */,
 				9F1C8E5B1F16320800268023 /* UIColor+Converter.m in Sources */,
 				9FB609D11E673E45007394EA /* CalendarViewWeekCell.m in Sources */,
+				9F594E3C214CF65500FB5949 /* PieCustomViewsLayer.swift in Sources */,
+				9F594E37214CF65500FB5949 /* PieLineTextLayerAnimator.swift in Sources */,
 				9F5617221E3D62AF00C92525 /* UIColor+Chameleon.m in Sources */,
 				9F37B2641E468F5800C8443C /* CalendarView.m in Sources */,
 				9FAE9A741EE83F31002F247F /* CalendarViewController.m in Sources */,
 				9F5617201E3D62AF00C92525 /* UIAppearance+Swift.m in Sources */,
 				9F76F47B1E5FCEB100641875 /* FSCalendarDelegationProxy.m in Sources */,
+				9F594E2C214CF65500FB5949 /* PieSliceLayer.swift in Sources */,
 				9F1C8E5F1F1CB37300268023 /* EventTableViewCell.m in Sources */,
 				9FEDC0262148DF130016B39D /* EventsTableViewCell.m in Sources */,
 				9F1C8E641F1CB38B00268023 /* DatePickerTableViewCell.m in Sources */,
 				9F9B426C2138770100B8C2B8 /* ReusableViewCache.m in Sources */,
 				9F76F4721E5FCEB100641875 /* FSCalendar+Deprecated.m in Sources */,
+				9F594E38214CF65500FB5949 /* PieLineTextLayer.swift in Sources */,
 				9FBA79351DCC5CF1000AE696 /* main.m in Sources */,
 				9F14B88C1DEBE43700ADBE0C /* TodayViewController.m in Sources */,
 				9F76F47C1E5FCEB100641875 /* FSCalendarExtensions.m in Sources */,
 				9FCA3EF51E4858BC00A016FF /* CollectionViewFlowLayout.m in Sources */,
 				9F76F4781E5FCEB100641875 /* FSCalendarCollectionViewLayout.m in Sources */,
 				9FB96D021EF342CC00BDC3BA /* CategoriesViewController.m in Sources */,
+				9F594E3B214CF65500FB5949 /* AlphaPieViewLayerAnimator.swift in Sources */,
 				9F71EF3C1E21A22C00CD23DA /* TodayCollectionViewCell.m in Sources */,
 				9F44175C213D180A009FD17D /* MakeTimeCache.m in Sources */,
 			);
@@ -1266,10 +1734,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		9FEDC01521471C950016B39D /* PBXTargetDependency */ = {
+		9F594DF3214CE91E00FB5949 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = Charts;
-			targetProxy = 9FEDC01421471C950016B39D /* PBXContainerItemProxy */;
+			targetProxy = 9F594DF2214CE91E00FB5949 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1383,7 +1851,9 @@
 		9FBA794B1DCC5CF1000AE696 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6X7DGG368N;
 				INFOPLIST_FILE = "Assets/Supporting Files/Info.plist";
@@ -1391,6 +1861,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Grigoriou.MakeTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MakeTime/Pie Chart/Controllers/MakeTime-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1398,7 +1871,9 @@
 		9FBA794C1DCC5CF1000AE696 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6X7DGG368N;
 				INFOPLIST_FILE = "Assets/Supporting Files/Info.plist";
@@ -1406,6 +1881,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Grigoriou.MakeTime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "MakeTime/Pie Chart/Controllers/MakeTime-Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

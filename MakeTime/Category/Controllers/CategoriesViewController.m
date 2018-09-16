@@ -23,6 +23,8 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSArray *customCalendars;
 
+@property (strong, nonatomic) NSDictionary<UIColor *, NSArray<EKCalendar *> *> *sections;
+
 @property (strong, nonatomic) NSIndexPath *checkedIndexPath;
 @property (assign, nonatomic) NSInteger checkedRow;
 
@@ -85,7 +87,7 @@
     
     EKCalendar *cal = self.customCalendars[indexPath.row];
     cell.categoriesLabel.text = cal.title;
-    cell.categoriesLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:15.0f];
+    cell.categoriesLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:15.0f];
     
     UIColor *calendarColor = [UIColor colorWithCGColor:cal.CGColor];
     CALayer *layer = [CALayer layer];
@@ -254,6 +256,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         _appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     }
     return _appDelegate;
+}
+
+- (NSDictionary<UIColor *, NSArray<EKCalendar *> *> *)sections {
+    if (!_sections) {
+        _sections = [NSDictionary<UIColor *, NSArray<EKCalendar *> *> dictionary];
+    }
+    return _sections;
 }
 
 

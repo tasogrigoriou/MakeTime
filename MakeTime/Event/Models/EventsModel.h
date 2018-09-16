@@ -11,21 +11,18 @@
 
 @interface EventsModel : NSObject
 
-@property (strong, nonatomic) NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents;
-@property (strong, nonatomic) NSArray<NSArray<EKEvent *> *> *indexedEvents;
-@property (strong, nonatomic) NSDictionary<NSDate *, NSNumber *> *indexedDates;
-
 @property (strong, nonatomic) NSArray<NSDate *> *days;
 
+@property (strong, nonatomic) NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents;
 @property (strong, nonatomic) NSArray<NSDate *> *sortedDays;
 
-- (instancetype)initWithDateEvents:(NSDictionary<NSDate *, NSArray<EKEvent *> *> *)dateEvents days:(NSArray<NSDate *> *)days;
+@property (strong, nonatomic) NSDictionary<NSDate *, NSNumber *> *dateSections;
 
-- (void)loadEventsModelDataWithCompletion:(void (^)(void))completion;
+- (void)loadEventsDataModelWithStartDate:(NSDate *)startDate
+                                 endDate:(NSDate *)endDate
+                               calendars:(NSArray<EKCalendar *> *)calendars
+                              completion:(void (^)(void))completion;
 
-- (void)loadEventsDataWithStartDate:(NSDate *)startDate
-                            endDate:(NSDate *)endDate
-                          calendars:(NSArray<EKCalendar *> *)calendars
-                         completion:(void (^)(void))completion;
+- (void)mapDateToSectionIndex:(NSDictionary<NSDate *, NSArray<EKEvent *> *> *)dateEvents;
 
 @end

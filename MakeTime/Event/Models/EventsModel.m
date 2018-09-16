@@ -11,71 +11,14 @@
 
 @implementation EventsModel
 
-- (instancetype)initWithDateEvents:(NSDictionary<NSDate *, NSArray<EKEvent *> *> *)dateEvents days:(NSArray<NSDate *> *)days {
-    if (self = [super init]) {
-        self.dateEvents = dateEvents;
-        self.days = days;
-    }
-    return self;
-}
 
-- (void)loadEventsModelDataWithCompletion:(void (^)(void))completion {
-    self.indexedEvents = [self convertDateEventsToIndexedEvents:self.dateEvents];
-    self.indexedDates = [self mapIndexToDate:self.indexedEvents];
-    completion();
-}
-
-- (NSArray<NSArray<EKEvent *> *> *)convertDateEventsToIndexedEvents:(NSDictionary<NSDate *, NSArray<EKEvent *> *> *)dateEvents {
-    NSMutableArray<NSArray<EKEvent *> *> *indexedEvents = [[NSMutableArray alloc] init];
-    NSMutableArray<EKEvent *> *allEvents = [NSMutableArray array];
-    
-    NSInteger index = 0;
-    for (NSDate *day in self.days) {
-        for (NSDate *key in dateEvents) {
-            if ([day isEqualToDate:key]) {
-                NSArray<EKEvent *> *events = [dateEvents objectForKey:key];
-                NSMutableArray<EKEvent *> *mutableEvents = [NSMutableArray array];
-                for (EKEvent *event in events) {
-                    if ([allEvents containsObject:event]) {
-                        continue;
-                    } else {
-                        [mutableEvents addObject:event];
-                        [allEvents addObject:event];
-                    }
-                }
-                if ([mutableEvents count] > 0) {
-                    [indexedEvents insertObject:(NSArray *)mutableEvents atIndex:index];
-                    index++;
-                    break;
-                }
-            }
-        }
-    }
-    
-    return (NSArray<NSArray<EKEvent *> *> *)indexedEvents;
-}
-
-- (NSDictionary<NSDate *, NSNumber *> *)mapIndexToDate:(NSArray<NSArray<EKEvent *> *> *)indexedEvents {
-    NSMutableDictionary<NSDate *, NSNumber *> *indexedDates = [[NSMutableDictionary alloc] init];
-    
-    NSInteger index = 0;
-    for (NSArray<EKEvent *> *events in indexedEvents) {
-        NSDate *dateKey = [[NSCalendar currentCalendar] startOfDayForDate:[events firstObject].startDate];
-        NSNumber *numValue = [NSNumber numberWithInteger:index];
-        indexedDates[dateKey] = numValue;
-        index++;
-    }
-    
-    return (NSDictionary<NSDate *, NSNumber *> *)indexedDates;
-}
-
-- (void)loadEventsDataWithStartDate:(NSDate *)startDate
-                            endDate:(NSDate *)endDate
-                          calendars:(NSArray<EKCalendar *> *)calendars
-                         completion:(void (^)(void))completion {
+- (void)loadEventsDataModelWithStartDate:(NSDate *)startDate
+                                 endDate:(NSDate *)endDate
+                               calendars:(NSArray<EKCalendar *> *)calendars
+                              completion:(void (^)(void))completion {
     EventManager *eventManager = [EventManager sharedManager];
     NSDate *start = [[NSCalendar currentCalendar] startOfDayForDate:startDate];
-    NSDate *end = [[NSCalendar currentCalendar] startOfDayForDate:[NSDate dateWithTimeIntervalSinceNow:[[NSDate distantFuture] timeIntervalSinceReferenceDate]]];
+    NSDate *end = [[NSCalendar currentCalendar] startOfDayForDate:endDate];
     NSPredicate *fetchCalendarEvents = [eventManager.eventStore predicateForEventsWithStartDate:start
                                                                                         endDate:end
                                                                                       calendars:calendars];
@@ -104,7 +47,23 @@
     NSArray *unsortedDays = [self.dateEvents allKeys];
     self.sortedDays = [unsortedDays sortedArrayUsingSelector:@selector(compare:)];
     
+
+    [self mapDateToSectionIndex:self.dateEvents];
+    
     completion();
 }
+
+- (void)mapDateToSectionIndex:(NSDictionary<NSDate *, NSArray<EKEvent *> *> *)dateEvents {
+    NSMutableDictionary<NSDate *, NSNumber *> *indexedDates = [[NSMutableDictionary alloc] init];
+    
+    NSInteger index = 0;
+    for (NSDate *day in self.sortedDays) {
+        [indexedDates setObject:[NSNumber numberWithInteger:index] forKey:day];
+        index += 1;
+    }
+    
+    self.dateSections = (NSDictionary<NSDate *, NSNumber *> *)indexedDates;
+}
+
 
 @end

@@ -112,7 +112,7 @@
     return isCustomCalendar;
 }
 
-- (void)loadCustomCalendarsWithCompletion:(void (^)(NSArray *))completion {
+- (void)loadCustomCalendarsWithCompletion:(void (^)(NSArray<EKCalendar *> *))completion {
     NSMutableArray *customCals = [NSMutableArray new];
     
     // Load default calendars (if we're on first launch of app)
@@ -141,7 +141,7 @@
     /**** Log NSUserDefaults to view calendar identifiers ****/
     //     NSLog(@"NSUserDefaults: \n%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
     
-    self.customCalendars = (NSArray *)customCals;
+    self.customCalendars = (NSArray<EKCalendar *> *)customCals;
     completion(self.customCalendars);
 }
 

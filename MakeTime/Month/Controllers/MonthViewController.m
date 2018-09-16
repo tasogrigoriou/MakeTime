@@ -29,13 +29,11 @@
 
 @property (strong, nonatomic) EventsModel *eventsModel;
 
+@property (strong, nonatomic) NSArray<EKCalendar *> *customCalendars;
+
 @property (strong, nonatomic) NSDateFormatter *headerFormatter;
 @property (strong, nonatomic) NSDateFormatter *tableViewHeaderFormatter;
 @property (strong, nonatomic) NSDateFormatter *cellDateFormatter;
-
-@property (strong, nonatomic) NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents;
-@property (strong, nonatomic) NSArray<NSDate *> *daysInMonth;
-@property (strong, nonatomic) NSArray *events;
 
 @property (nonatomic) BOOL isFirstTimeLoadingData;
 
@@ -78,19 +76,18 @@
 
 - (void)loadCalendarData {
     EventManager *eventManager = [EventManager sharedManager];
+    self.eventsModel = [[EventsModel alloc] init];
+    
+    NSDate *startDate = self.calendar.currentPage;
+    NSDateComponents *comps = [NSDateComponents new];
+    comps.month = 1;
+    NSDate *endDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:startDate options:0];
+    
     __weak MonthViewController *weakSelf = self;
-    [eventManager loadDateEventsInMonth:self.calendar.currentPage
-                             completion:^(NSDictionary<NSDate *, NSArray<EKEvent *> *> *dateEvents, NSArray<NSDate *> *daysInMonth) {
-                                 weakSelf.dateEvents = dateEvents;
-                                 weakSelf.daysInMonth = daysInMonth;
-                                 [weakSelf loadTableViewData];
-                             }];
-}
-
-- (void)loadTableViewData {
-    self.eventsModel = [[EventsModel alloc] initWithDateEvents:self.dateEvents days:self.daysInMonth];
-    __weak MonthViewController *weakSelf = self;
-    [self.eventsModel loadEventsModelDataWithCompletion:^{
+    [eventManager loadCustomCalendarsWithCompletion:^(NSArray<EKCalendar *> *calendars) {
+        weakSelf.customCalendars = calendars;
+    }];
+    [self.eventsModel loadEventsDataModelWithStartDate:startDate endDate:endDate calendars:self.customCalendars completion:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf refreshCalendarAndTableView];
         });
@@ -102,7 +99,7 @@
         [self.calendar setHidden:NO duration:0.3 completion:nil];
         self.isFirstTimeLoadingData = NO;
     }
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [UIView transitionWithView:self.calendar
                           duration:0.25
                            options:UIViewAnimationOptionTransitionCrossDissolve
@@ -146,32 +143,41 @@
         [calendar deselectDate:date];
         return;
     }
-    if ([self.eventsModel.indexedEvents count] == 0) {
+    if ([self.eventsModel.dateEvents count] == 0) {
         return;
     }
     
-    NSNumber *numIndex = self.eventsModel.indexedDates[date];
-    if (numIndex != nil) {
-        [self.eventsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:[numIndex integerValue]]
+    NSNumber *sectionIndex = [self.eventsModel.dateSections objectForKey:date];
+    if (sectionIndex != nil) {
+        [self.eventsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:[sectionIndex integerValue]]
                                     atScrollPosition:UITableViewScrollPositionTop
                                             animated:YES];
     } else {
-        NSDateComponents *comps = [NSDateComponents new];
+        NSDateComponents *nextMonthComps = [NSDateComponents new];
+        nextMonthComps.month = 1;
+        NSDate *startOfNextMonth = [[NSCalendar currentCalendar] dateByAddingComponents:nextMonthComps
+                                                                                 toDate:self.calendar.currentPage options:0];
+        NSDateComponents *nextDayComps = [NSDateComponents new];
         NSDate *nextDay = date;
-        while (numIndex == nil && [nextDay compare:[self.daysInMonth lastObject]] == NSOrderedAscending) {
-            comps.day += 1;
-            nextDay = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:date options:0];
-            numIndex = self.eventsModel.indexedDates[nextDay];
+        
+        while (sectionIndex == nil && ([nextDay compare:startOfNextMonth] != NSOrderedSame)) {
+            nextDayComps.day += 1;
+            nextDay = [[NSCalendar currentCalendar] dateByAddingComponents:nextDayComps toDate:date options:0];
+            sectionIndex = [self.eventsModel.dateSections objectForKey:nextDay];
         }
         
-        if (numIndex != nil) {
-            [self.eventsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:[numIndex integerValue]]
+        if (sectionIndex != nil) {
+            [self.eventsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:[sectionIndex integerValue]]
                                         atScrollPosition:UITableViewScrollPositionTop
                                                 animated:YES];
         } else {
             // Scroll to last row of last section
-            NSInteger rowIndex = [self.eventsModel.indexedEvents.lastObject indexOfObject:self.eventsModel.indexedEvents.lastObject.lastObject];
-            NSInteger sectionIndex = [self.eventsModel.indexedDates count] - 1;
+            NSDate *lastDayOfMonthWithEvents = [self.eventsModel.sortedDays lastObject];
+            NSArray *eventsOnThisDay = [self.eventsModel.dateEvents objectForKey:lastDayOfMonthWithEvents];
+            
+            NSInteger rowIndex = [eventsOnThisDay indexOfObject:[eventsOnThisDay lastObject]];
+            NSInteger sectionIndex = [self.eventsModel.sortedDays count] - 1;
+            
             [self.eventsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:rowIndex inSection:sectionIndex]
                                         atScrollPosition:UITableViewScrollPositionBottom
                                                 animated:YES];
@@ -268,7 +274,7 @@
  * Asks the dataSource the number of event dots for a specific date.
  */
 - (NSInteger)calendar:(FSCalendar *)calendar numberOfEventsForDate:(NSDate *)date {
-    return [self.dateEvents[date] count];
+    return [[self.eventsModel.dateEvents objectForKey:date] count];
 }
 
 
@@ -388,23 +394,27 @@
 
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-//    return [self.eventsModel.dateEvents count];
-    return [self.eventsModel.indexedEvents count];
-
+    return [self.eventsModel.dateEvents count];
 }
 
-- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.eventsModel.indexedEvents[section] count];
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSDate *dateRepresentingThisDay = [self.eventsModel.sortedDays objectAtIndex:section];
+    NSArray *eventsOnThisDay = [self.eventsModel.dateEvents objectForKey:dateRepresentingThisDay];
+    return [eventsOnThisDay count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    return [self.tableViewHeaderFormatter stringFromDate:[self.eventsModel.indexedEvents[section] firstObject].startDate];
+    NSDate *dateRepresentingThisDay = [self.eventsModel.sortedDays objectAtIndex:section];
+    return [self.tableViewHeaderFormatter stringFromDate:dateRepresentingThisDay];
 }
 
-- (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    EventsTableViewCell *cell = (EventsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventsTableViewCell" forIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    EventsTableViewCell *cell = (EventsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventsTableViewCell"
+                                                                                       forIndexPath:indexPath];
     
-    EKEvent *event = [self.eventsModel.indexedEvents[indexPath.section] objectAtIndex:indexPath.row];
+    NSDate *dateRepresentingThisDay = [self.eventsModel.sortedDays objectAtIndex:indexPath.section];
+    NSArray *eventsOnThisDay = [self.eventsModel.dateEvents objectForKey:dateRepresentingThisDay];
+    EKEvent *event = [eventsOnThisDay objectAtIndex:indexPath.row];
     
     cell.textLabel.text = event.calendar.title;
     cell.textLabel.textColor = [UIColor colorWithCGColor:event.calendar.CGColor];
@@ -423,13 +433,15 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    EKEvent *event = [self.eventsModel.indexedEvents[indexPath.section] objectAtIndex:indexPath.row];
+    NSDate *dateRepresentingThisDay = [self.eventsModel.sortedDays objectAtIndex:indexPath.section];
+    NSArray *eventsOnThisDay = [self.eventsModel.dateEvents objectForKey:dateRepresentingThisDay];
+    EKEvent *event = [eventsOnThisDay objectAtIndex:indexPath.row];
+    
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[[EditEventViewController alloc] initWithEvent:event]];
     [self presentViewController:navController animated:YES completion:^{
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }];
 }
-
 
 #pragma mark - IBActions
 
@@ -478,7 +490,7 @@
 
 - (nullable NSArray<UIColor *> *)eventColorsForDate:(NSDate *)date {
     NSMutableArray *eventColors = [NSMutableArray array];
-    for (EKEvent *event in self.dateEvents[date]) {
+    for (EKEvent *event in self.eventsModel.dateEvents[date]) {
         UIColor *calendarColor = [UIColor colorWithCGColor:event.calendar.CGColor];
         if (![eventColors containsObject:calendarColor]) {
             [eventColors addObject:calendarColor];

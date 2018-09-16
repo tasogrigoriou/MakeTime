@@ -74,7 +74,7 @@
     NSDate *endDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:startDate options:0];
     
     __weak EventsViewController *weakSelf = self;
-    [self.eventsModel loadEventsDataWithStartDate:startDate endDate:endDate calendars:@[self.calendar] completion:^{
+    [self.eventsModel loadEventsDataModelWithStartDate:startDate endDate:endDate calendars:@[self.calendar] completion:^{
         dispatch_async(dispatch_get_main_queue(), ^{
             [weakSelf.tableView reloadData];
         });
