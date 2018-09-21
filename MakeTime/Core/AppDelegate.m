@@ -41,6 +41,9 @@
     [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"initialScrollDone"];
     [[NSUserDefaults standardUserDefaults] setObject:@NO forKey:@"initialScrollDoneForWeek"];
     
+    [[UITabBar appearance] setTintColor:[UIColor purpleColor]];
+//    [[UITabBar appearance] setUnselectedItemTintColor:[UIColor darkGrayColor]];
+    
     return YES;
 }
 

@@ -11,23 +11,89 @@ import UIKit
 class PieChartViewController: UIViewController {
     
     @IBOutlet weak var pieChartView: PieChart!
+    @IBOutlet weak var segmentedControl: BetterSegmentedControl!
     
     let eventManager = EventManager.sharedManager() as! EventManager
     
     var pieChartCalendars = [PieChartCalendar]()
+    
+    var startDate = Date()
+    var endDate: Date?
+    
+    var dateRange = DateRange.week {
+        didSet {
+            var comps = DateComponents()
+            switch dateRange {
+            case .week:
+                comps.weekOfYear = 1
+            case .month:
+                comps.month = 1
+            case .year:
+                comps.year = 1
+            }
+            endDate = Calendar.current.date(byAdding: comps, to: startDate)
+            
+            clearAllData()
+            loadPieChartData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupNavBarTitle()
+        setupSegmentedControl()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadPieChartData()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        clearAllData()
+    }
+    
+    private func clearAllData() {
+        pieChartCalendars.removeAll()
+        pieChartView.clear()
+    }
+    
+    private func loadPieChartData() {
         DispatchQueue.global(qos: .userInitiated).async {
             self.eventManager.loadCustomCalendars { calendars in
                 if let calendars = calendars {
                     self.convertToPieChartCalendars(calendars)
                 }
             }
-            DispatchQueue.main.async {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
                 self.setupPieChart()
             }
+        }
+    }
+    
+    private func setupSegmentedControl() {
+        segmentedControl.segments = LabelSegment.segments(withTitles: ["Week", "Month", "Year"],
+                                                          normalFont: UIFont(name: "AvenirNext-Medium", size: 15.0)!,
+                                                          normalTextColor: .darkGray,
+                                                          selectedFont: UIFont(name: "AvenirNext-DemiBold", size: 15.0)!,
+                                                          selectedTextColor: .white)
+//        segmentedControl.options = [.backgroundColor(.darkGray),
+//                                    .indicatorViewBackgroundColor(.blue)]
+        segmentedControl.addTarget(self, action: #selector(controlValueChanged(_:)), for: .valueChanged)
+    }
+    
+    @objc func controlValueChanged(_ sender: BetterSegmentedControl) {
+        switch sender.index {
+        case 0:
+            dateRange = .week
+        case 1:
+            dateRange = .month
+        case 2:
+            dateRange = .year
+        default:
+            break
         }
     }
     
@@ -46,14 +112,14 @@ class PieChartViewController: UIViewController {
 
     
     private func convertToPieChartCalendars(_ calendars: [EKCalendar]) {
-        let startDate = Date()
-        var comps = DateComponents()
-        comps.month = 1
-        guard let endDate = Calendar.current.date(byAdding: comps, to: startDate) else { return }
-        
+        if endDate == nil {
+            var comps = DateComponents()
+            comps.weekOfYear = 1
+            endDate = Calendar.current.date(byAdding: comps, to: startDate)
+        }
         for calendar in calendars {
             let pieChartCalendar = PieChartCalendar(calendar: calendar)
-            let events = pieChartCalendar.getEventsForCalendar(startDate: startDate, endDate: endDate)
+            let events = pieChartCalendar.getEventsForCalendar(startDate: startDate, endDate: endDate!)
             for event in events {
                 pieChartCalendar.addDateInterval(DateInterval(start: event.startDate, end: event.endDate))
             }
@@ -63,7 +129,6 @@ class PieChartViewController: UIViewController {
     
     private func setupPieChart() {
         pieChartView.layers = [createPlainTextLayer()]
-        
         pieChartView.models = createPieChartModels()
     }
             
@@ -142,6 +207,12 @@ class PieChartCalendar {
         let predicate = eventManager.eventStore.predicateForEvents(withStart: startDate, end: endDate, calendars: [calendar])
         return eventManager.eventStore.events(matching: predicate)
     }
+}
+
+enum DateRange {
+    case week
+    case month
+    case year
 }
 
 

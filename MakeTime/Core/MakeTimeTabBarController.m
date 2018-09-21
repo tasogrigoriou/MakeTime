@@ -96,49 +96,52 @@
     UINavigationController *categoriesNavigationController = [[UINavigationController alloc]
                                                               initWithRootViewController:categoriesViewController];
     
-//    ToDoListViewController *toDoListViewController = [ToDoListViewController new];
-//    UINavigationController *toDoListNavigationController = [[UINavigationController alloc] initWithRootViewController:toDoListViewController];
-
     PieChartViewController *pieChartViewController = [PieChartViewController new];
     UINavigationController *pieChartNavigationController = [[UINavigationController alloc] initWithRootViewController:pieChartViewController];
     
+    ToDoListViewController *toDoListViewController = [ToDoListViewController new];
+    UINavigationController *toDoListNavigationController = [[UINavigationController alloc] initWithRootViewController:toDoListViewController];
+    
     self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, categoriesNavigationController, pieChartNavigationController];
+    
+//    self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, categoriesNavigationController, pieChartNavigationController, toDoListNavigationController];
+//    self.viewControllers[4].title = @"Pie Chart";
+//    self.viewControllers[5].title = @"To Do List";
 
     self.selectedViewController = todayNavigationController;
     self.lastSelectedViewController = todayNavigationController;
 }
 
 - (void)setupTabBarItems {
-    self.tabBar.items[0].image = [UIImage imageNamed:@"menu.png"];
-    self.tabBar.items[0].selectedImage = [UIImage imageNamed:@"menu.png"];
+    self.tabBar.items[0].image = [UIImage imageNamed:@"dayview"];
+    self.tabBar.items[0].selectedImage = [UIImage imageNamed:@"dayview"];
     self.tabBar.items[0].title = @"Day";
     self.tabBar.items[0].tag = 0;
     
-    self.tabBar.items[1].image = [UIImage imageNamed:@"menu.png"];
-    self.tabBar.items[1].selectedImage = [UIImage imageNamed:@"menu.png"];
+    self.tabBar.items[1].image = [UIImage imageNamed:@"week"];
+    self.tabBar.items[1].selectedImage = [UIImage imageNamed:@"week"];
     self.tabBar.items[1].title = @"Week";
     self.tabBar.items[1].tag = 1;
     
-    self.tabBar.items[2].image = [UIImage imageNamed:@"menu.png"];
-    self.tabBar.items[2].selectedImage = [UIImage imageNamed:@"menu.png"];
+    self.tabBar.items[2].image = [UIImage imageNamed:@"month"];
+    self.tabBar.items[2].selectedImage = [UIImage imageNamed:@"month"];
     self.tabBar.items[2].title = @"Month";
     self.tabBar.items[2].tag = 2;
     
-    self.tabBar.items[3].image = [UIImage imageNamed:@"menu.png"];
-    self.tabBar.items[3].selectedImage = [UIImage imageNamed:@"menu.png"];
+    self.tabBar.items[3].image = [UIImage imageNamed:@"categories"];
+    self.tabBar.items[3].selectedImage = [UIImage imageNamed:@"categories"];
     self.tabBar.items[3].title = @"Categories";
     self.tabBar.items[3].tag = 3;
     
-//    self.tabBar.items[4].image = [UIImage imageNamed:@"menu.png"];
-//    self.tabBar.items[4].selectedImage = [UIImage imageNamed:@"menu.png"];
-//    self.tabBar.items[4].title = @"To Do List";
-//    self.tabBar.items[4].tag = 4;
-    
-    self.tabBar.items[4].image = [UIImage imageNamed:@"menu.png"];
-    self.tabBar.items[4].selectedImage = [UIImage imageNamed:@"menu.png"];
+    self.tabBar.items[4].image = [UIImage imageNamed:@"piechart"];
+    self.tabBar.items[4].selectedImage = [UIImage imageNamed:@"piechart"];
     self.tabBar.items[4].title = @"Pie Chart";
     self.tabBar.items[4].tag = 4;
 
+//    self.tabBar.items[5].image = [UIImage imageNamed:@"menu.png"];
+//    self.tabBar.items[5].selectedImage = [UIImage imageNamed:@"menu.png"];
+//    self.tabBar.items[5].title = @"To Do List";
+//    self.tabBar.items[5].tag = 5;
 }
 
 

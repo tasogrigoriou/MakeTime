@@ -51,6 +51,8 @@
     [super viewDidLoad];
     
     [self configureViewAndCalendarView];
+    [self customizeNavBarTitle];
+    [self customizeLeftBarButtonItem];
     [self setTableViewContentInset];
     [self addDataDidChangeNotificationObserver];
     
@@ -149,6 +151,30 @@
 
 - (void)setTableViewContentInset {
     self.tableView.contentInset = UIEdgeInsetsMake(-7, 0, 0, 0);
+}
+
+- (void)customizeNavBarTitle {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.textColor = [UIColor blackColor];
+    label.text = @"Events";
+    [label sizeToFit];
+    self.navigationItem.titleView = label;
+}
+
+- (void)customizeLeftBarButtonItem {
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backarrow2"]
+                                                                       style:UIBarButtonItemStylePlain
+                                                                      target:self
+                                                                      action:@selector(popViewController:)];
+    leftButtonItem.tintColor = [UIColor blackColor];
+    self.navigationItem.leftBarButtonItem = leftButtonItem;
+}
+
+- (void)popViewController:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)addDataDidChangeNotificationObserver {

@@ -70,8 +70,6 @@
 		9F5617261E3D62AF00C92525 /* UINavigationController+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F5617181E3D62AF00C92525 /* UINavigationController+Chameleon.m */; };
 		9F5617271E3D62AF00C92525 /* UIView+ChameleonPrivate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F56171A1E3D62AF00C92525 /* UIView+ChameleonPrivate.m */; };
 		9F5617281E3D62AF00C92525 /* UIViewController+Chameleon.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F56171C1E3D62AF00C92525 /* UIViewController+Chameleon.m */; };
-		9F594DF0214CE91E00FB5949 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FEDC01121471C840016B39D /* Charts.framework */; };
-		9F594DF1214CE91E00FB5949 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9FEDC01121471C840016B39D /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9F594DF8214CED9600FB5949 /* PieChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594DF6214CED9600FB5949 /* PieChartViewController.swift */; };
 		9F594DF9214CED9600FB5949 /* PieChartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F594DF7214CED9600FB5949 /* PieChartViewController.xib */; };
 		9F594E2A214CF65500FB5949 /* PieSliceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E05214CF65400FB5949 /* PieSliceDelegate.swift */; };
@@ -94,7 +92,7 @@
 		9F594E3B214CF65500FB5949 /* AlphaPieViewLayerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E21214CF65400FB5949 /* AlphaPieViewLayerAnimator.swift */; };
 		9F594E3C214CF65500FB5949 /* PieCustomViewsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E22214CF65400FB5949 /* PieCustomViewsLayer.swift */; };
 		9F594E3D214CF65500FB5949 /* PieChartLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E23214CF65400FB5949 /* PieChartLayer.swift */; };
-		9F594E3E214CF65500FB5949 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F594E26214CF65400FB5949 /* Info.plist */; };
+		9F594E3E214CF65500FB5949 /* Info3.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F594E26214CF65400FB5949 /* Info3.plist */; };
 		9F594E3F214CF65500FB5949 /* PieSliceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E28214CF65400FB5949 /* PieSliceModel.swift */; };
 		9F594E40214CF65500FB5949 /* PieSliceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F594E29214CF65400FB5949 /* PieSliceData.swift */; };
 		9F60B8CE2135138B00E300BF /* MakeTimeTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F60B8CD2135138B00E300BF /* MakeTimeTabBarController.m */; };
@@ -120,8 +118,15 @@
 		9F76F47F1E5FCEB100641875 /* FSCalendarStickyHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F76F46C1E5FCEB100641875 /* FSCalendarStickyHeader.m */; };
 		9F76F4801E5FCEB100641875 /* FSCalendarTransitionCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F76F46E1E5FCEB100641875 /* FSCalendarTransitionCoordinator.m */; };
 		9F76F4811E5FCEB100641875 /* FSCalendarWeekdayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F76F4701E5FCEB100641875 /* FSCalendarWeekdayView.m */; };
-		9F76F4821E5FCEB100641875 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F76F4711E5FCEB100641875 /* Info.plist */; };
+		9F76F4821E5FCEB100641875 /* Info2.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9F76F4711E5FCEB100641875 /* Info2.plist */; };
 		9F78CB281E48302D00D70867 /* CalendarViewMonthCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F78CB271E48302D00D70867 /* CalendarViewMonthCell.m */; };
+		9F7B6C102150E379000C024A /* Options.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6C072150E379000C024A /* Options.swift */; };
+		9F7B6C112150E379000C024A /* BetterSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6C082150E379000C024A /* BetterSegmentedControl.swift */; };
+		9F7B6C122150E379000C024A /* BetterSegmentedControlSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6C092150E379000C024A /* BetterSegmentedControlSegment.swift */; };
+		9F7B6C132150E379000C024A /* 1.gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6C0A2150E379000C024A /* 1.gitkeep */; };
+		9F7B6C142150E379000C024A /* IconSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6C0C2150E379000C024A /* IconSegment.swift */; };
+		9F7B6C152150E379000C024A /* LabelSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6C0D2150E379000C024A /* LabelSegment.swift */; };
+		9F7B6C162150E379000C024A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6C0F2150E379000C024A /* .gitkeep */; };
 		9F8532FE214468B0007B55CA /* WeekDayLineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8532FD214468B0007B55CA /* WeekDayLineView.xib */; };
 		9F853301214468C0007B55CA /* WeekDayLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F853300214468C0007B55CA /* WeekDayLineView.m */; };
 		9F9B426C2138770100B8C2B8 /* ReusableViewCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9B426B2138770100B8C2B8 /* ReusableViewCache.m */; };
@@ -176,30 +181,6 @@
 		9FFA42031E92015C00832C31 /* TodayCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FFA42021E92015C00832C31 /* TodayCollectionViewLayout.m */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		9F594DF2214CE91E00FB5949 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9FEDC00B21471C840016B39D /* Charts.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A58A4ED274A941CA248EA921;
-			remoteInfo = Charts;
-		};
-		9FEDC01021471C840016B39D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9FEDC00B21471C840016B39D /* Charts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 65AD9E95D9ED4DC0BD73A743;
-			remoteInfo = Charts;
-		};
-		9FEDC01221471C840016B39D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9FEDC00B21471C840016B39D /* Charts.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 1CBBC58C6CE1EBEE9852CE41;
-			remoteInfo = ChartsTests;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		9F594DF4214CE91E00FB5949 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -207,7 +188,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9F594DF1214CE91E00FB5949 /* Charts.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,7 +318,7 @@
 		9F594E22214CF65400FB5949 /* PieCustomViewsLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieCustomViewsLayer.swift; sourceTree = "<group>"; };
 		9F594E23214CF65400FB5949 /* PieChartLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartLayer.swift; sourceTree = "<group>"; };
 		9F594E25214CF65400FB5949 /* PieCharts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieCharts.h; sourceTree = "<group>"; };
-		9F594E26214CF65400FB5949 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F594E26214CF65400FB5949 /* Info3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info3.plist; sourceTree = "<group>"; };
 		9F594E28214CF65400FB5949 /* PieSliceModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieSliceModel.swift; sourceTree = "<group>"; };
 		9F594E29214CF65400FB5949 /* PieSliceData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieSliceData.swift; sourceTree = "<group>"; };
 		9F594E44214CF84C00FB5949 /* PieSliceDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieSliceDelegate.swift; sourceTree = "<group>"; };
@@ -408,9 +388,16 @@
 		9F76F46E1E5FCEB100641875 /* FSCalendarTransitionCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarTransitionCoordinator.m; sourceTree = "<group>"; };
 		9F76F46F1E5FCEB100641875 /* FSCalendarWeekdayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FSCalendarWeekdayView.h; sourceTree = "<group>"; };
 		9F76F4701E5FCEB100641875 /* FSCalendarWeekdayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSCalendarWeekdayView.m; sourceTree = "<group>"; };
-		9F76F4711E5FCEB100641875 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9F76F4711E5FCEB100641875 /* Info2.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info2.plist; sourceTree = "<group>"; };
 		9F78CB261E48302D00D70867 /* CalendarViewMonthCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewMonthCell.h; sourceTree = "<group>"; };
 		9F78CB271E48302D00D70867 /* CalendarViewMonthCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewMonthCell.m; sourceTree = "<group>"; };
+		9F7B6C072150E379000C024A /* Options.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Options.swift; sourceTree = "<group>"; };
+		9F7B6C082150E379000C024A /* BetterSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BetterSegmentedControl.swift; sourceTree = "<group>"; };
+		9F7B6C092150E379000C024A /* BetterSegmentedControlSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BetterSegmentedControlSegment.swift; sourceTree = "<group>"; };
+		9F7B6C0A2150E379000C024A /* 1.gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 1.gitkeep; sourceTree = "<group>"; };
+		9F7B6C0C2150E379000C024A /* IconSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconSegment.swift; sourceTree = "<group>"; };
+		9F7B6C0D2150E379000C024A /* LabelSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelSegment.swift; sourceTree = "<group>"; };
+		9F7B6C0F2150E379000C024A /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		9F8532FD214468B0007B55CA /* WeekDayLineView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeekDayLineView.xib; sourceTree = "<group>"; };
 		9F8532FF214468C0007B55CA /* WeekDayLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeekDayLineView.h; sourceTree = "<group>"; };
 		9F853300214468C0007B55CA /* WeekDayLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeekDayLineView.m; sourceTree = "<group>"; };
@@ -488,7 +475,6 @@
 		9FEDC00621470A710016B39D /* UIImage+Extras.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extras.m"; sourceTree = "<group>"; };
 		9FEDC00821470BBE0016B39D /* UIView+Extras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Extras.h"; sourceTree = "<group>"; };
 		9FEDC00921470BBE0016B39D /* UIView+Extras.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIView+Extras.m"; sourceTree = "<group>"; };
-		9FEDC00B21471C840016B39D /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../Downloads/Github/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
 		9FEDC0232148DF130016B39D /* EventsTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventsTableViewCell.h; sourceTree = "<group>"; };
 		9FEDC0242148DF130016B39D /* EventsTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventsTableViewCell.m; sourceTree = "<group>"; };
 		9FEDC0252148DF130016B39D /* EventsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventsTableViewCell.xib; sourceTree = "<group>"; };
@@ -508,7 +494,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F37B2671E47046100C8443C /* EventKit.framework in Frameworks */,
-				9F594DF0214CE91E00FB5949 /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -886,7 +871,7 @@
 			isa = PBXGroup;
 			children = (
 				9F594E25214CF65400FB5949 /* PieCharts.h */,
-				9F594E26214CF65400FB5949 /* Info.plist */,
+				9F594E26214CF65400FB5949 /* Info3.plist */,
 			);
 			path = "Supporting files";
 			sourceTree = "<group>";
@@ -1103,9 +1088,47 @@
 				9F76F46E1E5FCEB100641875 /* FSCalendarTransitionCoordinator.m */,
 				9F76F46F1E5FCEB100641875 /* FSCalendarWeekdayView.h */,
 				9F76F4701E5FCEB100641875 /* FSCalendarWeekdayView.m */,
-				9F76F4711E5FCEB100641875 /* Info.plist */,
+				9F76F4711E5FCEB100641875 /* Info2.plist */,
 			);
 			path = FSCalendar;
+			sourceTree = "<group>";
+		};
+		9F7B6C052150E379000C024A /* Pod */ = {
+			isa = PBXGroup;
+			children = (
+				9F7B6C062150E379000C024A /* Classes */,
+				9F7B6C0E2150E379000C024A /* Assets */,
+			);
+			path = Pod;
+			sourceTree = "<group>";
+		};
+		9F7B6C062150E379000C024A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				9F7B6C072150E379000C024A /* Options.swift */,
+				9F7B6C082150E379000C024A /* BetterSegmentedControl.swift */,
+				9F7B6C092150E379000C024A /* BetterSegmentedControlSegment.swift */,
+				9F7B6C0A2150E379000C024A /* 1.gitkeep */,
+				9F7B6C0B2150E379000C024A /* Segments */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		9F7B6C0B2150E379000C024A /* Segments */ = {
+			isa = PBXGroup;
+			children = (
+				9F7B6C0C2150E379000C024A /* IconSegment.swift */,
+				9F7B6C0D2150E379000C024A /* LabelSegment.swift */,
+			);
+			path = Segments;
+			sourceTree = "<group>";
+		};
+		9F7B6C0E2150E379000C024A /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				9F7B6C0F2150E379000C024A /* .gitkeep */,
+			);
+			path = Assets;
 			sourceTree = "<group>";
 		};
 		9F9D2C471EDE1018006167EB /* Models */ = {
@@ -1248,8 +1271,8 @@
 		9FBA79271DCC5CF1000AE696 = {
 			isa = PBXGroup;
 			children = (
+				9F7B6C052150E379000C024A /* Pod */,
 				9F594E02214CF65400FB5949 /* PieCharts */,
-				9FEDC00B21471C840016B39D /* Charts.xcodeproj */,
 				9FA26DD92127E3F40053F628 /* LaunchScreen2.storyboard */,
 				9F32CF5B1ED4839100922048 /* Assets */,
 				9FBA79321DCC5CF1000AE696 /* MakeTime */,
@@ -1455,15 +1478,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		9FEDC00C21471C840016B39D /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9FEDC01121471C840016B39D /* Charts.framework */,
-				9FEDC01321471C840016B39D /* ChartsTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1479,7 +1493,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				9F594DF3214CE91E00FB5949 /* PBXTargetDependency */,
 			);
 			name = MakeTime;
 			productName = MakeTime;
@@ -1492,7 +1505,7 @@
 		9FBA79281DCC5CF1000AE696 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = Grigoriou;
 				TargetAttributes = {
 					9FBA792F1DCC5CF1000AE696 = {
@@ -1519,35 +1532,12 @@
 			mainGroup = 9FBA79271DCC5CF1000AE696;
 			productRefGroup = 9FBA79311DCC5CF1000AE696 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 9FEDC00C21471C840016B39D /* Products */;
-					ProjectRef = 9FEDC00B21471C840016B39D /* Charts.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				9FBA792F1DCC5CF1000AE696 /* MakeTime */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		9FEDC01121471C840016B39D /* Charts.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Charts.framework;
-			remoteRef = 9FEDC01021471C840016B39D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		9FEDC01321471C840016B39D /* ChartsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ChartsTests.xctest;
-			remoteRef = 9FEDC01221471C840016B39D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		9FBA792E1DCC5CF1000AE696 /* Resources */ = {
@@ -1557,6 +1547,7 @@
 				9FAE9A821EE9D224002F247F /* CalendarCollectionViewCell.xib in Resources */,
 				9F14B8A41DEBF54800ADBE0C /* RearViewController.xib in Resources */,
 				9FB96D031EF342CC00BDC3BA /* CategoriesViewController.xib in Resources */,
+				9F7B6C162150E379000C024A /* .gitkeep in Resources */,
 				9FD9487A1F2D4C1300483302 /* RepeatAlertViewController.xib in Resources */,
 				9F74EB591E36E14900DECF21 /* HeaderCollectionReusableView.xib in Resources */,
 				9F0930721E1E1A3B007A33F6 /* pen.png in Resources */,
@@ -1566,7 +1557,7 @@
 				9F14B88D1DEBE43700ADBE0C /* TodayViewController.xib in Resources */,
 				9F4035B21F11F4C200EA1B16 /* EditCategoriesViewController.xib in Resources */,
 				9F17EC861E39B78700019CDC /* jadecolor.jpg in Resources */,
-				9F594E3E214CF65500FB5949 /* Info.plist in Resources */,
+				9F594E3E214CF65500FB5949 /* Info3.plist in Resources */,
 				9F0930811E1EF319007A33F6 /* menu@2x.png in Resources */,
 				9F09306C1E1CB787007A33F6 /* write.png in Resources */,
 				9F71EF3D1E21A22C00CD23DA /* TodayCollectionViewCell.xib in Resources */,
@@ -1574,8 +1565,9 @@
 				9FBA79431DCC5CF1000AE696 /* Assets.xcassets in Resources */,
 				9F4035B71F13577C00EA1B16 /* EditCategoriesTableViewCell.xib in Resources */,
 				9F1ED88F1FF8B06E006FF015 /* EditEventViewController.xib in Resources */,
-				9F76F4821E5FCEB100641875 /* Info.plist in Resources */,
+				9F76F4821E5FCEB100641875 /* Info2.plist in Resources */,
 				9FAE9A7A1EE84997002F247F /* AddEventViewController.xib in Resources */,
+				9F7B6C132150E379000C024A /* 1.gitkeep in Resources */,
 				9FBC52FA1EFE13C4001BF4CD /* AddCalendarViewController.xib in Resources */,
 				9FB385881DE41D9700A6F1E4 /* Default-568h@2x.png in Resources */,
 				9F21FD071E18893100BBE626 /* pen-point-tip.png in Resources */,
@@ -1628,6 +1620,7 @@
 				9F594DF8214CED9600FB5949 /* PieChartViewController.swift in Sources */,
 				9F76F4741E5FCEB100641875 /* FSCalendarAppearance.m in Sources */,
 				9FCA3EF81E48594E00A016FF /* CalendarLineReusableView.m in Sources */,
+				9F7B6C102150E379000C024A /* Options.swift in Sources */,
 				9FBA79381DCC5CF1000AE696 /* AppDelegate.m in Sources */,
 				9FCA3EEF1E48510B00A016FF /* CalendarViewDayCell.m in Sources */,
 				9FF7442D1E1307A400816F8D /* UIColor+RBExtras.m in Sources */,
@@ -1641,17 +1634,20 @@
 				9FDF6CA91F6B78FE0026ED15 /* WeekCollectionViewWeekCell.m in Sources */,
 				9FEDC02A2148E1CD0016B39D /* EventsModel.m in Sources */,
 				9FCA32F3214AF5260062ABCF /* ToDoTableViewCell.m in Sources */,
+				9F7B6C122150E379000C024A /* BetterSegmentedControlSegment.swift in Sources */,
 				9F76F4731E5FCEB100641875 /* FSCalendar.m in Sources */,
 				9F594E2B214CF65500FB5949 /* PieSlice.swift in Sources */,
 				9F594E30214CF65500FB5949 /* CGSize.swift in Sources */,
 				9FBA3299214B6E790013C300 /* EventsViewController.m in Sources */,
 				9F71EF411E23784B00CD23DA /* RearCollectionViewCell.m in Sources */,
+				9F7B6C142150E379000C024A /* IconSegment.swift in Sources */,
 				9F1B5BBF1F4AB58F00F20370 /* WeekCollectionViewCell.m in Sources */,
 				9FCA3EF21E4851E400A016FF /* CalendarHeaderView.m in Sources */,
 				9F14B8911DEBE44800ADBE0C /* WeekViewController.m in Sources */,
 				9F594E2E214CF65500FB5949 /* PieChart.swift in Sources */,
 				9F14B8A31DEBF54800ADBE0C /* RearViewController.m in Sources */,
 				9FAE9A791EE84997002F247F /* AddEventViewController.m in Sources */,
+				9F7B6C152150E379000C024A /* LabelSegment.swift in Sources */,
 				9F5617281E3D62AF00C92525 /* UIViewController+Chameleon.m in Sources */,
 				9F594E40214CF65500FB5949 /* PieSliceData.swift in Sources */,
 				9F594E3D214CF65500FB5949 /* PieChartLayer.swift in Sources */,
@@ -1709,6 +1705,7 @@
 				9F594E37214CF65500FB5949 /* PieLineTextLayerAnimator.swift in Sources */,
 				9F5617221E3D62AF00C92525 /* UIColor+Chameleon.m in Sources */,
 				9F37B2641E468F5800C8443C /* CalendarView.m in Sources */,
+				9F7B6C112150E379000C024A /* BetterSegmentedControl.swift in Sources */,
 				9FAE9A741EE83F31002F247F /* CalendarViewController.m in Sources */,
 				9F5617201E3D62AF00C92525 /* UIAppearance+Swift.m in Sources */,
 				9F76F47B1E5FCEB100641875 /* FSCalendarDelegationProxy.m in Sources */,
@@ -1732,14 +1729,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9F594DF3214CE91E00FB5949 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = Charts;
-			targetProxy = 9F594DF2214CE91E00FB5949 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		9FBA79481DCC5CF1000AE696 /* Debug */ = {
@@ -1844,6 +1833,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

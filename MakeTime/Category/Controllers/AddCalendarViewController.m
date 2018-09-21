@@ -162,7 +162,7 @@
     }
     
     cell.categoriesLabel.text = self.calendarStringColors[indexPath.row];
-    cell.categoriesLabel.font = [UIFont fontWithName:@"Avenir Next Condensed Medium" size:15.0f];
+    cell.categoriesLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:14.0f];
     
     // Since we need the backgroundColor of the colorView to persist through out the highlight animation,
     // Create a CALayer with a background color, instead of using the backgroundColor property of UIView.

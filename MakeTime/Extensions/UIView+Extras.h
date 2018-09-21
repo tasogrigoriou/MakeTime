@@ -14,4 +14,6 @@
          duration:(NSTimeInterval)duration
        completion:(void (^)(BOOL finished))completion;
 
+-(void)setRoundedCorners:(UIRectCorner)corners radius:(CGFloat)radius;
+
 @end

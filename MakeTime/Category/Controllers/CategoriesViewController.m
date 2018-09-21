@@ -24,6 +24,8 @@
 @property (strong, nonatomic) NSArray *customCalendars;
 
 @property (strong, nonatomic) NSDictionary<UIColor *, NSArray<EKCalendar *> *> *sections;
+@property (strong, nonatomic) NSArray<UIColor *> *colors;
+@property (strong, nonatomic) NSDictionary<UIColor *, NSString *> *colorStrings;
 
 @property (strong, nonatomic) NSIndexPath *checkedIndexPath;
 @property (assign, nonatomic) NSInteger checkedRow;
@@ -48,14 +50,59 @@
 - (void)loadCalendarData {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self assignCalendarColors];
+        [self mapColorsToStrings];
         __weak CategoriesViewController *weakSelf = self;
         [[EventManager sharedManager] loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.customCalendars = calendars;
-                [weakSelf.categoriesTableView reloadData];
-            });
+            weakSelf.customCalendars = calendars;
+            [weakSelf createSectionsForCalendars:calendars completion:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.categoriesTableView reloadData];
+                });
+            }];
         }];
     });
+}
+
+- (void)createSectionsForCalendars:(NSArray *)calendars completion:(void (^)(void))completion {
+    NSMutableDictionary<UIColor *, NSMutableArray<EKCalendar *> *> *sections = [NSMutableDictionary dictionary];
+    
+    for (EKCalendar *calendar in self.customCalendars) {
+        UIColor *color = [UIColor colorWithCGColor:calendar.CGColor];
+        
+        NSMutableArray *calendars = [sections objectForKey:color];
+        if (calendars == nil) {
+            calendars = [NSMutableArray array];
+            
+            [sections setObject:calendars forKey:color];
+        }
+        
+        [calendars addObject:calendar];
+    }
+    
+    self.sections = (NSDictionary<UIColor *, NSArray<EKCalendar *> *> *)sections;
+    self.colors = [self.sections allKeys];
+    
+    completion();
+}
+
+- (void)mapColorsToStrings {
+    NSMutableDictionary<UIColor *, NSString *> *colorStrings = [NSMutableDictionary dictionary];
+    
+    UIColor *hotPink = [UIColor colorWithRed:(238/255.0) green:(106/255.0) blue:(167/255.0) alpha:1.0];
+    UIColor *turquoise = [UIColor colorWithRed:(64/255.0) green:(224/255.0) blue:(208/255.0) alpha:1.0];
+    UIColor *darkOrchid = [UIColor colorWithRed:(154/255.0) green:(50/255.0) blue:(205/255.0) alpha:1.0];
+    UIColor *darkOrange = [UIColor colorWithRed:(255/255.0) green:(140/255.0) blue:(0/255.0) alpha:1.0];
+    UIColor *chartreuse = [UIColor colorWithRed:(118/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
+    UIColor *yellow = [UIColor colorWithRed:(238/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
+
+    colorStrings[hotPink] = @"Pink";
+    colorStrings[turquoise] = @"Turquoise";
+    colorStrings[darkOrchid] = @"Orchid";
+    colorStrings[darkOrange] = @"Orange";
+    colorStrings[chartreuse] = @"Green";
+    colorStrings[yellow] = @"Yellow";
+    
+    self.colorStrings = (NSDictionary<UIColor *, NSString *> *)colorStrings;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -63,6 +110,12 @@
     
     // Reload table view and the custom calendars when navigating back from AddCalendarVC
     [self loadCalendarData];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self.categoriesTableView setEditing:NO animated:NO];
+    self.navigationItem.leftBarButtonItem.title = @"Edit";
 }
 
 
@@ -77,19 +130,38 @@
 #pragma mark - UITableViewDataSource
 
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return [self.sections count];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.customCalendars count];
+    UIColor *color = [self.colors objectAtIndex:section];
+    NSArray *calendars = [self.sections objectForKey:color];
+    return [calendars count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    UIColor *color = [self.colors objectAtIndex:section];
+    for (UIColor *colorKey in self.colorStrings) {
+        if ([colorKey isEqualToColor:color]) {
+            return [self.colorStrings objectForKey:colorKey];
+        }
+    }
+    return nil;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CategoriesTableViewCell *cell = (CategoriesTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CategoriesTableViewCell"];
-    cell.backgroundColor = [UIColor clearColor];
+    cell.backgroundColor = [UIColor whiteColor];
     
-    EKCalendar *cal = self.customCalendars[indexPath.row];
-    cell.categoriesLabel.text = cal.title;
+    UIColor *color = [self.colors objectAtIndex:indexPath.section];
+    NSArray *calendarsForColor = [self.sections objectForKey:color];
+    EKCalendar *calendar = [calendarsForColor objectAtIndex:indexPath.row];
+    
     cell.categoriesLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:15.0f];
+    cell.categoriesLabel.text = calendar.title;
     
-    UIColor *calendarColor = [UIColor colorWithCGColor:cal.CGColor];
+    UIColor *calendarColor = [UIColor colorWithCGColor:calendar.CGColor];
     CALayer *layer = [CALayer layer];
     layer.cornerRadius = cell.categoriesColorView.bounds.size.width / 2;
     layer.frame = cell.categoriesColorView.bounds;
@@ -99,53 +171,114 @@
     return cell;
 }
 
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView
-commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
-forRowAtIndexPath:(NSIndexPath *)indexPath {
-    EventManager *eventManager = [EventManager sharedManager];
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSError *error;
-        EKCalendar *cal = self.customCalendars[indexPath.row];
-        [eventManager removeCustomCalendarIdentifier:cal.calendarIdentifier];
-        if (![eventManager.eventStore removeCalendar:cal commit:YES error:&error]) {
-            NSLog(@"%@", [error localizedDescription]);
-        } else {
-            NSLog(@"Successfully deleted calendar titled %@", cal.title);
-        }
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.categoriesTableView.isEditing) {
+        return UITableViewCellEditingStyleDelete;
+    } else {
+        return UITableViewCellEditingStyleNone;
     }
-    
-    // Re-load all calendars, delete the row with an animation (which also refreshes the table view)
-    __weak CategoriesViewController *weakSelf = self;
-    [eventManager loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
-        weakSelf.customCalendars = calendars;
-        [weakSelf.categoriesTableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self shouldProceedWithDeletingCalendar:^(BOOL shouldProceed) {
+        if (shouldProceed) {
+             EventManager *eventManager = [EventManager sharedManager];
+            if (editingStyle == UITableViewCellEditingStyleDelete) {
+                
+                UIColor *color = [self.colors objectAtIndex:indexPath.section];
+                NSArray *calendarsForColor = [self.sections objectForKey:color];
+                EKCalendar *cal = [calendarsForColor objectAtIndex:indexPath.row];
+                
+                NSMutableDictionary<UIColor *, NSMutableArray<EKCalendar *> *> *mutableSections = [self.sections mutableCopy];
+                NSMutableArray *mutableColors = [self.colors mutableCopy];
+                
+                [tableView beginUpdates];
+                if ([calendarsForColor count] <= 1) {
+                    [mutableSections removeObjectForKey:color];
+                    [mutableColors removeObject:color];
+                    self.sections = mutableSections;
+                    self.colors = mutableColors;
+                    [self.categoriesTableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section]
+                                            withRowAnimation:UITableViewRowAnimationFade];
+                } else {
+                    NSMutableArray<EKCalendar *> *calendars = [mutableSections objectForKey:color];
+                    [calendars removeObjectAtIndex:indexPath.row];
+                    self.sections = mutableSections;
+                    [self.categoriesTableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row
+                                                                                          inSection:indexPath.section]]
+                                                    withRowAnimation:UITableViewRowAnimationFade];
+                }
+                [tableView endUpdates];
+                
+                [eventManager removeCustomCalendarIdentifier:cal.calendarIdentifier];
+                NSError *error;
+                if (![eventManager.eventStore removeCalendar:cal commit:YES error:&error]) {
+                    NSLog(@"%@", [error localizedDescription]);
+                } else {
+                    NSLog(@"Successfully deleted calendar titled %@", cal.title);
+                }
+            }
+            __weak CategoriesViewController *weakSelf = self;
+            [eventManager loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
+                weakSelf.customCalendars = calendars;
+            }];
+        }
     }];
+}
+
+- (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
+    UIContextualAction *editAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal
+                                                                         title:@"Edit"
+                                                                       handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+                                                                           [self presentEditCategoriesVC:indexPath];
+                                                                       }];
+    editAction.image = [UIImage imageNamed:@"right"];
+    editAction.backgroundColor = [UIColor greenColor];
+    
+    UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[editAction]];
+    return config;
+}
+
+- (void)presentEditCategoriesVC:(NSIndexPath *)indexPath {
+    UIColor *color = [self.colors objectAtIndex:indexPath.section];
+    NSArray *calendarsForColor = [self.sections objectForKey:color];
+    EKCalendar *cal = [calendarsForColor objectAtIndex:indexPath.row];
+    
+    EditCategoriesViewController *editCategoriesVC = [[EditCategoriesViewController alloc] initWithCalendar:cal];
+    [self.navigationController presentViewController:editCategoriesVC animated:YES completion:nil];
+}
+
+- (void)shouldProceedWithDeletingCalendar:(void (^)(BOOL shouldProceed))completion {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Delete Calendar"
+                                                                             message:@"Are you sure?"
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDestructive
+                                                     handler:^(UIAlertAction *action) {
+                                                         completion(NO);
+                                                     }];
+    
+    UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction *action) {
+                                                          completion(YES);
+                                                      }];
+    [alertController addAction:noAction];
+    [alertController addAction:yesAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 
 
 #pragma mark - UITableViewDelegate
 
 
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    EKCalendar *cal = self.customCalendars[indexPath.row];
-//
-//    EditCategoriesViewController *editCategoriesVC = [[EditCategoriesViewController alloc] initWithCalendar:cal];
-//    editCategoriesVC.indexOfCategory = indexPath.row;
-//
-//    // Assign the checked row value to the index of the calendar's color
-//    UIColor *colorOfCal = [UIColor colorWithCGColor:cal.CGColor];
-//    for (NSInteger i = 0; i < [self.calendarUIColors count]; i++) {
-//        if ([colorOfCal isEqualToColor:self.calendarUIColors[i]]) {
-//            editCategoriesVC.checkedRow = i;
-//        }
-//    }
-//
-//    [self.navigationController pushViewController:editCategoriesVC animated:YES];
-//}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    EventsViewController *eventsViewController = [[EventsViewController alloc] initWithCalendar:self.customCalendars[indexPath.row]];
+    UIColor *color = [self.colors objectAtIndex:indexPath.section];
+    NSArray *calendarsForColor = [self.sections objectForKey:color];
+    EKCalendar *calendar = [calendarsForColor objectAtIndex:indexPath.row];
+    
+    EventsViewController *eventsViewController = [[EventsViewController alloc] initWithCalendar:calendar];
     [self.navigationController pushViewController:eventsViewController animated:YES];
 }
 
@@ -162,8 +295,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                      completion:nil];
 }
 
-#pragma mark - Private Methods
 
+#pragma mark - Private Methods
 
 
 - (void)customizeLabel {
@@ -179,14 +312,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)configureButtonsForTabBar {
     NSDictionary *textAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0], NSForegroundColorAttributeName : [UIColor blackColor] };
-    //    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
-    //                                                                       style:UIBarButtonItemStylePlain
-    //                                                                      target:self
-    //                                                                      action:@selector(pushEditEventVC)];
-    //    leftButtonItem.tintColor = [UIColor blackColor];
-    //    [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-    //    [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
-    //    self.navigationItem.leftBarButtonItem = leftButtonItem;
+        UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(showEditing:)];
+        leftButtonItem.tintColor = [UIColor blackColor];
+        [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+        [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+        self.navigationItem.leftBarButtonItem = leftButtonItem;
     
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
                                                                         style:UIBarButtonItemStylePlain
@@ -198,9 +331,19 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     self.navigationItem.rightBarButtonItem = rightButtonItem;
 }
 
+- (void)showEditing:(UIBarButtonItem *)sender {
+    if (self.categoriesTableView.isEditing) {
+        [self.categoriesTableView setEditing:NO animated:YES];
+        self.navigationItem.leftBarButtonItem.title = @"Edit";
+    } else {
+        [self.categoriesTableView setEditing:YES animated:YES];
+        self.navigationItem.leftBarButtonItem.title = @"Done";
+    }
+}
+
 - (void)configureViewAndTableView {
     self.view.backgroundColor = [UIColor whiteColor];
-    self.categoriesTableView.backgroundColor = [UIColor clearColor];
+//    self.categoriesTableView.backgroundColor = [UIColor clearColor];
     
     self.navigationController.navigationBar.clipsToBounds = NO;
     self.automaticallyAdjustsScrollViewInsets = NO;
@@ -213,26 +356,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     //  self.categoriesTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     
     // Insert a dummy footer view which will only show amount of cells you returned in tableView:numberOfRowsInSection:
-    self.categoriesTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+//    self.categoriesTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
     // Do NOT modify the content area of the scroll view using the safe area insets
     if (@available(iOS 11.0, *)) {
         self.categoriesTableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
     
+    self.categoriesTableView.contentInset = UIEdgeInsetsMake(-11, 0, 0, 0);
+    
     // Dont let scroll view bounce past the end of the bounds
 //    self.categoriesTableView.alwaysBounceVertical = NO;
-}
-
-- (void)giveGradientBackgroundColor {
-    // Create an overlay view to give a gradient background color
-    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 3000);
-    UIView *overlayView = [[UIView alloc] initWithFrame:frame];
-    UIColor *skyBlueLight = [UIColor colorWithHue:0.57 saturation:0.90 brightness:0.98 alpha:1.0];
-    overlayView.backgroundColor = [UIColor colorWithGradientStyle:UIGradientStyleTopToBottom
-                                                        withFrame:frame
-                                                        andColors:@[[UIColor whiteColor], skyBlueLight]];
-    [self.view insertSubview:overlayView atIndex:0];
 }
 
 - (void)assignCalendarColors {

@@ -8,11 +8,15 @@
 
 #import "EventPopUpViewController.h"
 #import "EditEventViewController.h"
+#import "UIView+Extras.h"
 
 @interface EventPopUpViewController () <UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *popUpView;
+@property (weak, nonatomic) IBOutlet UIView *headerView;
 @property (weak, nonatomic) IBOutlet UITextView *textView;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *editButton;
 
 @property (strong, nonatomic) EKEvent *event;
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
@@ -31,10 +35,10 @@
     self = [super initWithNibName:nil bundle:nil];
     
     if (self) {
-        self.modalPresentationStyle = UIModalPresentationOverFullScreen;
-        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
         self.event = event;
         self.delegate = delegate;
+        self.modalPresentationStyle = UIModalPresentationOverFullScreen;
+        self.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     }
     
     return self;
@@ -46,6 +50,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self roundCorners];
     [self setupTextView];
     [self setupTapRecognizer];
 }
@@ -80,6 +85,14 @@
 
 #pragma mark - Private Methods
 
+
+- (void)roundCorners {
+    self.popUpView.layer.cornerRadius = 40.0f;
+    self.textView.layer.cornerRadius = 20.0f;
+    [self.headerView setRoundedCorners:UIRectCornerTopLeft | UIRectCornerTopRight radius:10.0f];
+    [self.cancelButton setRoundedCorners:UIRectCornerBottomLeft radius:10.0f];
+    [self.editButton setRoundedCorners:UIRectCornerBottomRight radius:10.0f];
+}
 
 - (void)setupTextView {
     NSDateFormatter *formatter = [NSDateFormatter new];

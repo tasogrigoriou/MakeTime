@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PieChartViewController" customModule="MakeTime" customModuleProvider="target">
             <connections>
                 <outlet property="pieChartView" destination="ahe-Th-qU3" id="4Wx-2o-kBy"/>
+                <outlet property="segmentedControl" destination="uNn-DI-6b9" id="yaq-AX-k4u"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -24,6 +26,22 @@
                     <rect key="frame" x="0.0" y="171" width="375" height="327"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uNn-DI-6b9" customClass="BetterSegmentedControl" customModule="MakeTime" customModuleProvider="target">
+                    <rect key="frame" x="37.5" y="50" width="300" height="44"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="XeR-Ec-clP"/>
+                        <constraint firstAttribute="width" constant="300" id="oXo-W8-wDJ"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                            <real key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="color" keyPath="indicatorViewBackgroundColor">
+                            <color key="value" red="0.31823925749999998" green="0.006494678724" blue="0.62998383619999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -31,6 +49,8 @@
                 <constraint firstItem="ahe-Th-qU3" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="151" id="23B-Ek-hZp"/>
                 <constraint firstItem="ahe-Th-qU3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="C3l-Bj-EU7"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ahe-Th-qU3" secondAttribute="bottom" constant="169" id="Jkl-Og-SU3"/>
+                <constraint firstItem="uNn-DI-6b9" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Lkc-Xo-03m"/>
+                <constraint firstItem="uNn-DI-6b9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="bCu-an-Ja6"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="33.5" y="82.5"/>
