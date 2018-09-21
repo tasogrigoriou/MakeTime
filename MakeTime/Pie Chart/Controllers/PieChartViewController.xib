@@ -28,7 +28,6 @@
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uNn-DI-6b9" customClass="BetterSegmentedControl" customModule="MakeTime" customModuleProvider="target">
                     <rect key="frame" x="37.5" y="50" width="300" height="44"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="XeR-Ec-clP"/>
                         <constraint firstAttribute="width" constant="300" id="oXo-W8-wDJ"/>
@@ -38,7 +37,7 @@
                             <real key="value" value="20"/>
                         </userDefinedRuntimeAttribute>
                         <userDefinedRuntimeAttribute type="color" keyPath="indicatorViewBackgroundColor">
-                            <color key="value" red="0.31823925749999998" green="0.006494678724" blue="0.62998383619999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="value" red="0.31764705882352939" green="0.0078431372549019607" blue="0.63137254901960782" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                 </view>

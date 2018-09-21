@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EditEventViewController">
             <connections>
+                <outlet property="deleteButton" destination="ia7-QC-O8f" id="goj-6b-nF4"/>
                 <outlet property="editEventTableView" destination="mdv-J5-QC1" id="84R-ap-2c3"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -28,33 +30,34 @@
                         <outlet property="delegate" destination="-1" id="arj-bp-kLv"/>
                     </connections>
                 </tableView>
-                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="340-bv-GP3">
-                    <rect key="frame" x="0.0" y="602" width="375" height="65"/>
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ia7-QC-O8f">
+                    <rect key="frame" x="135" y="612" width="105" height="40"/>
+                    <color key="backgroundColor" red="0.92903473140000004" green="0.082929124670000007" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="65" id="8Pa-cy-IpT"/>
+                        <constraint firstAttribute="height" constant="40" id="9Ev-5W-JuT"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                     <state key="normal" title="Delete">
-                        <color key="titleColor" red="1" green="0.24464908460000001" blue="0.28149162529999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </state>
                     <connections>
-                        <action selector="deleteEventButtonPressed:" destination="-1" eventType="touchUpInside" id="Ps9-1Q-hxs"/>
+                        <action selector="deleteEventButtonPressed:" destination="-1" eventType="touchUpInside" id="687-ca-Nbu"/>
                     </connections>
                 </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="mdv-J5-QC1" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6mX-cb-iY6"/>
-                <constraint firstItem="340-bv-GP3" firstAttribute="top" secondItem="mdv-J5-QC1" secondAttribute="bottom" id="9dx-Ln-wk1"/>
-                <constraint firstItem="340-bv-GP3" firstAttribute="bottom" secondItem="l6M-Z0-82u" secondAttribute="bottom" id="BRf-Yo-hme"/>
-                <constraint firstItem="340-bv-GP3" firstAttribute="leading" secondItem="l6M-Z0-82u" secondAttribute="leading" id="Bh8-fR-HEV"/>
                 <constraint firstItem="mdv-J5-QC1" firstAttribute="trailing" secondItem="i5M-Pr-FkT" secondAttribute="trailing" id="FwK-if-PUp"/>
-                <constraint firstItem="340-bv-GP3" firstAttribute="trailing" secondItem="l6M-Z0-82u" secondAttribute="trailing" id="O8D-Od-zRG"/>
+                <constraint firstItem="l6M-Z0-82u" firstAttribute="trailing" secondItem="ia7-QC-O8f" secondAttribute="trailing" constant="135" id="Vl8-nk-90Z"/>
+                <constraint firstItem="ia7-QC-O8f" firstAttribute="top" secondItem="mdv-J5-QC1" secondAttribute="bottom" constant="10" id="ap5-G7-cRD"/>
+                <constraint firstItem="ia7-QC-O8f" firstAttribute="bottom" secondItem="l6M-Z0-82u" secondAttribute="bottom" constant="-15" id="iwI-mH-VOY"/>
                 <constraint firstItem="mdv-J5-QC1" firstAttribute="top" secondItem="l6M-Z0-82u" secondAttribute="top" id="mcf-sk-fOs"/>
+                <constraint firstItem="ia7-QC-O8f" firstAttribute="leading" secondItem="l6M-Z0-82u" secondAttribute="leading" constant="135" id="x0g-v1-VJ6"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="l6M-Z0-82u"/>
-            <point key="canvasLocation" x="33.5" y="54.5"/>
+            <point key="canvasLocation" x="32.799999999999997" y="54.422788605697157"/>
         </view>
     </objects>
 </document>

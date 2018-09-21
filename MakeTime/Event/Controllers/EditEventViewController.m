@@ -22,6 +22,7 @@
 @interface EditEventViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate, RepeatAlertViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *editEventTableView;
+@property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSArray *customCalendars;
@@ -136,6 +137,7 @@
     
     [self customizeTitle];
     [self customizeBarButtonItems];
+    self.deleteButton.layer.cornerRadius = 18.0f;
     
     [self registerCellSubclasses];
     [self addTapGestureRecognizer];

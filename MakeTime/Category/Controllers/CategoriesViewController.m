@@ -114,8 +114,8 @@
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
-    [self.categoriesTableView setEditing:NO animated:NO];
-    self.navigationItem.leftBarButtonItem.title = @"Edit";
+//    [self.categoriesTableView setEditing:NO animated:NO];
+//    self.navigationItem.leftBarButtonItem.title = @"Edit";
 }
 
 
@@ -171,60 +171,73 @@
     return cell;
 }
 
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.categoriesTableView.isEditing) {
-        return UITableViewCellEditingStyleDelete;
-    } else {
-        return UITableViewCellEditingStyleNone;
-    }
-}
+//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (self.categoriesTableView.isEditing) {
+//        return UITableViewCellEditingStyleDelete;
+//    } else {
+//        return UITableViewCellEditingStyleNone;
+//    }
+//}
 
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self shouldProceedWithDeletingCalendar:^(BOOL shouldProceed) {
-        if (shouldProceed) {
-             EventManager *eventManager = [EventManager sharedManager];
-            if (editingStyle == UITableViewCellEditingStyleDelete) {
-                
-                UIColor *color = [self.colors objectAtIndex:indexPath.section];
-                NSArray *calendarsForColor = [self.sections objectForKey:color];
-                EKCalendar *cal = [calendarsForColor objectAtIndex:indexPath.row];
-                
-                NSMutableDictionary<UIColor *, NSMutableArray<EKCalendar *> *> *mutableSections = [self.sections mutableCopy];
-                NSMutableArray *mutableColors = [self.colors mutableCopy];
-                
-                [tableView beginUpdates];
-                if ([calendarsForColor count] <= 1) {
-                    [mutableSections removeObjectForKey:color];
-                    [mutableColors removeObject:color];
-                    self.sections = mutableSections;
-                    self.colors = mutableColors;
-                    [self.categoriesTableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section]
-                                            withRowAnimation:UITableViewRowAnimationFade];
-                } else {
-                    NSMutableArray<EKCalendar *> *calendars = [mutableSections objectForKey:color];
-                    [calendars removeObjectAtIndex:indexPath.row];
-                    self.sections = mutableSections;
-                    [self.categoriesTableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row
-                                                                                          inSection:indexPath.section]]
-                                                    withRowAnimation:UITableViewRowAnimationFade];
-                }
-                [tableView endUpdates];
-                
-                [eventManager removeCustomCalendarIdentifier:cal.calendarIdentifier];
-                NSError *error;
-                if (![eventManager.eventStore removeCalendar:cal commit:YES error:&error]) {
-                    NSLog(@"%@", [error localizedDescription]);
-                } else {
-                    NSLog(@"Successfully deleted calendar titled %@", cal.title);
-                }
-            }
-            __weak CategoriesViewController *weakSelf = self;
-            [eventManager loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
-                weakSelf.customCalendars = calendars;
-            }];
-        }
-    }];
+// //  Override to support editing the table view.
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    __weak CategoriesViewController *weakSelf = self;
+//    [self shouldProceedWithDeletingCalendar:^(BOOL shouldProceed) {
+//        if (shouldProceed) {
+//             EventManager *eventManager = [EventManager sharedManager];
+//            if (editingStyle == UITableViewCellEditingStyleDelete) {
+//                [weakSelf deleteCategoryAtIndexPath:indexPath];
+//            } else {
+//                [weakSelf presentEditCategoriesVC:indexPath];
+//            }
+//            [eventManager loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
+//                weakSelf.customCalendars = calendars;
+//            }];
+//        } else {
+//            [weakSelf.categoriesTableView setEditing:NO animated:YES];
+//            weakSelf.navigationItem.leftBarButtonItem.title = @"Edit";
+//        }
+//    }];
+//}
+
+- (void)deleteCategoryAtIndexPath:(NSIndexPath *)indexPath {
+    EventManager *eventManager = [EventManager sharedManager];
+    
+    UIColor *color = [self.colors objectAtIndex:indexPath.section];
+    NSArray *calendarsForColor = [self.sections objectForKey:color];
+    EKCalendar *cal = [calendarsForColor objectAtIndex:indexPath.row];
+    
+    NSMutableDictionary<UIColor *, NSMutableArray<EKCalendar *> *> *mutableSections = [self.sections mutableCopy];
+    NSMutableArray *mutableColors = [self.colors mutableCopy];
+    
+    [self.categoriesTableView beginUpdates];
+    if ([calendarsForColor count] <= 1) {
+        [mutableSections removeObjectForKey:color];
+        [mutableColors removeObject:color];
+        self.sections = mutableSections;
+        self.colors = mutableColors;
+        [self.categoriesTableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section]
+                                withRowAnimation:UITableViewRowAnimationFade];
+    } else {
+        NSMutableArray<EKCalendar *> *calendars = [mutableSections objectForKey:color];
+        [calendars removeObjectAtIndex:indexPath.row];
+        self.sections = mutableSections;
+        [self.categoriesTableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:indexPath.row
+                                                                              inSection:indexPath.section]]
+                                        withRowAnimation:UITableViewRowAnimationFade];
+    }
+    [self.categoriesTableView endUpdates];
+    
+    [self.categoriesTableView setEditing:NO animated:YES];
+    self.navigationItem.leftBarButtonItem.title = @"Edit";
+    
+    [eventManager removeCustomCalendarIdentifier:cal.calendarIdentifier];
+    NSError *error;
+    if (![eventManager.eventStore removeCalendar:cal commit:YES error:&error]) {
+        NSLog(@"%@", [error localizedDescription]);
+    } else {
+        NSLog(@"Successfully deleted calendar titled %@", cal.title);
+    }
 }
 
 - (UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -233,10 +246,26 @@
                                                                        handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
                                                                            [self presentEditCategoriesVC:indexPath];
                                                                        }];
-    editAction.image = [UIImage imageNamed:@"right"];
-    editAction.backgroundColor = [UIColor greenColor];
+    editAction.backgroundColor = [UIColor flatGreenColor];
     
-    UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[editAction]];
+    UIContextualAction *deleteAction = [UIContextualAction
+                                      contextualActionWithStyle:UIContextualActionStyleNormal
+                                      title:@"Delete"
+                                      handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+                                          __weak CategoriesViewController *weakSelf = self;
+                                          [self shouldProceedWithDeletingCalendar:^(BOOL shouldProceed) {
+                                              if (shouldProceed) {
+                                                  [weakSelf deleteCategoryAtIndexPath:indexPath];
+                                              } else {
+                                                  [weakSelf.categoriesTableView setEditing:NO animated:YES];
+                                                  weakSelf.navigationItem.leftBarButtonItem.title = @"Edit";
+                                              }
+                                          }];
+                                      }];
+    deleteAction.backgroundColor = [UIColor redColor];
+    
+    UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[deleteAction, editAction]];
+    config.performsFirstActionWithFullSwipe = NO;
     return config;
 }
 
@@ -245,8 +274,16 @@
     NSArray *calendarsForColor = [self.sections objectForKey:color];
     EKCalendar *cal = [calendarsForColor objectAtIndex:indexPath.row];
     
-    EditCategoriesViewController *editCategoriesVC = [[EditCategoriesViewController alloc] initWithCalendar:cal];
-    [self.navigationController presentViewController:editCategoriesVC animated:YES completion:nil];
+    NSString *colorTitle;
+    for (UIColor *colorKey in self.colorStrings) {
+        if ([colorKey isEqualToColor:color]) {
+            colorTitle = [self.colorStrings objectForKey:colorKey];
+        }
+    }
+    
+    EditCategoriesViewController *editCategoriesVC = [[EditCategoriesViewController alloc] initWithCalendar:cal
+                                                                                                 colorTitle:colorTitle];
+    [self.navigationController pushViewController:editCategoriesVC animated:YES];
 }
 
 - (void)shouldProceedWithDeletingCalendar:(void (^)(BOOL shouldProceed))completion {
@@ -312,14 +349,14 @@
 
 - (void)configureButtonsForTabBar {
     NSDictionary *textAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0], NSForegroundColorAttributeName : [UIColor blackColor] };
-        UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
-                                                                           style:UIBarButtonItemStylePlain
-                                                                          target:self
-                                                                          action:@selector(showEditing:)];
-        leftButtonItem.tintColor = [UIColor blackColor];
-        [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-        [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
-        self.navigationItem.leftBarButtonItem = leftButtonItem;
+//        UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
+//                                                                           style:UIBarButtonItemStylePlain
+//                                                                          target:self
+//                                                                          action:@selector(showEditing:)];
+//        leftButtonItem.tintColor = [UIColor blackColor];
+//        [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+//        [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+//        self.navigationItem.leftBarButtonItem = leftButtonItem;
     
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
                                                                         style:UIBarButtonItemStylePlain

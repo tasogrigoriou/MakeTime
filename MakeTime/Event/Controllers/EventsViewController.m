@@ -159,7 +159,7 @@
     label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
-    label.text = @"Events";
+    label.text = [NSString stringWithFormat:@"%@ Events", self.calendar.title];
     [label sizeToFit];
     self.navigationItem.titleView = label;
 }

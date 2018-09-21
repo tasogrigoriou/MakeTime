@@ -20,6 +20,8 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) EKCalendar *calendar;
 
+@property (copy, nonatomic) NSString *colorTitle;
+
 @end
 
 @implementation EditCategoriesViewController
@@ -28,10 +30,11 @@
 #pragma mark - View Lifecycle
 
 
-- (instancetype)initWithCalendar:(EKCalendar *)calendar {
+- (instancetype)initWithCalendar:(EKCalendar *)calendar colorTitle:(NSString *)colorTitle {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         self.calendar = calendar;
+        self.colorTitle = colorTitle;
     }
     return self;
 }
@@ -42,6 +45,7 @@
     [self configureViewAndTableView];
     [self customizeBarButtonItems];
     [self customizeLabel];
+    self.deleteCategoryButton.layer.cornerRadius = 18.0f;
     
     [self loadCalendarColors];
 }
@@ -49,6 +53,7 @@
 - (void)loadCalendarColors {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self assignCalendarColors];
+        [self mapColorTitleToIndex];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.editCategoriesTableView reloadData];
         });
@@ -183,7 +188,7 @@
     // Assign the nav bar's title to be the title of the selected calendar
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
     label.backgroundColor = [UIColor clearColor];
-    label.font = [UIFont fontWithName:@"Avenir Next Condensed Regular" size:14.0f];
+    label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor colorWithCGColor:cal.CGColor];
     label.text = cal.title;
@@ -253,7 +258,16 @@
     UIColor *yellow = [UIColor colorWithRed:(238/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
     
     self.calendarUIColors = @[hotPink, turquoise, darkOrchid, darkOrange, chartreuse, yellow];
-    self.calendarStringColors = @[@"Pink", @"Turquoise", @"Orchid", @"Orange", @"Chartreuse", @"Yellow"];
+    self.calendarStringColors = @[@"Pink", @"Turquoise", @"Orchid", @"Orange", @"Green", @"Yellow"];
+}
+
+- (void)mapColorTitleToIndex {
+    for (NSInteger i = 0; i < self.calendarStringColors.count; i++) {
+        NSString *stringColor = self.calendarStringColors[i];
+        if ([stringColor isEqualToString:self.colorTitle]) {
+            self.checkedRow = i;
+        }
+    }
 }
 
 

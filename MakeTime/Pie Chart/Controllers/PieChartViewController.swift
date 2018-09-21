@@ -74,13 +74,16 @@ class PieChartViewController: UIViewController {
     }
     
     private func setupSegmentedControl() {
+//        segmentedControl.layer.borderWidth = 2
+//        let purpleColor = UIColor(red: 81/255.0, green: 2/255.0, blue: 161/255.0, alpha: 1.0)
+//        segmentedControl.layer.borderColor = purpleColor.cgColor
         segmentedControl.segments = LabelSegment.segments(withTitles: ["Week", "Month", "Year"],
                                                           normalFont: UIFont(name: "AvenirNext-Medium", size: 15.0)!,
                                                           normalTextColor: .darkGray,
                                                           selectedFont: UIFont(name: "AvenirNext-DemiBold", size: 15.0)!,
                                                           selectedTextColor: .white)
-//        segmentedControl.options = [.backgroundColor(.darkGray),
-//                                    .indicatorViewBackgroundColor(.blue)]
+//        segmentedControl.options = [.indicatorViewBorderWidth(2),
+//        .indicatorViewBorderColor(purpleColor)]
         segmentedControl.addTarget(self, action: #selector(controlValueChanged(_:)), for: .valueChanged)
     }
     

@@ -18,6 +18,6 @@
 @property (strong, nonatomic) NSArray<UIColor *> *calendarUIColors;
 @property (strong, nonatomic) NSArray<NSString *> *calendarStringColors;
 
-- (instancetype)initWithCalendar:(EKCalendar *)calendar;
+- (instancetype)initWithCalendar:(EKCalendar *)calendar colorTitle:(NSString *)colorTitle;
 
 @end
