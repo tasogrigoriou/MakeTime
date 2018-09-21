@@ -84,7 +84,8 @@
     weekDayLineView.backgroundColor = [UIColor clearColor];
     
     if (makeTimeCache.weekDayLineImage == nil) {
-        [weekDayLineView initWeekdayLinesWithCollectionView:self.collectionView];
+        [weekDayLineView initWeekdayLinesWithCollectionView:self.collectionView
+                                   sizeForSupplementaryView:self.sizeForSupplementaryView];
         makeTimeCache.weekDayLineImage = [UIImage imageWithView:weekDayLineView size:self.bounds.size];
     }
     

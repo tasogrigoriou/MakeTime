@@ -12,6 +12,6 @@
 
 @property (strong, nonatomic) NSArray<UIView *> *lineViews;
 
-- (void)initWeekdayLinesWithCollectionView:(UICollectionView *)collectionView;
+- (void)initWeekdayLinesWithCollectionView:(UICollectionView *)collectionView sizeForSupplementaryView:(CGFloat)size;
 
 @end

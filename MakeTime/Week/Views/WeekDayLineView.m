@@ -26,7 +26,7 @@
     return self;
 }
 
-- (void)initWeekdayLinesWithCollectionView:(UICollectionView *)collectionView {
+- (void)initWeekdayLinesWithCollectionView:(UICollectionView *)collectionView sizeForSupplementaryView:(CGFloat)size {
     NSMutableArray *lineViews = [NSMutableArray array];
     for (NSInteger i = 0; i < 7; i++) {
         if (i > 0 && i < 7) {
@@ -35,7 +35,7 @@
             
             CGRect attributesFrame = CGRectZero;
             attributesFrame.size = CGSizeMake(0.5, collectionView.bounds.size.height);
-            attributesFrame.origin = CGPointMake(i * (collectionView.bounds.size.width / 7), 0);
+            attributesFrame.origin = CGPointMake(i * (collectionView.bounds.size.width / 7), size);
             
             lineView.frame = attributesFrame;
             
