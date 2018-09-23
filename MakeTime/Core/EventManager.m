@@ -41,6 +41,8 @@
         
         // Load the custom calendar identifiers
         self.customCalendarIdentifiers = [[userDefaults objectForKey:@"customCalendarIdentifiers"] mutableCopy];
+        
+        [self setupCalendarColors];
     }
     
     return self;
@@ -180,7 +182,7 @@
     exerciseCalendar.CGColor = [UIColor colorWithRed:(255/255.0) green:(140/255.0) blue:(0/255.0) alpha:1.0].CGColor;
     [calendarArray addObject:exerciseCalendar];
     
-    // Social - Chartreuse default color
+    // Social - Green default color
     EKCalendar *socialCalendar = [EKCalendar calendarForEntityType:EKEntityTypeEvent eventStore:self.eventStore];
     socialCalendar.title = @"Social";
     socialCalendar.CGColor = [UIColor colorWithRed:(118/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0].CGColor;
@@ -355,6 +357,28 @@
     }
     
     return (NSArray<NSDate *> *)result;
+}
+
+- (void)setupCalendarColors {
+    NSMutableDictionary<UIColor *, NSString *> *colorStrings = [NSMutableDictionary dictionary];
+    
+    UIColor *hotPink = [UIColor colorWithRed:(238/255.0) green:(106/255.0) blue:(167/255.0) alpha:1.0];
+    UIColor *turquoise = [UIColor colorWithRed:(64/255.0) green:(224/255.0) blue:(208/255.0) alpha:1.0];
+    UIColor *darkOrchid = [UIColor colorWithRed:(154/255.0) green:(50/255.0) blue:(205/255.0) alpha:1.0];
+    UIColor *darkOrange = [UIColor colorWithRed:(255/255.0) green:(140/255.0) blue:(0/255.0) alpha:1.0];
+    UIColor *green = [UIColor colorWithRed:(118/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
+    UIColor *yellow = [UIColor colorWithRed:(238/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
+    
+    colorStrings[hotPink] = @"Pink";
+    colorStrings[turquoise] = @"Turquoise";
+    colorStrings[darkOrchid] = @"Orchid";
+    colorStrings[darkOrange] = @"Orange";
+    colorStrings[green] = @"Green";
+    colorStrings[yellow] = @"Yellow";
+    
+    self.calendarUIColors = @[hotPink, turquoise, darkOrchid, darkOrange, green, yellow];
+    self.calendarStringColors = @[@"Pink", @"Turquoise", @"Orchid", @"Orange", @"Green", @"Yellow"];
+    self.colorStrings = (NSDictionary<UIColor *, NSString *> *)colorStrings;
 }
 
 

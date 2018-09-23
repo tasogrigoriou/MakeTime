@@ -52,7 +52,6 @@
 
 - (void)loadCalendarColors {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self assignCalendarColors];
         [self mapColorTitleToIndex];
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.editCategoriesTableView reloadData];
@@ -71,14 +70,15 @@
 - (IBAction)saveCalendarColor:(id)sender {
     // Get the calendar that was selected from CategoriesVC
     EKCalendar *cal = self.calendar;
+    EventManager *eventManager = [EventManager sharedManager];
     
     // Re-assign the calendar's color to the color indexed at the row that is selected
-    UIColor *color = self.calendarUIColors[self.checkedRow];
+    UIColor *color = eventManager.calendarUIColors[self.checkedRow];
     cal.CGColor = color.CGColor;
     
     // Commit the calendar color change to the event store
     NSError *error;
-    if (![[[EventManager sharedManager] eventStore] saveCalendar:cal commit:YES error:&error]) {
+    if (![eventManager.eventStore saveCalendar:cal commit:YES error:&error]) {
         NSLog(@"%@", [error localizedDescription]);
     } else {
         NSLog(@"Successfully updated %@ CGColor property", cal.title);
@@ -132,7 +132,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.calendarStringColors count];
+    return [[[EventManager sharedManager] calendarStringColors] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -146,12 +146,14 @@
         cell.checkmarkImage.image = nil;
     }
     
-    cell.categoriesLabel.text = self.calendarStringColors[indexPath.row];
+    EventManager *eventManager = [EventManager sharedManager];
+    
+    cell.categoriesLabel.text = eventManager.calendarStringColors[indexPath.row];
     cell.categoriesLabel.font = [UIFont fontWithName:@"Avenir Next Condensed Medium" size:15.0f];
     
     // Since we need the backgroundColor of the colorView to persist through out the highlight animation,
     // Create a CALayer with a background color, instead of using the backgroundColor property of UIView.
-    UIColor *calendarColor = self.calendarUIColors[indexPath.row];
+    UIColor *calendarColor = eventManager.calendarUIColors[indexPath.row];
     CALayer *layer = [CALayer layer];
     layer.cornerRadius = cell.categoriesColorView.bounds.size.width / 2;
     layer.frame = cell.categoriesColorView.bounds;
@@ -249,21 +251,10 @@
     self.navigationItem.rightBarButtonItem = saveBBI;
 }
 
-- (void)assignCalendarColors {
-    UIColor *hotPink = [UIColor colorWithRed:(238/255.0) green:(106/255.0) blue:(167/255.0) alpha:1.0];
-    UIColor *turquoise = [UIColor colorWithRed:(64/255.0) green:(224/255.0) blue:(208/255.0) alpha:1.0];
-    UIColor *darkOrchid = [UIColor colorWithRed:(154/255.0) green:(50/255.0) blue:(205/255.0) alpha:1.0];
-    UIColor *darkOrange = [UIColor colorWithRed:(255/255.0) green:(140/255.0) blue:(0/255.0) alpha:1.0];
-    UIColor *chartreuse = [UIColor colorWithRed:(118/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
-    UIColor *yellow = [UIColor colorWithRed:(238/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
-    
-    self.calendarUIColors = @[hotPink, turquoise, darkOrchid, darkOrange, chartreuse, yellow];
-    self.calendarStringColors = @[@"Pink", @"Turquoise", @"Orchid", @"Orange", @"Green", @"Yellow"];
-}
-
 - (void)mapColorTitleToIndex {
-    for (NSInteger i = 0; i < self.calendarStringColors.count; i++) {
-        NSString *stringColor = self.calendarStringColors[i];
+    EventManager *eventManager = [EventManager sharedManager];
+    for (NSInteger i = 0; i < eventManager.calendarStringColors.count; i++) {
+        NSString *stringColor = eventManager.calendarStringColors[i];
         if ([stringColor isEqualToString:self.colorTitle]) {
             self.checkedRow = i;
         }

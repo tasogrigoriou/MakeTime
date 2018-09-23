@@ -47,7 +47,6 @@
 
 - (void)loadCalendarData {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self assignCalendarColors];
         __weak AddCalendarViewController *weakSelf = self;
         [[EventManager sharedManager] loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -111,7 +110,7 @@
         [self presentViewController:alert animated:YES completion:nil];
         return;
     } else {
-        UIColor *color = self.calendarUIColors[self.checkedRow];
+        UIColor *color = eventManager.calendarUIColors[self.checkedRow];
         newCalendar.CGColor = color.CGColor;
     }
     
@@ -147,7 +146,7 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.calendarStringColors count];
+    return [[[EventManager sharedManager] calendarStringColors] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -161,12 +160,14 @@
         cell.checkmarkImage.image = nil;
     }
     
-    cell.categoriesLabel.text = self.calendarStringColors[indexPath.row];
+    EventManager *eventManager = [EventManager sharedManager];
+    
+    cell.categoriesLabel.text = eventManager.calendarStringColors[indexPath.row];
     cell.categoriesLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:14.0f];
     
     // Since we need the backgroundColor of the colorView to persist through out the highlight animation,
     // Create a CALayer with a background color, instead of using the backgroundColor property of UIView.
-    UIColor *calendarColor = self.calendarUIColors[indexPath.row];
+    UIColor *calendarColor = eventManager.calendarUIColors[indexPath.row];
     CALayer *layer = [CALayer layer];
     layer.cornerRadius = cell.categoriesColorView.bounds.size.width / 2;
     layer.frame = cell.categoriesColorView.bounds;
@@ -264,30 +265,6 @@
     if (@available(iOS 11.0, *)) {
         self.addCalendarTableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
-}
-
-- (void)giveGradientBackgroundColor
-{
-    // Create an overlay view to give a gradient background color
-    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height + 3000);
-    UIView *overlayView = [[UIView alloc] initWithFrame:frame];
-    UIColor *skyBlueLight = [UIColor colorWithHue:0.57 saturation:0.90 brightness:0.98 alpha:1.0];
-    overlayView.backgroundColor = [UIColor colorWithGradientStyle:UIGradientStyleTopToBottom
-                                                        withFrame:frame
-                                                        andColors:@[[UIColor whiteColor], skyBlueLight]];
-    [self.view insertSubview:overlayView atIndex:0];
-}
-
-- (void)assignCalendarColors {
-    UIColor *hotPink = [UIColor colorWithRed:(238/255.0) green:(106/255.0) blue:(167/255.0) alpha:1.0];
-    UIColor *turquoise = [UIColor colorWithRed:(64/255.0) green:(224/255.0) blue:(208/255.0) alpha:1.0];
-    UIColor *darkOrchid = [UIColor colorWithRed:(154/255.0) green:(50/255.0) blue:(205/255.0) alpha:1.0];
-    UIColor *darkOrange = [UIColor colorWithRed:(255/255.0) green:(140/255.0) blue:(0/255.0) alpha:1.0];
-    UIColor *chartreuse = [UIColor colorWithRed:(118/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
-    UIColor *yellow = [UIColor colorWithRed:(238/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
-    
-    self.calendarUIColors = @[hotPink, turquoise, darkOrchid, darkOrange, chartreuse, yellow];
-    self.calendarStringColors = @[@"Pink", @"Turquoise", @"Orchid", @"Orange", @"Chartreuse", @"Yellow"];
 }
 
 - (void)addTapGestureRecognizer {

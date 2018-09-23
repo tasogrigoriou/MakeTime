@@ -10,6 +10,7 @@
 #import "TodayViewController.h"
 #import "UIColor+RBExtras.h"
 #import "Chameleon.h"
+#import "UIColor+Converter.h"
 #import "CalendarViewDayCell.h"
 #import <EventKit/EventKit.h>
 #import "FSCalendar.h"
@@ -274,7 +275,7 @@
  * Asks the dataSource the number of event dots for a specific date.
  */
 - (NSInteger)calendar:(FSCalendar *)calendar numberOfEventsForDate:(NSDate *)date {
-    return [[self.eventsModel.dateEvents objectForKey:date] count];
+    return [[self eventColorsForDate:date] count];
 }
 
 
@@ -489,14 +490,12 @@
 }
 
 - (nullable NSArray<UIColor *> *)eventColorsForDate:(NSDate *)date {
-    NSMutableArray *eventColors = [NSMutableArray array];
+    NSMutableSet *eventColors = [NSMutableSet set];
     for (EKEvent *event in self.eventsModel.dateEvents[date]) {
         UIColor *calendarColor = [UIColor colorWithCGColor:event.calendar.CGColor];
-        if (![eventColors containsObject:calendarColor]) {
-            [eventColors addObject:calendarColor];
-        }
+        [eventColors addObject:calendarColor];
     }
-    return [eventColors count] > 0 ? eventColors : nil;
+    return [eventColors count] > 0 ? [eventColors allObjects] : nil;
 }
 
 - (void)addTabBarNotificationObserver {

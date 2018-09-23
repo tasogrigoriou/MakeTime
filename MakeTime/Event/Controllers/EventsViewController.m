@@ -110,14 +110,15 @@
     NSArray *eventsOnThisDay = [self.eventsModel.dateEvents objectForKey:dateRepresentingThisDay];
     EKEvent *event = [eventsOnThisDay objectAtIndex:indexPath.row];
     
-    cell.textLabel.text = event.calendar.title;
-    cell.textLabel.textColor = [UIColor colorWithCGColor:event.calendar.CGColor];
-    
     NSString *eventTitle = event.title.length != 0 ? event.title : @"No title";
+    
+    cell.textLabel.text = eventTitle;
+//    cell.textLabel.textColor = [UIColor colorWithCGColor:event.calendar.CGColor];
+    
     NSString *startDateTitle = [self.cellDateFormatter stringFromDate:event.startDate];
     NSString *endDateTitle = [self.cellDateFormatter stringFromDate:event.endDate];
     
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@  |  %@ - %@", eventTitle, startDateTitle, endDateTitle];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ - %@", startDateTitle, endDateTitle];
     
     return cell;
 }
@@ -158,7 +159,7 @@
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor blackColor];
+    label.textColor = [UIColor colorWithCGColor:self.calendar.CGColor];
     label.text = [NSString stringWithFormat:@"%@ Events", self.calendar.title];
     [label sizeToFit];
     self.navigationItem.titleView = label;

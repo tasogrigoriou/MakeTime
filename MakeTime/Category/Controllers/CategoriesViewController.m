@@ -25,7 +25,6 @@
 
 @property (strong, nonatomic) NSDictionary<UIColor *, NSArray<EKCalendar *> *> *sections;
 @property (strong, nonatomic) NSArray<UIColor *> *colors;
-@property (strong, nonatomic) NSDictionary<UIColor *, NSString *> *colorStrings;
 
 @property (strong, nonatomic) NSIndexPath *checkedIndexPath;
 @property (assign, nonatomic) NSInteger checkedRow;
@@ -49,8 +48,6 @@
 
 - (void)loadCalendarData {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-        [self assignCalendarColors];
-        [self mapColorsToStrings];
         __weak CategoriesViewController *weakSelf = self;
         [[EventManager sharedManager] loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
             weakSelf.customCalendars = calendars;
@@ -83,26 +80,6 @@
     self.colors = [self.sections allKeys];
     
     completion();
-}
-
-- (void)mapColorsToStrings {
-    NSMutableDictionary<UIColor *, NSString *> *colorStrings = [NSMutableDictionary dictionary];
-    
-    UIColor *hotPink = [UIColor colorWithRed:(238/255.0) green:(106/255.0) blue:(167/255.0) alpha:1.0];
-    UIColor *turquoise = [UIColor colorWithRed:(64/255.0) green:(224/255.0) blue:(208/255.0) alpha:1.0];
-    UIColor *darkOrchid = [UIColor colorWithRed:(154/255.0) green:(50/255.0) blue:(205/255.0) alpha:1.0];
-    UIColor *darkOrange = [UIColor colorWithRed:(255/255.0) green:(140/255.0) blue:(0/255.0) alpha:1.0];
-    UIColor *chartreuse = [UIColor colorWithRed:(118/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
-    UIColor *yellow = [UIColor colorWithRed:(238/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
-
-    colorStrings[hotPink] = @"Pink";
-    colorStrings[turquoise] = @"Turquoise";
-    colorStrings[darkOrchid] = @"Orchid";
-    colorStrings[darkOrange] = @"Orange";
-    colorStrings[chartreuse] = @"Green";
-    colorStrings[yellow] = @"Yellow";
-    
-    self.colorStrings = (NSDictionary<UIColor *, NSString *> *)colorStrings;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -142,9 +119,10 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     UIColor *color = [self.colors objectAtIndex:section];
-    for (UIColor *colorKey in self.colorStrings) {
+    EventManager *eventManager = [EventManager sharedManager];
+    for (UIColor *colorKey in eventManager.colorStrings) {
         if ([colorKey isEqualToColor:color]) {
-            return [self.colorStrings objectForKey:colorKey];
+            return [eventManager.colorStrings objectForKey:colorKey];
         }
     }
     return nil;
@@ -274,10 +252,11 @@
     NSArray *calendarsForColor = [self.sections objectForKey:color];
     EKCalendar *cal = [calendarsForColor objectAtIndex:indexPath.row];
     
+    EventManager *eventManager = [EventManager sharedManager];
     NSString *colorTitle;
-    for (UIColor *colorKey in self.colorStrings) {
+    for (UIColor *colorKey in eventManager.colorStrings) {
         if ([colorKey isEqualToColor:color]) {
-            colorTitle = [self.colorStrings objectForKey:colorKey];
+            colorTitle = [eventManager.colorStrings objectForKey:colorKey];
         }
     }
     
@@ -404,18 +383,6 @@
     
     // Dont let scroll view bounce past the end of the bounds
 //    self.categoriesTableView.alwaysBounceVertical = NO;
-}
-
-- (void)assignCalendarColors {
-    UIColor *hotPink = [UIColor colorWithRed:(238/255.0) green:(106/255.0) blue:(167/255.0) alpha:1.0];
-    UIColor *turquoise = [UIColor colorWithRed:(64/255.0) green:(224/255.0) blue:(208/255.0) alpha:1.0];
-    UIColor *darkOrchid = [UIColor colorWithRed:(154/255.0) green:(50/255.0) blue:(205/255.0) alpha:1.0];
-    UIColor *darkOrange = [UIColor colorWithRed:(255/255.0) green:(140/255.0) blue:(0/255.0) alpha:1.0];
-    UIColor *chartreuse = [UIColor colorWithRed:(118/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
-    UIColor *yellow = [UIColor colorWithRed:(238/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
-    
-    self.calendarUIColors = @[hotPink, turquoise, darkOrchid, darkOrange, chartreuse, yellow];
-    self.calendarStringColors = @[@"Pink", @"Turquoise", @"Orchid", @"Orange", @"Chartreuse", @"Yellow"];
 }
 
 

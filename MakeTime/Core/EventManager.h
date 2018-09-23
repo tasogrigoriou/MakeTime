@@ -22,6 +22,10 @@
 @property (strong, nonatomic) NSArray *customCalendars;
 @property (strong, nonatomic) NSMutableArray *customCalendarIdentifiers;
 
+@property (strong, nonatomic) NSArray<UIColor *> *calendarUIColors;
+@property (strong, nonatomic) NSArray<NSString *> *calendarStringColors;
+@property (strong, nonatomic) NSDictionary<UIColor *, NSString *> *colorStrings;
+
 // Assigns the range (location, length) of the event within a particular day.
 @property (assign, nonatomic) NSRange *timespanOfEvent;
 

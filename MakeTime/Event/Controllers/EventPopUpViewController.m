@@ -9,6 +9,8 @@
 #import "EventPopUpViewController.h"
 #import "EditEventViewController.h"
 #import "UIView+Extras.h"
+#import "Chameleon.h"
+
 
 @interface EventPopUpViewController () <UIGestureRecognizerDelegate>
 
@@ -91,7 +93,9 @@
     self.textView.layer.cornerRadius = 20.0f;
     [self.headerView setRoundedCorners:UIRectCornerTopLeft | UIRectCornerTopRight radius:10.0f];
     [self.cancelButton setRoundedCorners:UIRectCornerBottomLeft radius:10.0f];
-    [self.editButton setRoundedCorners:UIRectCornerBottomRight radius:10.0f];
+    [self.editButton setRoundedCorners:UIRectCornerBottomRight | UIRectCornerBottomLeft radius:10.0f];
+//    self.editButton.backgroundColor = [UIColor flatGreenColor];
+    self.editButton.backgroundColor = [UIColor colorWithCGColor:self.event.calendar.CGColor];
 }
 
 - (void)setupTextView {
@@ -105,9 +109,9 @@
     NSString *noEventTitle = @"No Title";
     
     if (self.event.title.length != 0) {
-        self.textView.text = [NSString stringWithFormat:@"Calendar: %@ \nEvent: %@ \nStart: %@ \nEnd: %@", self.event.calendar.title, self.event.title, startDateTitle, endDateTitle];
+        self.textView.text = [NSString stringWithFormat:@"Title: %@ \nCategory: %@ \nStart: %@ \nEnd: %@", self.event.title, self.event.calendar.title, startDateTitle, endDateTitle];
     } else {
-        self.textView.text = [NSString stringWithFormat:@"Calendar: %@ \nEvent: %@ \nStart: %@ \nEnd: %@", self.event.calendar.title, noEventTitle, startDateTitle, endDateTitle];
+        self.textView.text = [NSString stringWithFormat:@"Title: %@ \nCategory: %@ \nStart: %@ \nEnd: %@", noEventTitle, self.event.calendar.title, startDateTitle, endDateTitle];
     }
 }
 

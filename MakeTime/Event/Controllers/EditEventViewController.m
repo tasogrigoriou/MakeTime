@@ -362,19 +362,12 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    EventTextFieldTableViewCell *eventTextFieldCell = (EventTextFieldTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventTextFieldTableViewCell"];
-    eventTextFieldCell.titleTextField.delegate = self;
-    eventTextFieldCell.backgroundColor = [UIColor clearColor];
-    
-    DatePickerTableViewCell *datePickerCell = (DatePickerTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"DatePickerTableViewCell"];
-    datePickerCell.backgroundColor = [UIColor clearColor];
-    
-    EventTableViewCell *eventCell = (EventTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventTableViewCell"];
-    eventCell.backgroundColor = [UIColor clearColor];
-    
     if (indexPath.section == 0) {
         
         if (indexPath.row == 0) {
+            EventTextFieldTableViewCell *eventTextFieldCell = (EventTextFieldTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventTextFieldTableViewCell"];
+            eventTextFieldCell.titleTextField.delegate = self;
+            eventTextFieldCell.backgroundColor = [UIColor clearColor];
             
             // If we just recently pushed the RepeatAlertVC, do NOT re-assign the detail label from the title's text field.
             // Simply read in the event title which was saved from earlier.
@@ -388,18 +381,20 @@
             } else {
                 eventTextFieldCell.detailLabel.text = @"";
             }
+            return eventTextFieldCell;
             
         } else if (indexPath.row == 1) {
+            EventTableViewCell *eventCell = (EventTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventTableViewCell"];
+            eventCell.backgroundColor = [UIColor clearColor];
             eventCell.textLabel.text = @"Category";
             eventCell.detailTextLabel.text = self.eventCalendar.title;
             return eventCell;
         }
-        
-        return eventTextFieldCell;
     }
     
     if (indexPath.section == 1 && self.datePickerIndexPath && self.datePickerIndexPath == indexPath) {
-        
+        DatePickerTableViewCell *datePickerCell = (DatePickerTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"DatePickerTableViewCell"];
+        datePickerCell.backgroundColor = [UIColor clearColor];
         // A date picker sends the UIControlEventValueChanged event when the user finishes rotating one of the wheels to change the date or time. You can respond to this event by performing some corresponding action in your app, such as updating the time for a calendar event. You register the target-action methods for a date picker as shown below.
         [datePickerCell.datePicker addTarget:self
                                       action:@selector(changeDateAboveDatePicker:)
@@ -414,7 +409,8 @@
         return datePickerCell;
         
     } else {
-        
+        EventTableViewCell *eventCell = (EventTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventTableViewCell"];
+        eventCell.backgroundColor = [UIColor clearColor];
         if (indexPath.section == 1) {
             
             if (indexPath.row == 0) {

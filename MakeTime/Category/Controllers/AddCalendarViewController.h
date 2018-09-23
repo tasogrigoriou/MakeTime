@@ -13,7 +13,4 @@
 @property (assign, nonatomic) NSInteger checkedRow;
 @property (assign, nonatomic) NSInteger colorIndex;
 
-@property (strong, nonatomic) NSArray<UIColor *> *calendarUIColors;
-@property (strong, nonatomic) NSArray<NSString *> *calendarStringColors;
-
 @end

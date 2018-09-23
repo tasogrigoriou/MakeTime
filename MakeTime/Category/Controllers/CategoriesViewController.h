@@ -11,7 +11,4 @@
 
 @interface CategoriesViewController : CustomViewController
 
-@property (strong, nonatomic) NSArray<NSString *> *calendarStringColors;
-@property (strong, nonatomic) NSArray<UIColor *> *calendarUIColors;
-
 @end
