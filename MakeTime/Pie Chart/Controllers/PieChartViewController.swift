@@ -62,9 +62,9 @@ class PieChartViewController: UIViewController {
     
     private func loadPieChartData() {
         DispatchQueue.global(qos: .userInitiated).async {
-            self.eventManager.loadCustomCalendars { calendars in
+            self.eventManager.loadCustomCalendars { [weak self] calendars in
                 if let calendars = calendars {
-                    self.convertToPieChartCalendars(calendars)
+                    self?.convertToPieChartCalendars(calendars)
                 }
             }
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
@@ -137,9 +137,9 @@ class PieChartViewController: UIViewController {
             
     private func createPlainTextLayer() -> PiePlainTextLayer {
         let textLayerSettings = PiePlainTextLayerSettings()
-        textLayerSettings.viewRadius = pieChartView.frame.size.width / 5
-        textLayerSettings.hideOnOverflow = false
-        textLayerSettings.label.font = UIFont(name: "AvenirNext-Medium", size: 14) ?? UIFont.systemFont(ofSize: 12)
+        textLayerSettings.viewRadius = pieChartView.frame.size.width / 6
+        textLayerSettings.hideOnOverflow = true
+        textLayerSettings.label.font = UIFont(name: "AvenirNext-Medium", size: 13)!
         
         
         let formatter = NumberFormatter()
@@ -161,7 +161,7 @@ class PieChartViewController: UIViewController {
         lineTextLayerSettings.lineColor = UIColor.lightGray
         let formatter = NumberFormatter()
         formatter.maximumFractionDigits = 1
-        lineTextLayerSettings.label.font = UIFont(name: "AvenirNext-Medium", size: 14) ?? UIFont.systemFont(ofSize: 12)
+        lineTextLayerSettings.label.font = UIFont(name: "AvenirNext-Medium", size: 13) ?? UIFont.systemFont(ofSize: 12)
         lineTextLayerSettings.label.textGenerator = {slice in
             return formatter.string(from: slice.data.model.value as NSNumber).map { "\($0)" } ?? ""
         }

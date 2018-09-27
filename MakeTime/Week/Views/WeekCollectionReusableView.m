@@ -30,7 +30,7 @@
 }
 
 - (void)drawRoundedCorners {
-    self.layer.cornerRadius = 3.0f;
+    self.layer.cornerRadius = 2.0f;
     self.layer.borderWidth = 0.5f;
     self.layer.borderColor = [UIColor lightGrayHTMLColor].CGColor;
 }

@@ -18,8 +18,9 @@
 #import "EventTextFieldTableViewCell.h"
 #import "DatePickerTableViewCell.h"
 #import "RepeatAlertViewController.h"
+#import "CategoriesViewController.h"
 
-@interface EditEventViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate, RepeatAlertViewControllerDelegate>
+@interface EditEventViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate, RepeatAlertViewControllerDelegate, CategoriesViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *editEventTableView;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
@@ -388,6 +389,7 @@
             eventCell.backgroundColor = [UIColor clearColor];
             eventCell.textLabel.text = @"Category";
             eventCell.detailTextLabel.text = self.eventCalendar.title;
+            eventCell.detailTextLabel.textColor = [UIColor colorWithCGColor:self.eventCalendar.CGColor];
             return eventCell;
         }
     }
@@ -496,6 +498,14 @@
         
         [self.navigationController pushViewController:repeatVC animated:YES];
     }
+    
+    if (indexPath.section == 0) {
+        if (indexPath.row == 1) {
+            CategoriesViewController *categoriesVC = [[CategoriesViewController alloc] initWithCalendar:self.eventCalendar
+                                                                                               delegate:self];
+            [self.navigationController pushViewController:categoriesVC animated:YES];
+        }
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -548,6 +558,14 @@
 //
 //  return lineView;
 //}
+
+
+#pragma mark - CategoriesViewControllerDelegate
+
+
+- (void)didSelectCalendar:(EKCalendar *)calendar {
+    self.eventCalendar = calendar;
+}
 
 
 #pragma mark - RepeatAlertViewControllerDelegate
@@ -625,7 +643,8 @@
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor colorWithCGColor:self.currentEvent.calendar.CGColor];
+//    label.textColor = [UIColor colorWithCGColor:self.currentEvent.calendar.CGColor];
+    label.textColor = [UIColor blackColor];
     //    label.text = self.eventTitle;
     label.text = @"Edit Event";
     [label sizeToFit];

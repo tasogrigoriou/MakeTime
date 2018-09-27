@@ -227,13 +227,13 @@
     
     NSDictionary *textAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0], NSForegroundColorAttributeName : [UIColor blackColor] };
     
-    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backarrow2"]
                                                                        style:UIBarButtonItemStylePlain
                                                                       target:self
                                                                       action:@selector(popViewController:)];
+    leftButtonItem.tintColor = [UIColor blackColor];
     [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
-    leftButtonItem.tintColor = [UIColor blackColor];
     self.navigationItem.leftBarButtonItem = leftButtonItem;
     
     UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save"

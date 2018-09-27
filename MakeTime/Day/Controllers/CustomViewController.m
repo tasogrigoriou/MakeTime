@@ -98,7 +98,7 @@
 //    [self.navigationController pushViewController:[CalendarViewController new] animated:YES];
 //    [self presentViewController:[CalendarViewController new] animated:YES completion:nil];
     
-    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[CalendarViewController new]];
+    UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:[[AddEventViewController alloc] init]];
     [self presentViewController:navController animated:YES completion:nil];
 }
 

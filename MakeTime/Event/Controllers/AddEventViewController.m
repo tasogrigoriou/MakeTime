@@ -20,7 +20,7 @@
 #import "RepeatAlertViewController.h"
 #import "CategoriesViewController.h"
 
-@interface AddEventViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate, RepeatAlertViewControllerDelegate>
+@interface AddEventViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate, RepeatAlertViewControllerDelegate, CategoriesViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *eventTableView;
 
@@ -163,6 +163,17 @@
 }
 
 - (void)saveEvent:(id)sender {
+    if (self.calendar == nil) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                       message:@"This event doesn't have a category"
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
+                                                              handler:^(UIAlertAction *action) {}];
+        [alert addAction:defaultAction];
+        [self presentViewController:alert animated:YES completion:nil];
+        return;
+    }
+    
     EventManager *eventManager = [EventManager sharedManager];
     
     EKEvent *event = [EKEvent eventWithEventStore:eventManager.eventStore];
@@ -280,6 +291,7 @@
                 category = @"None";
             } else {
                 category = self.calendar.title;
+                eventCell.detailTextLabel.textColor = [UIColor colorWithCGColor:self.calendar.CGColor];
             }
             eventCell.detailTextLabel.text = category;
             return eventCell;
@@ -393,7 +405,8 @@
     
     if (indexPath.section == 0) {
         if (indexPath.row == 1) {
-            CategoriesViewController *categoriesVC = [[CategoriesViewController alloc] init];
+            CategoriesViewController *categoriesVC = [[CategoriesViewController alloc] initWithCalendar:self.calendar
+                                                                                               delegate:self];
             [self.navigationController pushViewController:categoriesVC animated:YES];
         }
     }
@@ -449,6 +462,15 @@
 //
 //  return lineView;
 //}
+
+
+#pragma mark - CategoriesViewControllerDelegate
+
+
+- (void)didSelectCalendar:(EKCalendar *)calendar {
+    self.calendar = calendar;
+//    [self.eventTableView reloadData];
+}
 
 
 #pragma mark - RepeatAlertViewControllerDelegate
@@ -525,7 +547,7 @@
     label.backgroundColor = [UIColor clearColor];
     label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
     label.textAlignment = NSTextAlignmentCenter;
-    label.textColor = [UIColor colorWithCGColor:self.calendar.CGColor];
+    label.textColor = [UIColor blackColor];
     label.text = @"New Event";
     [label sizeToFit];
     self.navigationItem.titleView = label;
@@ -534,10 +556,10 @@
 - (void)customizeBarButtonItems {
     NSDictionary *textAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0], NSForegroundColorAttributeName : [UIColor blackColor] };
     
-    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back"
+    UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                                        style:UIBarButtonItemStylePlain
                                                                       target:self
-                                                                      action:@selector(popViewController:)];
+                                                                      action:@selector(cancelAdd)];
     [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
     leftButtonItem.tintColor = [UIColor blackColor];
@@ -551,6 +573,10 @@
     [saveButton setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
     saveButton.tintColor = [UIColor blackColor];
     self.navigationItem.rightBarButtonItem = saveButton;
+}
+
+- (void)cancelAdd {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)customizeDatesAndOptions {

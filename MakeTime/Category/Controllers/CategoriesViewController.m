@@ -29,10 +29,25 @@
 @property (strong, nonatomic) NSIndexPath *checkedIndexPath;
 @property (assign, nonatomic) NSInteger checkedRow;
 
+@property (strong, nonatomic) EKCalendar *selectedCalendar;
+
+@property (nonatomic) BOOL navigatingFromAddEventVC;
+
 @end
 
 
 @implementation CategoriesViewController
+
+
+- (instancetype)initWithCalendar:(EKCalendar *)calendar delegate:(id<CategoriesViewControllerDelegate>)delegate {
+    self = [super initWithNibName:nil bundle:nil];
+    if (self) {
+        self.delegate = delegate;
+        self.navigatingFromAddEventVC = YES;
+        self.selectedCalendar = calendar;
+    }
+    return self;
+}
 
 
 #pragma mark - View Lifecycle
@@ -46,7 +61,7 @@
     [self configureViewAndTableView];
 }
 
-- (void)loadCalendarData {
+- (void)loadData {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         __weak CategoriesViewController *weakSelf = self;
         [[EventManager sharedManager] loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
@@ -86,7 +101,7 @@
     [super viewWillAppear:animated];
     
     // Reload table view and the custom calendars when navigating back from AddCalendarVC
-    [self loadCalendarData];
+    [self loadData];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -138,6 +153,10 @@
     
     cell.categoriesLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:15.0f];
     cell.categoriesLabel.text = calendar.title;
+    
+    if ([self.selectedCalendar isEqual:calendar]) {
+        cell.checkmarkImage.image = [UIImage imageNamed:@"checkmark.png"];
+    }
     
     UIColor *calendarColor = [UIColor colorWithCGColor:calendar.CGColor];
     CALayer *layer = [CALayer layer];
@@ -293,9 +312,15 @@
     UIColor *color = [self.colors objectAtIndex:indexPath.section];
     NSArray *calendarsForColor = [self.sections objectForKey:color];
     EKCalendar *calendar = [calendarsForColor objectAtIndex:indexPath.row];
+    if (!self.navigatingFromAddEventVC) {
+        EventsViewController *eventsViewController = [[EventsViewController alloc] initWithCalendar:calendar];
+        [self.navigationController pushViewController:eventsViewController animated:YES];
     
-    EventsViewController *eventsViewController = [[EventsViewController alloc] initWithCalendar:calendar];
-    [self.navigationController pushViewController:eventsViewController animated:YES];
+    } else {
+        self.checkedIndexPath = indexPath;
+        [self.delegate didSelectCalendar:calendar];
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -328,14 +353,16 @@
 
 - (void)configureButtonsForTabBar {
     NSDictionary *textAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"AvenirNextCondensed-Regular" size:14.0], NSForegroundColorAttributeName : [UIColor blackColor] };
-//        UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Edit"
-//                                                                           style:UIBarButtonItemStylePlain
-//                                                                          target:self
-//                                                                          action:@selector(showEditing:)];
-//        leftButtonItem.tintColor = [UIColor blackColor];
-//        [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
-//        [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
-//        self.navigationItem.leftBarButtonItem = leftButtonItem;
+    if (self.navigatingFromAddEventVC) {
+        UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backarrow2"]
+                                                                           style:UIBarButtonItemStylePlain
+                                                                          target:self
+                                                                          action:@selector(popVC)];
+        leftButtonItem.tintColor = [UIColor blackColor];
+        [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
+        [leftButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
+        self.navigationItem.leftBarButtonItem = leftButtonItem;
+    }
     
     UIBarButtonItem *rightButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Add"
                                                                         style:UIBarButtonItemStylePlain
@@ -345,6 +372,10 @@
     [rightButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateNormal];
     [rightButtonItem setTitleTextAttributes:textAttributes forState:UIControlStateHighlighted];
     self.navigationItem.rightBarButtonItem = rightButtonItem;
+}
+
+- (void)popVC {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)showEditing:(UIBarButtonItem *)sender {

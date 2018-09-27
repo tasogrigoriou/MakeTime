@@ -25,6 +25,11 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ahe-Th-qU3" customClass="PieChart" customModule="MakeTime" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="171" width="375" height="327"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="innerRadius">
+                            <real key="value" value="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uNn-DI-6b9" customClass="BetterSegmentedControl" customModule="MakeTime" customModuleProvider="target">
                     <rect key="frame" x="37.5" y="50" width="300" height="44"/>

@@ -8,7 +8,20 @@
 
 #import <UIKit/UIKit.h>
 #import "CustomViewController.h"
+#import "EventKit/EventKit.h"
+
+@class CategoriesViewController;
+
+@protocol CategoriesViewControllerDelegate <NSObject>
+
+- (void)didSelectCalendar:(EKCalendar *)calendar;
+
+@end
 
 @interface CategoriesViewController : CustomViewController
+
+@property (weak, nonatomic) id<CategoriesViewControllerDelegate> delegate;
+
+- (instancetype)initWithCalendar:(EKCalendar *)calendar delegate:(id<CategoriesViewControllerDelegate>)delegate;
 
 @end
