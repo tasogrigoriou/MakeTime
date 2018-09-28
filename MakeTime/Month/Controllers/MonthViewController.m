@@ -114,7 +114,14 @@
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
                             [self.eventsTableView reloadData];
-                            if ([self.eventsModel.dateEvents count] > 0) {
+                            NSDate *startOfToday = [[NSCalendar currentCalendar] startOfDayForDate:[NSDate date]];
+                            NSNumber *sectionIndex = [self.eventsModel.dateSections objectForKey:startOfToday];
+                            if (sectionIndex != nil && [self.eventsModel.dateEvents count] > 0) {
+                                [self.eventsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0
+                                                                                                inSection:[sectionIndex integerValue]]
+                                                            atScrollPosition:UITableViewScrollPositionTop
+                                                                    animated:YES];
+                            } else if ([self.eventsModel.dateEvents count] > 0) {
                                 [self.eventsTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]
                                                             atScrollPosition:UITableViewScrollPositionTop
                                                                     animated:YES];
