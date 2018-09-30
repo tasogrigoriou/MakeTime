@@ -390,6 +390,7 @@
             eventCell.textLabel.text = @"Category";
             eventCell.detailTextLabel.text = self.eventCalendar.title;
             eventCell.detailTextLabel.textColor = [UIColor colorWithCGColor:self.eventCalendar.CGColor];
+            eventCell.detailTextLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:16.0f];
             return eventCell;
         }
     }

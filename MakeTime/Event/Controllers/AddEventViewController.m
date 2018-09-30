@@ -292,6 +292,8 @@
             } else {
                 category = self.calendar.title;
                 eventCell.detailTextLabel.textColor = [UIColor colorWithCGColor:self.calendar.CGColor];
+                eventCell.detailTextLabel.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:16.0f];
+
             }
             eventCell.detailTextLabel.text = category;
             return eventCell;

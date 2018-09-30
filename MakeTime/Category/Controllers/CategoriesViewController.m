@@ -153,7 +153,7 @@
     
 //    cell.backgroundColor = [UIColor colorWithCGColor:calendar.CGColor];
     
-    cell.categoriesLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:15.0f];
+    cell.categoriesLabel.font = [UIFont fontWithName:@"AvenirNext-Regular" size:15.0f];
     cell.categoriesLabel.text = calendar.title;
     
     if ([self.selectedCalendar isEqual:calendar]) {
