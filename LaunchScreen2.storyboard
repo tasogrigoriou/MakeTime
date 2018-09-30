@@ -18,11 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="maketime" translatesAutoresizingMaskIntoConstraints="NO" id="Do1-tf-PU1">
-                                <rect key="frame" x="37.5" y="323" width="300" height="41"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MakeTime_Gradient_Background.png" translatesAutoresizingMaskIntoConstraints="NO" id="2v9-2b-ezE">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MakeTimeIconNoBackground.png" translatesAutoresizingMaskIntoConstraints="NO" id="Do1-tf-PU1">
+                                <rect key="frame" x="112.5" y="-168.5" width="150" height="1024"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="Yme-TR-a0f"/>
-                                    <constraint firstAttribute="width" secondItem="Do1-tf-PU1" secondAttribute="height" multiplier="169:23" id="dV2-pk-K0w"/>
+                                    <constraint firstAttribute="width" constant="150" id="Yme-TR-a0f"/>
                                 </constraints>
                             </imageView>
                         </subviews>
@@ -30,6 +32,10 @@
                         <constraints>
                             <constraint firstItem="Do1-tf-PU1" firstAttribute="centerY" secondItem="xa6-Jl-jDJ" secondAttribute="centerY" id="8t8-Ge-89n"/>
                             <constraint firstItem="Do1-tf-PU1" firstAttribute="centerX" secondItem="xa6-Jl-jDJ" secondAttribute="centerX" id="BWA-M6-2Tl"/>
+                            <constraint firstAttribute="trailing" secondItem="2v9-2b-ezE" secondAttribute="trailing" id="QmP-fe-WnB"/>
+                            <constraint firstAttribute="bottom" secondItem="2v9-2b-ezE" secondAttribute="bottom" id="fyy-ij-bkP"/>
+                            <constraint firstItem="2v9-2b-ezE" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="gA7-Pt-keN"/>
+                            <constraint firstItem="2v9-2b-ezE" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="qd7-pp-FYc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="xa6-Jl-jDJ"/>
                     </view>
@@ -40,6 +46,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="maketime" width="100" height="100"/>
+        <image name="MakeTimeIconNoBackground.png" width="1024" height="1024"/>
+        <image name="MakeTime_Gradient_Background.png" width="1024" height="1024"/>
     </resources>
 </document>

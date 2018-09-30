@@ -170,10 +170,10 @@
     workCalendar.CGColor = [UIColor colorWithRed:(64/255.0) green:(224/255.0) blue:(208/255.0) alpha:1.0].CGColor;
     [calendarArray addObject:workCalendar];
     
-    // School - Dark Orchid default color
+    // School - Deep Purple default color
     EKCalendar *schoolCalendar = [EKCalendar calendarForEntityType:EKEntityTypeEvent eventStore:self.eventStore];
     schoolCalendar.title = @"School";
-    schoolCalendar.CGColor = [UIColor colorWithRed:(154/255.0) green:(50/255.0) blue:(205/255.0) alpha:1.0].CGColor;
+    schoolCalendar.CGColor = [UIColor colorWithRed:(118/255.0) green:(77/255.0) blue:(190/255.0) alpha:1.0].CGColor;
     [calendarArray addObject:schoolCalendar];
     
     // Exercise - Dark Orange default color
@@ -185,13 +185,13 @@
     // Social - Green default color
     EKCalendar *socialCalendar = [EKCalendar calendarForEntityType:EKEntityTypeEvent eventStore:self.eventStore];
     socialCalendar.title = @"Social";
-    socialCalendar.CGColor = [UIColor colorWithRed:(118/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0].CGColor;
+    socialCalendar.CGColor = [UIColor colorWithRed:(118/255.0) green:(213/255.0) blue:(0/255.0) alpha:1.0].CGColor;
     [calendarArray addObject:socialCalendar];
     
-    // Cleaning - Yellow default color
+    // Cleaning - Amber default color
     EKCalendar *cleaningCalendar = [EKCalendar calendarForEntityType:EKEntityTypeEvent eventStore:self.eventStore];
     cleaningCalendar.title = @"Cleaning";
-    cleaningCalendar.CGColor = [UIColor colorWithRed:(238/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0].CGColor;
+    cleaningCalendar.CGColor = [UIColor colorWithRed:(255/255.0) green:(193/255.0) blue:(7/255.0) alpha:1.0].CGColor;
     [calendarArray addObject:cleaningCalendar];
     
     for (EKCalendar *cal in calendarArray) {
@@ -364,20 +364,36 @@
     
     UIColor *hotPink = [UIColor colorWithRed:(238/255.0) green:(106/255.0) blue:(167/255.0) alpha:1.0];
     UIColor *turquoise = [UIColor colorWithRed:(64/255.0) green:(224/255.0) blue:(208/255.0) alpha:1.0];
-    UIColor *darkOrchid = [UIColor colorWithRed:(154/255.0) green:(50/255.0) blue:(205/255.0) alpha:1.0];
+    UIColor *deepPurple = [UIColor colorWithRed:(118/255.0) green:(77/255.0) blue:(190/255.0) alpha:1.0];
     UIColor *darkOrange = [UIColor colorWithRed:(255/255.0) green:(140/255.0) blue:(0/255.0) alpha:1.0];
-    UIColor *green = [UIColor colorWithRed:(118/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
-    UIColor *yellow = [UIColor colorWithRed:(238/255.0) green:(238/255.0) blue:(0/255.0) alpha:1.0];
+    UIColor *green = [UIColor colorWithRed:(118/255.0) green:(213/255.0) blue:(0/255.0) alpha:1.0];
+    UIColor *yellow = [UIColor colorWithRed:(240/255.0) green:(220/255.0) blue:(0/255.0) alpha:1.0];
+    UIColor *amber = [UIColor colorWithRed:(255/255.0) green:(193/255.0) blue:(7/255.0) alpha:1.0];
+    UIColor *blue = [UIColor colorWithRed:(33/255.0) green:(150/255.0) blue:(243/255.0) alpha:1.0];
+    UIColor *lightPink = [UIColor colorWithRed:(255/255.0) green:(193/255.0) blue:(214/255.0) alpha:1.0];
+    UIColor *lightGreen = [UIColor colorWithRed:(176/255.0) green:(238/255.0) blue:(208/255.0) alpha:1.0];
+    UIColor *blueGrey = [UIColor colorWithRed:(120/255.0) green:(144/255.0) blue:(156/255.0) alpha:1.0];
+    UIColor *magenta = [UIColor colorWithRed:(196/255.0) green:(78/255.0) blue:(216/255.0) alpha:1.0];
+    UIColor *red = [UIColor colorWithRed:(244/255.0) green:(67/255.0) blue:(54/255.0) alpha:1.0];
+    UIColor *softBlue = [UIColor colorWithRed:(180/255.0) green:(171/255.0) blue:(210/255.0) alpha:1.0];
     
-    colorStrings[hotPink] = @"Pink";
+    colorStrings[hotPink] = @"Hot Pink";
     colorStrings[turquoise] = @"Turquoise";
-    colorStrings[darkOrchid] = @"Orchid";
+    colorStrings[deepPurple] = @"Purple";
     colorStrings[darkOrange] = @"Orange";
     colorStrings[green] = @"Green";
     colorStrings[yellow] = @"Yellow";
+    colorStrings[amber] = @"Amber";
+    colorStrings[blue] = @"Blue";
+    colorStrings[lightPink] = @"Light Pink";
+    colorStrings[lightGreen] = @"Light Green";
+    colorStrings[blueGrey] = @"Blue Grey";
+    colorStrings[magenta] = @"Magenta";
+    colorStrings[red] = @"Red";
+    colorStrings[softBlue] = @"Soft Blue";
     
-    self.calendarUIColors = @[hotPink, turquoise, darkOrchid, darkOrange, green, yellow];
-    self.calendarStringColors = @[@"Pink", @"Turquoise", @"Orchid", @"Orange", @"Green", @"Yellow"];
+    self.calendarUIColors = @[deepPurple, blue, hotPink, magenta, red, turquoise, darkOrange, green, amber, yellow, lightPink, lightGreen, blueGrey, softBlue];
+    self.calendarStringColors = @[@"Purple", @"Blue", @"Hot Pink", @"Magenta", @"Red", @"Turquoise", @"Orange", @"Green", @"Amber", @"Yellow", @"Light Pink", @"Light Green", @"Blue Grey", @"Soft Blue"];
     self.colorStrings = (NSDictionary<UIColor *, NSString *> *)colorStrings;
 }
 

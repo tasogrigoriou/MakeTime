@@ -99,14 +99,7 @@
     PieChartViewController *pieChartViewController = [PieChartViewController new];
     UINavigationController *pieChartNavigationController = [[UINavigationController alloc] initWithRootViewController:pieChartViewController];
     
-    ToDoListViewController *toDoListViewController = [ToDoListViewController new];
-    UINavigationController *toDoListNavigationController = [[UINavigationController alloc] initWithRootViewController:toDoListViewController];
-    
     self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, categoriesNavigationController, pieChartNavigationController];
-    
-//    self.viewControllers = @[todayNavigationController, weekNavigationController, monthNavigationController, categoriesNavigationController, pieChartNavigationController, toDoListNavigationController];
-//    self.viewControllers[4].title = @"Pie Chart";
-//    self.viewControllers[5].title = @"To Do List";
 
     self.selectedViewController = todayNavigationController;
     self.lastSelectedViewController = todayNavigationController;
@@ -137,11 +130,6 @@
     self.tabBar.items[4].selectedImage = [UIImage imageNamed:@"piechart"];
     self.tabBar.items[4].title = @"Pie Chart";
     self.tabBar.items[4].tag = 4;
-
-//    self.tabBar.items[5].image = [UIImage imageNamed:@"menu.png"];
-//    self.tabBar.items[5].selectedImage = [UIImage imageNamed:@"menu.png"];
-//    self.tabBar.items[5].title = @"To Do List";
-//    self.tabBar.items[5].tag = 5;
 }
 
 

@@ -171,6 +171,8 @@
 		9FD948891F325DC800483302 /* TodayCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9FD948871F325DC800483302 /* TodayCollectionReusableView.xib */; };
 		9FDF6CA91F6B78FE0026ED15 /* WeekCollectionViewWeekCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FDF6CA81F6B78FE0026ED15 /* WeekCollectionViewWeekCell.m */; };
 		9FE19E8C1E14D2AC00CB8439 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE19E8B1E14D2AC00CB8439 /* home.png */; };
+		9FE8892E215F37C70095F9D5 /* MakeTime_Gradient_Background.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE8892D215F37C70095F9D5 /* MakeTime_Gradient_Background.png */; };
+		9FE88930215F37CE0095F9D5 /* MakeTimeIconNoBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = 9FE8892F215F37CE0095F9D5 /* MakeTimeIconNoBackground.png */; };
 		9FEDC00721470A710016B39D /* UIImage+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEDC00621470A710016B39D /* UIImage+Extras.m */; };
 		9FEDC00A21470BBE0016B39D /* UIView+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEDC00921470BBE0016B39D /* UIView+Extras.m */; };
 		9FEDC0262148DF130016B39D /* EventsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9FEDC0242148DF130016B39D /* EventsTableViewCell.m */; };
@@ -471,6 +473,8 @@
 		9FDF6CA71F6B78FE0026ED15 /* WeekCollectionViewWeekCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeekCollectionViewWeekCell.h; sourceTree = "<group>"; };
 		9FDF6CA81F6B78FE0026ED15 /* WeekCollectionViewWeekCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WeekCollectionViewWeekCell.m; sourceTree = "<group>"; };
 		9FE19E8B1E14D2AC00CB8439 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = home.png; sourceTree = "<group>"; };
+		9FE8892D215F37C70095F9D5 /* MakeTime_Gradient_Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MakeTime_Gradient_Background.png; sourceTree = "<group>"; };
+		9FE8892F215F37CE0095F9D5 /* MakeTimeIconNoBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MakeTimeIconNoBackground.png; sourceTree = "<group>"; };
 		9FEDC00521470A710016B39D /* UIImage+Extras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Extras.h"; sourceTree = "<group>"; };
 		9FEDC00621470A710016B39D /* UIImage+Extras.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Extras.m"; sourceTree = "<group>"; };
 		9FEDC00821470BBE0016B39D /* UIView+Extras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIView+Extras.h"; sourceTree = "<group>"; };
@@ -1310,6 +1314,8 @@
 			isa = PBXGroup;
 			children = (
 				9FBA79421DCC5CF1000AE696 /* Assets.xcassets */,
+				9FE8892D215F37C70095F9D5 /* MakeTime_Gradient_Background.png */,
+				9FE8892F215F37CE0095F9D5 /* MakeTimeIconNoBackground.png */,
 				9FB385871DE41D9700A6F1E4 /* Default-568h@2x.png */,
 				9FBA79471DCC5CF1000AE696 /* Info.plist */,
 				9FF7442B1E1307A400816F8D /* UIColor+RBExtras.h */,
@@ -1546,6 +1552,7 @@
 			files = (
 				9FAE9A821EE9D224002F247F /* CalendarCollectionViewCell.xib in Resources */,
 				9F14B8A41DEBF54800ADBE0C /* RearViewController.xib in Resources */,
+				9FE88930215F37CE0095F9D5 /* MakeTimeIconNoBackground.png in Resources */,
 				9FB96D031EF342CC00BDC3BA /* CategoriesViewController.xib in Resources */,
 				9F7B6C162150E379000C024A /* .gitkeep in Resources */,
 				9FD9487A1F2D4C1300483302 /* RepeatAlertViewController.xib in Resources */,
@@ -1568,6 +1575,7 @@
 				9F76F4821E5FCEB100641875 /* Info2.plist in Resources */,
 				9FAE9A7A1EE84997002F247F /* AddEventViewController.xib in Resources */,
 				9F7B6C132150E379000C024A /* 1.gitkeep in Resources */,
+				9FE8892E215F37C70095F9D5 /* MakeTime_Gradient_Background.png in Resources */,
 				9FBC52FA1EFE13C4001BF4CD /* AddCalendarViewController.xib in Resources */,
 				9FB385881DE41D9700A6F1E4 /* Default-568h@2x.png in Resources */,
 				9F21FD071E18893100BBE626 /* pen-point-tip.png in Resources */,
@@ -1843,6 +1851,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6X7DGG368N;
@@ -1863,6 +1872,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "LaunchImage-2";
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 6X7DGG368N;
