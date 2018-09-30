@@ -137,7 +137,7 @@
     EventManager *eventManager = [EventManager sharedManager];
     for (UIColor *colorKey in eventManager.colorStrings) {
         if ([colorKey isEqualToColor:color]) {
-//            return [eventManager.colorStrings objectForKey:colorKey];
+            return [eventManager.colorStrings objectForKey:colorKey];
         }
     }
     return nil;
@@ -145,13 +145,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     CategoriesTableViewCell *cell = (CategoriesTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"CategoriesTableViewCell"];
-//    cell.backgroundColor = [UIColor whiteColor];
+    cell.backgroundColor = [UIColor whiteColor];
     
     UIColor *color = [self.colors objectAtIndex:indexPath.section];
     NSArray *calendarsForColor = [self.sections objectForKey:color];
     EKCalendar *calendar = [calendarsForColor objectAtIndex:indexPath.row];
     
-    cell.backgroundColor = [UIColor colorWithCGColor:calendar.CGColor];
+//    cell.backgroundColor = [UIColor colorWithCGColor:calendar.CGColor];
     
     cell.categoriesLabel.font = [UIFont fontWithName:@"AvenirNext-Medium" size:15.0f];
     cell.categoriesLabel.text = calendar.title;
@@ -412,7 +412,7 @@
         self.categoriesTableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     }
     
-    self.categoriesTableView.contentInset = UIEdgeInsetsMake(-28, 0, 0, 0);
+    self.categoriesTableView.contentInset = UIEdgeInsetsMake(-15, 0, 0, 0);
     
     // Dont let scroll view bounce past the end of the bounds
 //    self.categoriesTableView.alwaysBounceVertical = NO;
