@@ -19,6 +19,8 @@
 @property (weak, nonatomic) IBOutlet UITextView *textView;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;
 @property (weak, nonatomic) IBOutlet UIButton *editButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *popUpHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *popUpWidthConstraint;
 
 @property (strong, nonatomic) EKEvent *event;
 @property (strong, nonatomic) UITapGestureRecognizer *tapRecognizer;
@@ -52,6 +54,12 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    if (UIDevice.currentDevice.userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        self.popUpHeightConstraint.constant *= 1.5;
+        self.popUpWidthConstraint.constant *= 1.5;
+        [self.view layoutIfNeeded];
+    }
     [self roundCorners];
     [self setupTextView];
     [self setupTapRecognizer];

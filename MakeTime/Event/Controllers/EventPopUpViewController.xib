@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="ipad12_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -14,18 +14,20 @@
             <connections>
                 <outlet property="editButton" destination="YMH-qY-Bat" id="Kfi-wL-ggr"/>
                 <outlet property="headerView" destination="xnx-pe-GN9" id="XgO-MT-g51"/>
+                <outlet property="popUpHeightConstraint" destination="2bB-zk-nJL" id="Tn3-la-EMu"/>
                 <outlet property="popUpView" destination="WJ0-Hh-wmp" id="2xw-75-FAB"/>
+                <outlet property="popUpWidthConstraint" destination="b1m-Ea-e0f" id="FkM-le-BG6"/>
                 <outlet property="textView" destination="WDW-xa-JcS" id="Txr-vM-TeU"/>
                 <outlet property="view" destination="T9k-Yk-6Dl" id="ajV-2e-HLb"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="T9k-Yk-6Dl">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WJ0-Hh-wmp">
-                    <rect key="frame" x="55" y="226" width="265" height="215"/>
+                    <rect key="frame" x="379.5" y="563" width="265" height="240"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xnx-pe-GN9">
                             <rect key="frame" x="0.0" y="0.0" width="265" height="50"/>
@@ -54,7 +56,7 @@
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMH-qY-Bat">
-                            <rect key="frame" x="0.0" y="175" width="265" height="40"/>
+                            <rect key="frame" x="0.0" y="200" width="265" height="40"/>
                             <color key="backgroundColor" red="0.30163472879999997" green="0.70777184270000004" blue="0.1435239428" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="5OS-ar-RuQ"/>
@@ -70,15 +72,15 @@
                     </subviews>
                     <color key="backgroundColor" red="0.9415141347" green="0.9415141347" blue="0.9415141347" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
+                        <constraint firstAttribute="height" constant="240" id="2bB-zk-nJL"/>
                         <constraint firstItem="WDW-xa-JcS" firstAttribute="top" secondItem="xnx-pe-GN9" secondAttribute="top" constant="49" id="9Df-mU-RB6"/>
                         <constraint firstAttribute="trailing" secondItem="WDW-xa-JcS" secondAttribute="trailing" constant="5" id="Gb0-2I-L6u"/>
                         <constraint firstAttribute="bottom" secondItem="YMH-qY-Bat" secondAttribute="bottom" id="Oi0-3A-aez"/>
                         <constraint firstItem="xnx-pe-GN9" firstAttribute="leading" secondItem="WJ0-Hh-wmp" secondAttribute="leading" id="XsU-px-1UC"/>
                         <constraint firstItem="xnx-pe-GN9" firstAttribute="top" secondItem="WJ0-Hh-wmp" secondAttribute="top" id="aMl-aO-RvY"/>
-                        <constraint firstAttribute="height" constant="215" id="kyU-VD-dhr"/>
+                        <constraint firstAttribute="width" constant="265" id="b1m-Ea-e0f"/>
                         <constraint firstItem="WDW-xa-JcS" firstAttribute="leading" secondItem="WJ0-Hh-wmp" secondAttribute="leading" constant="5" id="neK-Kf-Uz8"/>
                         <constraint firstAttribute="trailing" secondItem="YMH-qY-Bat" secondAttribute="trailing" id="ovv-Ol-dST"/>
-                        <constraint firstAttribute="width" constant="265" id="r6A-Xn-wgl"/>
                         <constraint firstAttribute="trailing" secondItem="xnx-pe-GN9" secondAttribute="trailing" id="xBL-Ux-tC5"/>
                         <constraint firstItem="YMH-qY-Bat" firstAttribute="leading" secondItem="WJ0-Hh-wmp" secondAttribute="leading" id="zbt-K4-Z7F"/>
                     </constraints>

@@ -27,6 +27,7 @@
                     <color key="backgroundColor" red="0.92903473143236071" green="0.082929124671461407" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="40" id="E0N-bN-c8t"/>
+                        <constraint firstAttribute="width" constant="105" id="TvC-Fz-Gq3"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="18"/>
                     <state key="normal" title="Delete">
@@ -50,10 +51,9 @@
             <constraints>
                 <constraint firstItem="Kdi-Tq-E1J" firstAttribute="top" secondItem="Qqv-hg-Fm3" secondAttribute="bottom" constant="10" id="1gv-H0-nXg"/>
                 <constraint firstItem="Qqv-hg-Fm3" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="C4G-OH-Yin"/>
-                <constraint firstAttribute="trailing" secondItem="Kdi-Tq-E1J" secondAttribute="trailing" constant="135" id="Qa7-hv-vJV"/>
                 <constraint firstItem="dDv-o4-GMT" firstAttribute="bottom" secondItem="Kdi-Tq-E1J" secondAttribute="bottom" constant="15" id="lvH-0e-WTs"/>
                 <constraint firstItem="Qqv-hg-Fm3" firstAttribute="top" secondItem="dDv-o4-GMT" secondAttribute="top" id="neq-Mb-77N"/>
-                <constraint firstItem="Kdi-Tq-E1J" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="135" id="wul-hr-17T"/>
+                <constraint firstItem="Kdi-Tq-E1J" firstAttribute="centerX" secondItem="Qqv-hg-Fm3" secondAttribute="centerX" id="qzU-EC-BE9"/>
                 <constraint firstAttribute="trailing" secondItem="Qqv-hg-Fm3" secondAttribute="trailing" id="ylE-Pl-chj"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="dDv-o4-GMT"/>
