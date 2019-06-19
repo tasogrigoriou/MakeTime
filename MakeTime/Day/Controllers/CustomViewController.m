@@ -12,6 +12,7 @@
 #import "QuartzCore/QuartzCore.h"
 #import "CalendarViewController.h"
 #import "AddEventViewController.h"
+#import "EventManager.h"
 
 @interface CustomViewController ()
 
@@ -86,6 +87,9 @@
             [[[EventManager sharedManager] eventStore] requestAccessToEntityType:EKEntityTypeEvent
                                                                       completion:^(BOOL granted, NSError *error) {
                                                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                                                              if (granted) {
+                                                                                  [[EventManager sharedManager] loadDefaultCalendars];
+                                                                              }
                                                                               weakSelf.isAccessToEventStoreGranted = granted;
                                                                           });
                                                                       }];

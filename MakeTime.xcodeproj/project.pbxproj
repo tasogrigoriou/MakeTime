@@ -41,6 +41,8 @@
 		9F21FD071E18893100BBE626 /* pen-point-tip.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F21FD061E18893100BBE626 /* pen-point-tip.png */; };
 		9F21FD091E188A3D00BBE626 /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F21FD081E188A3D00BBE626 /* clock.png */; };
 		9F21FD0F1E1B4FD200BBE626 /* CustomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F21FD0E1E1B4FD200BBE626 /* CustomViewController.m */; };
+		9F31235822A78BFB005071F9 /* EventTextViewTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F31235622A78BFB005071F9 /* EventTextViewTableViewCell.m */; };
+		9F31235922A78BFB005071F9 /* EventTextViewTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F31235722A78BFB005071F9 /* EventTextViewTableViewCell.xib */; };
 		9F37B2641E468F5800C8443C /* CalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F37B2631E468F5800C8443C /* CalendarView.m */; };
 		9F37B2671E47046100C8443C /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F37B2661E47046100C8443C /* EventKit.framework */; };
 		9F4035B11F11F4C200EA1B16 /* EditCategoriesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4035AF1F11F4C200EA1B16 /* EditCategoriesViewController.m */; };
@@ -243,6 +245,9 @@
 		9F21FD081E188A3D00BBE626 /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
 		9F21FD0D1E1B4FD200BBE626 /* CustomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomViewController.h; sourceTree = "<group>"; };
 		9F21FD0E1E1B4FD200BBE626 /* CustomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomViewController.m; sourceTree = "<group>"; };
+		9F31235522A78BFB005071F9 /* EventTextViewTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventTextViewTableViewCell.h; sourceTree = "<group>"; };
+		9F31235622A78BFB005071F9 /* EventTextViewTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventTextViewTableViewCell.m; sourceTree = "<group>"; };
+		9F31235722A78BFB005071F9 /* EventTextViewTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EventTextViewTableViewCell.xib; sourceTree = "<group>"; };
 		9F37B2621E468F5800C8443C /* CalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarView.h; sourceTree = "<group>"; };
 		9F37B2631E468F5800C8443C /* CalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarView.m; sourceTree = "<group>"; };
 		9F37B2661E47046100C8443C /* EventKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = EventKit.framework; path = System/Library/Frameworks/EventKit.framework; sourceTree = SDKROOT; };
@@ -1471,6 +1476,9 @@
 				9FC695DD1F266B2600006F13 /* EventTextFieldTableViewCell.h */,
 				9FC695DE1F266B2600006F13 /* EventTextFieldTableViewCell.m */,
 				9FC695DF1F266B2600006F13 /* EventTextFieldTableViewCell.xib */,
+				9F31235522A78BFB005071F9 /* EventTextViewTableViewCell.h */,
+				9F31235622A78BFB005071F9 /* EventTextViewTableViewCell.m */,
+				9F31235722A78BFB005071F9 /* EventTextViewTableViewCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1532,6 +1540,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1602,6 +1611,7 @@
 				9F09306E1E1DDA98007A33F6 /* magic-wand.png in Resources */,
 				9FCA32F4214AF5260062ABCF /* ToDoTableViewCell.xib in Resources */,
 				9FA26DDA2127E3F40053F628 /* LaunchScreen2.storyboard in Resources */,
+				9F31235922A78BFB005071F9 /* EventTextViewTableViewCell.xib in Resources */,
 				9F4DBDFD214AEBD80077CEF6 /* ToDoListViewController.xib in Resources */,
 				9F0930781E1EF0C6007A33F6 /* menu2.png in Resources */,
 				9F1B5BC01F4AB58F00F20370 /* WeekCollectionViewCell.xib in Resources */,
@@ -1650,6 +1660,7 @@
 				9F71EF411E23784B00CD23DA /* RearCollectionViewCell.m in Sources */,
 				9F7B6C142150E379000C024A /* IconSegment.swift in Sources */,
 				9F1B5BBF1F4AB58F00F20370 /* WeekCollectionViewCell.m in Sources */,
+				9F31235822A78BFB005071F9 /* EventTextViewTableViewCell.m in Sources */,
 				9FCA3EF21E4851E400A016FF /* CalendarHeaderView.m in Sources */,
 				9F14B8911DEBE44800ADBE0C /* WeekViewController.m in Sources */,
 				9F594E2E214CF65500FB5949 /* PieChart.swift in Sources */,

@@ -121,11 +121,16 @@
     BOOL isNotFirstLaunch = [[NSUserDefaults standardUserDefaults] objectForKey:@"isNotFirstLaunch"];
     if (!isNotFirstLaunch) {
         NSArray *defaultCals = [self loadDefaultCalendars];
-        for (EKCalendar *cal in defaultCals) {
-            if (![[NSUserDefaults standardUserDefaults] objectForKey:cal.calendarIdentifier]) {
-                [customCals addObject:cal];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            for (EKCalendar *cal in defaultCals) {
+                if (![[NSUserDefaults standardUserDefaults] objectForKey:cal.calendarIdentifier]) {
+                    [customCals addObject:cal];
+                }
             }
-        }
+            self.customCalendars = (NSArray<EKCalendar *> *)customCals;
+            completion(self.customCalendars);
+        });
         // Otherwise, just load the cal ID's present in NSUserDefaults and use them to load the EKCalendars
     } else {
         NSArray *userDefaultCalIdentifiers = [[NSUserDefaults standardUserDefaults] objectForKey:@"customCalendarIdentifiers"];
@@ -138,13 +143,10 @@
                 }
             }
         }
+        
+        self.customCalendars = (NSArray<EKCalendar *> *)customCals;
+        completion(self.customCalendars);
     }
-    
-    /**** Log NSUserDefaults to view calendar identifiers ****/
-    //     NSLog(@"NSUserDefaults: \n%@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
-    
-    self.customCalendars = (NSArray<EKCalendar *> *)customCals;
-    completion(self.customCalendars);
 }
 
 - (NSArray *)loadDefaultCalendars {
@@ -215,6 +217,7 @@
     }
     
     self.defaultCalendars = (NSArray *)calendarArray;
+    
     return self.defaultCalendars;
 }
 

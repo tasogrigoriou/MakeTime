@@ -16,14 +16,17 @@
 #import "SwipeBack.h"
 #import "EventTableViewCell.h"
 #import "EventTextFieldTableViewCell.h"
+#import "EventTextViewTableViewCell.h"
 #import "DatePickerTableViewCell.h"
 #import "RepeatAlertViewController.h"
 #import "CategoriesViewController.h"
 
-@interface EditEventViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate, RepeatAlertViewControllerDelegate, CategoriesViewControllerDelegate>
+@interface EditEventViewController () <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate, RepeatAlertViewControllerDelegate, CategoriesViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *editEventTableView;
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
+
+@property (nonatomic, assign) CGFloat rowHeight;
 
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSArray *customCalendars;
@@ -48,6 +51,8 @@
 
 @property (strong, nonatomic) UITextField *textField;
 
+@property (strong, nonatomic) NSString *eventNotes;
+
 @end
 
 
@@ -66,6 +71,10 @@
         self.eventStartDate = event.startDate;
         self.eventEndDate = event.endDate;
         self.eventCalendar = event.calendar;
+        
+        if (event.hasNotes) {
+            self.eventNotes = event.notes;
+        }
         
         self.textFieldHasTitle = YES;
         self.textFieldTitle = event.title;
@@ -222,6 +231,38 @@
 }
 
 
+#pragma mark - UITextViewDelegate
+
+
+- (void)textViewDidBeginEditing:(UITextView *)textView {
+    if ([textView.text isEqualToString:@"Notes"]) {
+        textView.text = @"";
+        textView.textColor = [UIColor blackColor];
+    }
+    [textView becomeFirstResponder];
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    if ([textView.text isEqualToString:@""]) {
+        textView.text = @"Notes";
+        textView.textColor = [UIColor lightGrayColor];
+    }
+    [textView resignFirstResponder];
+}
+
+- (void)textViewDidChange:(UITextView *)textView {
+    self.eventNotes = [textView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    
+    [UIView setAnimationsEnabled:NO];
+    [self.editEventTableView beginUpdates];
+    CGFloat paddingForTextView = 20;
+    [textView sizeThatFits:CGSizeMake(self.view.frame.size.width, CGFLOAT_MAX)];
+    self.rowHeight = textView.contentSize.height + paddingForTextView;
+    [self.editEventTableView endUpdates];
+    [UIView setAnimationsEnabled:YES];
+}
+
+
 #pragma mark - IBActions
 
 - (IBAction)deleteEventButtonPressed:(id)sender {
@@ -274,6 +315,9 @@
     event.startDate = self.eventStartDate;
     event.endDate = self.eventEndDate;
     event.calendar = self.eventCalendar;
+    if (self.eventNotes.length != 0 && ![self.eventNotes isEqualToString:@"Notes"]) {
+        event.notes = self.eventNotes;
+    }
     
     // Specify the recurrence frequency and interval values based on the repeat index in the tableview
     EKRecurrenceFrequency frequency;
@@ -356,6 +400,8 @@
     } else if (section == 1 && self.isTextFieldTapped && !self.datePickerIndexPath) {
         return 2;
     } else if (section == 1 && self.datePickerIndexPath) {
+        return 3;
+    } else if (section == 2) {
         return 3;
     } else {
         return 2;
@@ -441,6 +487,15 @@
                 } else {
                     eventCell.detailTextLabel.text = @"None";
                 }
+                
+            } else if (indexPath.row == 2) {
+                EventTextViewTableViewCell *eventTextViewCell = (EventTextViewTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventTextViewTableViewCell"];
+                if (self.eventNotes.length != 0 && ![self.eventNotes isEqualToString:@"Notes"]) {
+                    eventTextViewCell.textView.textColor = [UIColor blackColor];
+                    eventTextViewCell.textView.text = self.eventNotes;
+                }
+                eventTextViewCell.textView.delegate = self;
+                return eventTextViewCell;
             }
         }
         
@@ -486,18 +541,20 @@
     
     if (indexPath.section == 2) {
         
-        RepeatAlertViewController *repeatVC = [RepeatAlertViewController new];
-        repeatVC.delegate = self;
-        
-        if (indexPath.row == 0) {
-            repeatVC.repeatOrAlarm = @"Repeat";
-            repeatVC.checkedRowForRepeat = self.repeatIndex;
-        } else if (indexPath.row == 1) {
-            repeatVC.repeatOrAlarm = @"Alarm";
-            repeatVC.checkedRowForAlarm = self.alarmIndex;
+        if (indexPath.row != 2) {
+            RepeatAlertViewController *repeatVC = [RepeatAlertViewController new];
+            repeatVC.delegate = self;
+            
+            if (indexPath.row == 0) {
+                repeatVC.repeatOrAlarm = @"Repeat";
+                repeatVC.checkedRowForRepeat = self.repeatIndex;
+            } else if (indexPath.row == 1) {
+                repeatVC.repeatOrAlarm = @"Alarm";
+                repeatVC.checkedRowForAlarm = self.alarmIndex;
+            }
+            
+            [self.navigationController pushViewController:repeatVC animated:YES];
         }
-        
-        [self.navigationController pushViewController:repeatVC animated:YES];
     }
     
     if (indexPath.section == 0) {
@@ -516,6 +573,10 @@
     if (self.datePickerIndexPath && self.datePickerIndexPath == indexPath) {
         DatePickerTableViewCell *datePickerCell = (DatePickerTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"DatePickerTableViewCell"];
         rowHeight = datePickerCell.frame.size.height;
+    }
+    
+    if (indexPath.section == 2 && indexPath.row == 2) {
+        return self.rowHeight;
     }
     
     return rowHeight;
@@ -611,6 +672,18 @@
     
     if (parentIndexPath.row == 0) {
         self.eventStartDate = sender.date;
+        
+        // Update end date cell with new event start date (one hour ahead)
+        NSIndexPath *endDateIndexPath = [NSIndexPath indexPathForRow:self.datePickerIndexPath.row + 1 inSection:1];
+        EventTableViewCell *endDateCell = [self.editEventTableView cellForRowAtIndexPath:endDateIndexPath];
+        
+        NSDateComponents *comps = [NSDateComponents new];
+        comps.hour = 1;
+        NSDate *hourAheadDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:sender.date options:0];
+        self.eventEndDate = hourAheadDate;
+        
+        endDateCell.detailTextLabel.text = [self.dateFormatter stringFromDate:hourAheadDate];
+        
     } else if (parentIndexPath.row == 1) {
         self.eventEndDate = sender.date;
     }
@@ -631,6 +704,9 @@
     
     // Insert a dummy footer view to limit number of cells displayed in table view
     self.editEventTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    
+    self.rowHeight = 44;
+    self.editEventTableView.estimatedRowHeight = 200;
     
     // Do NOT modify the content area of the scroll view using the safe area insets
     if (@available(iOS 11.0, *)) {
@@ -692,9 +768,11 @@
     UINib *nib = [UINib nibWithNibName:@"EventTableViewCell" bundle:nil];
     UINib *nib2 = [UINib nibWithNibName:@"DatePickerTableViewCell" bundle:nil];
     UINib *nib3 = [UINib nibWithNibName:@"EventTextFieldTableViewCell" bundle:nil];
+    UINib *nib4 = [UINib nibWithNibName:@"EventTextViewTableViewCell" bundle:nil];
     [self.editEventTableView registerNib:nib forCellReuseIdentifier:@"EventTableViewCell"];
     [self.editEventTableView registerNib:nib2 forCellReuseIdentifier:@"DatePickerTableViewCell"];
     [self.editEventTableView registerNib:nib3 forCellReuseIdentifier:@"EventTextFieldTableViewCell"];
+    [self.editEventTableView registerNib:nib4 forCellReuseIdentifier:@"EventTextViewTableViewCell"];
 }
 
 - (void)addTapGestureRecognizer {

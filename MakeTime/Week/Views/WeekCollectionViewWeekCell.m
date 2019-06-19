@@ -71,6 +71,7 @@
     } else if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"loadedWeekCellCount"] integerValue] == 3) {
         [self.collectionView setHidden:NO duration:0.0 completion:nil];
     }
+    [self.collectionView setHidden:NO duration:0.3 completion:nil];
 }
 
 - (void)addWeekdayLineImageSubview {
@@ -98,15 +99,17 @@
 - (void)loadEventData {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self initDaysInWeek];
-        [self loadCustomCalendarsAndEvents];
         [self loadWeekdayLabelsArray];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-            [self showCollectionView];
-            if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"loadedWeekCellCount"] integerValue] == 1) {
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:2] forKey:@"loadedWeekCellCount"];
-            }
-        });
+        __weak WeekCollectionViewWeekCell *weakSelf = self;
+        [self loadCustomCalendarsAndEvents:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.collectionView reloadData];
+                [weakSelf showCollectionView];
+                if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"loadedWeekCellCount"] integerValue] == 1) {
+                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:2] forKey:@"loadedWeekCellCount"];
+                }
+            });
+        }];
     });
 }
 
@@ -285,40 +288,24 @@ timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-- (void)loadCustomCalendarsAndEvents {
+- (void)loadCustomCalendarsAndEvents:(void (^)(void))completion {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"eventStoreGranted"]) {
         
         __weak WeekCollectionViewWeekCell *weakSelf = self;
         [[EventManager sharedManager] loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
             weakSelf.customCalendars = calendars;
+            
+            weakSelf.customEvents = [[EventManager sharedManager] getEventsOfAllCalendars:weakSelf.customCalendars
+                                                                       thatFallInWeek:weakSelf.selectedDate];
+            
+            // Get converted event comps and sort them by startDate
+            weakSelf.eventComponentsArray = [weakSelf copyCustomEventsIntoEventComponents];
+            NSArray *convertedEventArray = [weakSelf getConvertedEventComponents];
+            NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:YES];
+            weakSelf.convertedEventComponentsArray = [convertedEventArray sortedArrayUsingDescriptors:@[dateDescriptor]];
+            
+            completion();
         }];
-        
-        self.customEvents = [[EventManager sharedManager] getEventsOfAllCalendars:self.customCalendars
-                                                                   thatFallInWeek:self.selectedDate];
-        
-        // Get converted event comps and sort them by startDate
-        self.eventComponentsArray = [self copyCustomEventsIntoEventComponents];
-        NSArray *convertedEventArray = [self getConvertedEventComponents];
-        NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:YES];
-        self.convertedEventComponentsArray = [convertedEventArray sortedArrayUsingDescriptors:@[dateDescriptor]];
-        
-        
-        /*** LOGGING ***/
-        for (EKEvent *event in self.customEvents) {
-            NSLog(@"custom event date = %@ --- %@", event.startDate, event.endDate);
-        }
-        
-        for (EventComponents *eventComponent in self.convertedEventComponentsArray) {
-            NSLog(@"custom eventCOMPONENT date = %@ --- %@", eventComponent.startDate, eventComponent.endDate);
-        }
-        
-        NSLog(@"self.customEvents count = %li", self.customEvents.count);
-        
-        //      for (EventComponents *eventComponent in self.convertedEventComponentsArray) {
-        //         NSLog(@"eventComponent title = %@", eventComponent.title);
-        //         NSLog(@"eventComponent startDate = %@", eventComponent.startDate);
-        //         NSLog(@"eventComponent endDate = %@", eventComponent.endDate);
-        //      }
     }
 }
 

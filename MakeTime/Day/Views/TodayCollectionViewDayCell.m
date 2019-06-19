@@ -107,14 +107,16 @@
 - (void)loadEventData {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self initEveryTwoHourDateArray];
-        [self loadConvertedEventComponents];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.collectionView reloadData];
-            [self showCollectionView];
-            if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"loadedDayCellCount"] integerValue] == 1) {
-                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:2] forKey:@"loadedDayCellCount"];
-            }
-        });
+        __weak TodayCollectionViewDayCell *weakSelf = self;
+        [self loadConvertedEventComponents:^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.collectionView reloadData];
+                [weakSelf showCollectionView];
+                if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"loadedDayCellCount"] integerValue] == 1) {
+                    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:2] forKey:@"loadedDayCellCount"];
+                }
+            });
+        }];
     });
 }
 
@@ -301,21 +303,23 @@
     self.everyTwoHourDateArray = (NSArray *)twoHourDateMutableArray;
 }
 
-- (void)loadConvertedEventComponents {
+- (void)loadConvertedEventComponents:(void (^)(void))completion {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"eventStoreGranted"]) {
         
         __weak TodayCollectionViewDayCell *weakSelf = self;
         [[EventManager sharedManager] loadCustomCalendarsWithCompletion:^(NSArray *calendars) {
             weakSelf.customCalendars = calendars;
+            weakSelf.customEvents = [[EventManager sharedManager] getEventsOfAllCalendars:weakSelf.customCalendars
+                                                                       thatFallOnDate:weakSelf.selectedDate];
+            
+            // Get converted event comps and sort them by startDate
+            weakSelf.eventComponentsArray = [weakSelf copyCustomEventsIntoEventComponents];
+            NSArray *convertedEventArray = [weakSelf getConvertedEventComponents];
+            NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:YES];
+            weakSelf.convertedEventComponentsArray = [convertedEventArray sortedArrayUsingDescriptors:@[dateDescriptor]];
+            
+            completion();
         }];
-        self.customEvents = [[EventManager sharedManager] getEventsOfAllCalendars:self.customCalendars
-                                                                   thatFallOnDate:self.selectedDate];
-        
-        // Get converted event comps and sort them by startDate
-        self.eventComponentsArray = [self copyCustomEventsIntoEventComponents];
-        NSArray *convertedEventArray = [self getConvertedEventComponents];
-        NSSortDescriptor *dateDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"startDate" ascending:YES];
-        self.convertedEventComponentsArray = [convertedEventArray sortedArrayUsingDescriptors:@[dateDescriptor]];
         
         //      for (EKEvent *event in self.customEvents) {
         //         NSLog(@"custom event = %@", event);
