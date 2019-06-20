@@ -196,27 +196,54 @@
     cleaningCalendar.CGColor = [UIColor colorWithRed:(255/255.0) green:(193/255.0) blue:(7/255.0) alpha:1.0].CGColor;
     [calendarArray addObject:cleaningCalendar];
     
-    for (EKCalendar *cal in calendarArray) {
+    NSArray *calendarsArray = [self.eventStore calendarsForEntityType:EKEntityTypeEvent];
+    for (EKCalendar *cal in calendarsArray) {
         cal.source = self.eventStore.defaultCalendarForNewEvents.source;
         
         NSMutableArray *calendarIdentifiers = [[[NSUserDefaults standardUserDefaults] objectForKey:@"customCalendarIdentifiers"] mutableCopy];
         if ([calendarIdentifiers containsObject:cal.calendarIdentifier]) {
             [self.calendarChecker addObject:@(YES)];
             NSLog(@"calendar %@ is contained in User Defaults", cal.title);
+        } else {
+            [self saveCustomCalendarIdentifier:cal.calendarIdentifier];
         }
         
         // If cal identifier is not found in NSUserDefaults, save the calendar to the event store.
-        if (![self.calendarChecker containsObject:@(YES)]) {
-            if (![self.eventStore saveCalendar:cal commit:YES error:&error]) {
-                NSLog(@"%@", [error localizedDescription]);
-            } else {
-                NSLog(@"Successfully saved calendar - %@", cal.title);
-                [self saveCustomCalendarIdentifier:cal.calendarIdentifier];
-            }
-        }
+//        if (![self.calendarChecker containsObject:@(YES)]) {
+//
+//            [self saveCustomCalendarIdentifier:cal.calendarIdentifier];
+        
+//            if (![self.eventStore saveCalendar:cal commit:YES error:&error]) {
+//                NSLog(@"%@", [error localizedDescription]);
+//            } else {
+//                NSLog(@"Successfully saved calendar - %@", cal.title);
+//                [self saveCustomCalendarIdentifier:cal.calendarIdentifier];
+//            }
+//        }
     }
     
-    self.defaultCalendars = (NSArray *)calendarArray;
+//    for (EKCalendar *cal in calendarArray) {
+//        cal.source = self.eventStore.defaultCalendarForNewEvents.source;
+//
+//        NSMutableArray *calendarIdentifiers = [[[NSUserDefaults standardUserDefaults] objectForKey:@"customCalendarIdentifiers"] mutableCopy];
+//        if ([calendarIdentifiers containsObject:cal.calendarIdentifier]) {
+//            [self.calendarChecker addObject:@(YES)];
+//            NSLog(@"calendar %@ is contained in User Defaults", cal.title);
+//        }
+//
+//        // If cal identifier is not found in NSUserDefaults, save the calendar to the event store.
+//        if (![self.calendarChecker containsObject:@(YES)]) {
+//            if (![self.eventStore saveCalendar:cal commit:YES error:&error]) {
+//                NSLog(@"%@", [error localizedDescription]);
+//            } else {
+//                NSLog(@"Successfully saved calendar - %@", cal.title);
+//                [self saveCustomCalendarIdentifier:cal.calendarIdentifier];
+//            }
+//        }
+//    }
+    
+//    self.defaultCalendars = (NSArray *)calendarArray;
+    self.defaultCalendars = calendarsArray;
     
     return self.defaultCalendars;
 }

@@ -137,7 +137,8 @@
     EventManager *eventManager = [EventManager sharedManager];
     for (UIColor *colorKey in eventManager.colorStrings) {
         if ([colorKey isEqualToColor:color]) {
-            return [eventManager.colorStrings objectForKey:colorKey];
+//            return [eventManager.colorStrings objectForKey:colorKey];
+            return nil;
         }
     }
     return nil;

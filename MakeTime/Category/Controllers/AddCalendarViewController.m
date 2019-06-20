@@ -82,7 +82,30 @@
     EKCalendar *newCalendar = [EKCalendar calendarForEntityType:EKEntityTypeEvent
                                                      eventStore:eventManager.eventStore];
     newCalendar.title = self.categoryTextField.text;
-    newCalendar.source = eventManager.eventStore.defaultCalendarForNewEvents.source;
+    BOOL isiCloud = NO;
+    for (EKSource *source in eventManager.eventStore.sources) {
+        if (source.sourceType == EKSourceTypeCalDAV && [source.title isEqualToString:@"iCloud"]) {
+            if ([source calendarsForEntityType:EKEntityTypeEvent].count > 0) {
+                newCalendar.source = source;
+                isiCloud = YES;
+                break;
+            }
+        }
+    }
+    if (!isiCloud) {
+        if (![eventManager.eventStore.defaultCalendarForNewEvents.source.title containsString:@"gmail.com"]) {
+            newCalendar.source = eventManager.eventStore.defaultCalendarForNewEvents.source;
+        } else {
+            for (EKSource *source in eventManager.eventStore.sources) {
+                if (source.sourceType == EKSourceTypeLocal) {
+                    newCalendar.source = source;
+                    break;
+                }
+            }
+        }
+    }
+    
+//    newCalendar.source = eventManager.eventStore.defaultCalendarForNewEvents.source;
     
     // Trim whitespace and newline into a new NSString to check for an empty calendar title
     NSString *trimmedTitle = [newCalendar.title

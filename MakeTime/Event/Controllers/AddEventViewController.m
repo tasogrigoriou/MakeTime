@@ -577,6 +577,7 @@
         NSDateComponents *comps = [NSDateComponents new];
         comps.hour = 1;
         NSDate *hourAheadDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps toDate:sender.date options:0];
+        self.eventEndDate = hourAheadDate;
         
         endDateCell.detailTextLabel.text = [self.dateFormatter stringFromDate:hourAheadDate];
         
