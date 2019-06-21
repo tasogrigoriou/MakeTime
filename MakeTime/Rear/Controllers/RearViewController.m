@@ -260,7 +260,7 @@ referenceSizeForHeaderInSection:(NSInteger)section
    NSArray *secondSectionImages = @[@"clock.png", @"watch.png"];
    
    // Initialize two arrays to split the texts into two groups for each section of the collection view.
-   NSArray *firstSectionTexts = @[@"Today", @"Week", @"Month", @"Categories"];
+   NSArray *firstSectionTexts = @[@"Today", @"Week", @"Month", @"Calendars"];
    NSArray *secondSectionTexts = @[@"Chart", @"Settings"];
    
    self.imagesArray = @[firstSectionImages, secondSectionImages];

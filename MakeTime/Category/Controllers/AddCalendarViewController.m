@@ -113,7 +113,7 @@
     
     if ([trimmedTitle isEqualToString:@""]) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                       message:@"This category doesn't have a title"
+                                                                       message:@"This calendar doesn't have a title"
                                                                 preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                               handler:^(UIAlertAction *action) {}];
@@ -125,7 +125,7 @@
     // Check if a color was selected before assigning the newCalendar's color property
     if (self.checkedRow == 100) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                       message:@"This category doesn't have a color"
+                                                                       message:@"This calendar doesn't have a color"
                                                                 preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                               handler:^(UIAlertAction *action) {}];
@@ -141,7 +141,7 @@
     for (EKCalendar *cal in self.customCalendars) {
         if ([[cal.title uppercaseString] isEqualToString:[newCalendar.title uppercaseString]]) {
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                           message:@"This category already exists"
+                                                                           message:@"This calendar already exists"
                                                                     preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                                   handler:^(UIAlertAction *action) {}];
@@ -229,7 +229,7 @@
     label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
-    label.text = @"New Category";
+    label.text = @"New Calendar";
     [label sizeToFit];
     self.navigationItem.titleView = label;
     

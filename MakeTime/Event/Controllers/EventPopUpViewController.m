@@ -117,9 +117,9 @@
     NSString *noEventTitle = @"No Title";
     
     if (self.event.title.length != 0) {
-        self.textView.text = [NSString stringWithFormat:@"Title: %@ \nCategory: %@ \nStart: %@ \nEnd: %@", self.event.title, self.event.calendar.title, startDateTitle, endDateTitle];
+        self.textView.text = [NSString stringWithFormat:@"Title: %@ \nCalendar: %@ \nStart: %@ \nEnd: %@", self.event.title, self.event.calendar.title, startDateTitle, endDateTitle];
     } else {
-        self.textView.text = [NSString stringWithFormat:@"Title: %@ \nCategory: %@ \nStart: %@ \nEnd: %@", noEventTitle, self.event.calendar.title, startDateTitle, endDateTitle];
+        self.textView.text = [NSString stringWithFormat:@"Title: %@ \nCalendar: %@ \nStart: %@ \nEnd: %@", noEventTitle, self.event.calendar.title, startDateTitle, endDateTitle];
     }
 }
 

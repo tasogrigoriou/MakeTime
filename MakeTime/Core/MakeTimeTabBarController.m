@@ -123,7 +123,7 @@
     
     self.tabBar.items[3].image = [UIImage imageNamed:@"categories"];
     self.tabBar.items[3].selectedImage = [UIImage imageNamed:@"categories"];
-    self.tabBar.items[3].title = @"Categories";
+    self.tabBar.items[3].title = @"Calendars";
     self.tabBar.items[3].tag = 3;
     
     self.tabBar.items[4].image = [UIImage imageNamed:@"piechart"];

@@ -20,6 +20,9 @@
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hBC-zd-tIJ">
                         <rect key="frame" x="20" y="0.0" width="242" height="44"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="rHQ-Ry-qhn"/>
+                        </constraints>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="16"/>
                         <textInputTraits key="textInputTraits"/>

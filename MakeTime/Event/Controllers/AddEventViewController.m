@@ -202,7 +202,7 @@
 - (void)saveEvent:(id)sender {
     if (self.calendar == nil) {
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                       message:@"This event doesn't have a category"
+                                                                       message:@"This event doesn't have a calendar"
                                                                 preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *defaultAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault
                                                               handler:^(UIAlertAction *action) {}];
@@ -327,7 +327,7 @@
         } else if (indexPath.row == 1) {
             EventTableViewCell *eventCell = (EventTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"EventTableViewCell"];
             eventCell.backgroundColor = [UIColor clearColor];
-            eventCell.textLabel.text = @"Category";
+            eventCell.textLabel.text = @"Calendar";
             NSString *category;
             if (self.calendar == nil) {
                 category = @"None";

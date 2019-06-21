@@ -134,7 +134,7 @@
     label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
-    label.text = @"Categories";
+    label.text = @"Calendars";
     [label sizeToFit];
     self.navigationItem.titleView = label;
 }

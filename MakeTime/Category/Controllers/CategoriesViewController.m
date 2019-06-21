@@ -39,7 +39,8 @@
 @implementation CategoriesViewController
 
 
-- (instancetype)initWithCalendar:(EKCalendar *)calendar delegate:(id<CategoriesViewControllerDelegate>)delegate {
+- (instancetype)initWithCalendar:(EKCalendar *)calendar
+                        delegate:(id<CategoriesViewControllerDelegate>)delegate {
     self = [super initWithNibName:nil bundle:nil];
     if (self) {
         self.delegate = delegate;
@@ -349,7 +350,7 @@
     label.font = [UIFont fontWithName:@"AvenirNextCondensed-DemiBold" size:20.0f];
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
-    label.text = @"Categories";
+    label.text = @"Calendars";
     [label sizeToFit];
     self.navigationItem.titleView = label;
 }
