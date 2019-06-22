@@ -19,33 +19,20 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hBC-zd-tIJ">
-                        <rect key="frame" x="20" y="0.0" width="242" height="44"/>
-                        <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="rHQ-Ry-qhn"/>
-                        </constraints>
+                        <rect key="frame" x="20" y="0.0" width="300" height="44"/>
                         <nil key="textColor"/>
                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="16"/>
                         <textInputTraits key="textInputTraits"/>
                     </textField>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JPd-pW-Mhy">
-                        <rect key="frame" x="269.5" y="15" width="34.5" height="15.5"/>
-                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="16"/>
-                        <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="hBC-zd-tIJ" secondAttribute="bottom" constant="-0.5" id="37V-DF-LlB"/>
-                    <constraint firstItem="JPd-pW-Mhy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="4" id="ENr-mV-KN6"/>
                     <constraint firstItem="hBC-zd-tIJ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="J27-e0-Ycc"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="JPd-pW-Mhy" secondAttribute="trailing" id="Xsr-gB-KXt"/>
+                    <constraint firstAttribute="trailing" secondItem="hBC-zd-tIJ" secondAttribute="trailing" id="LQZ-C2-hcv"/>
                     <constraint firstItem="hBC-zd-tIJ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="l6Q-Sc-a7M"/>
-                    <constraint firstItem="JPd-pW-Mhy" firstAttribute="leading" secondItem="hBC-zd-tIJ" secondAttribute="trailing" constant="7.5" id="s8F-Xj-wrd"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="JPd-pW-Mhy" secondAttribute="bottom" constant="2.5" id="xMW-IW-16V"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="detailLabel" destination="JPd-pW-Mhy" id="QR2-9Z-oww"/>
                 <outlet property="titleTextField" destination="hBC-zd-tIJ" id="duH-Zx-WOQ"/>
             </connections>
         </tableViewCell>

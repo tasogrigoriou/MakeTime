@@ -113,8 +113,8 @@
 // Use this method to implement any custom behavior when return is tapped (MUST make sure delegate is set in XIB).
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField.text.length != 0) {
-        self.textFieldHasTitle = YES;
-        self.textFieldTitle = textField.text;
+//        self.textFieldHasTitle = YES;
+//        self.textFieldTitle = textField.text;
     }
     [textField resignFirstResponder];
     [self.eventTableView reloadData];
@@ -124,8 +124,8 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason {
     if (textField.text.length != 0) {
-        self.textFieldHasTitle = YES;
-        self.textFieldTitle = textField.text;
+//        self.textFieldHasTitle = YES;
+//        self.textFieldTitle = textField.text;
     }
     [self.eventTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
@@ -135,10 +135,10 @@
     self.isTextFieldTapped = YES;
     self.didPushRepeatAlertVC = NO;
     
-    if (self.textFieldHasTitle) {
-        self.textFieldHasTitle = NO;
-        [self.eventTableView reloadData];
-    }
+//    if (self.textFieldHasTitle) {
+//        self.textFieldHasTitle = NO;
+//        [self.eventTableView reloadData];
+//    }
     
     [self.eventTableView beginUpdates];
     if (self.datePickerIndexPath) {
@@ -152,11 +152,15 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    textField.text = self.textFieldTitle;
+//    textField.text = self.textFieldTitle;
 }
 
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
-    return YES;
+//- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+//    return YES;
+//}
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    self.eventTitle = textField.text;
 }
 
 
@@ -214,11 +218,12 @@
     EventManager *eventManager = [EventManager sharedManager];
     
     EKEvent *event = [EKEvent eventWithEventStore:eventManager.eventStore];
-    if (self.eventTitle.length != 0) {
-        event.title = self.eventTitle;
-    } else if (self.textField.text.length != 0) {
-        event.title = self.textField.text;
-    }
+//    if (self.eventTitle.length != 0) {
+//        event.title = self.eventTitle;
+//    } else if (self.textField.text.length != 0) {
+//        event.title = self.textField.text;
+//    }
+    event.title = self.eventTitle;
     event.startDate = self.eventStartDate;
     event.endDate = self.eventEndDate;
     event.calendar = self.calendar;
@@ -310,17 +315,21 @@
             eventTextFieldCell.titleTextField.delegate = self;
             eventTextFieldCell.backgroundColor = [UIColor clearColor];
             
+            [eventTextFieldCell.titleTextField addTarget:self
+                                                  action:@selector(textFieldDidChange:)
+                                        forControlEvents:UIControlEventEditingChanged];
+            
             // If we just recently pushed the RepeatAlertVC, do NOT re-assign the detail label from the title's text field.
             // Simply read in the event title which was saved from earlier.
-            if (self.didPushRepeatAlertVC && self.eventTitle) {
-                eventTextFieldCell.detailLabel.text = self.eventTitle;
-                eventTextFieldCell.titleTextField.text = @"Title";
+            if (self.eventTitle) {
+                eventTextFieldCell.titleTextField.text = self.eventTitle;
+//                eventTextFieldCell.titleTextField.text = @"Title";
             } else if (self.textFieldHasTitle) {
-                eventTextFieldCell.detailLabel.text = self.textFieldTitle;
-                eventTextFieldCell.titleTextField.text = @"Title";
-                self.eventTitle = eventTextFieldCell.detailLabel.text;
+//                eventTextFieldCell.detailLabel.text = self.textFieldTitle;
+//                eventTextFieldCell.titleTextField.text = @"Title";
+//                self.eventTitle = eventTextFieldCell.detailLabel.text;
             } else {
-                eventTextFieldCell.detailLabel.text = @"";
+//                eventTextFieldCell.detailLabel.text = @"";
             }
             return eventTextFieldCell;
             

@@ -54,8 +54,8 @@
     }
     label.textAlignment = NSTextAlignmentCenter;
     label.textColor = [UIColor blackColor];
-    label.text = @"MakeTime";
-    label.layer.shadowRadius = 3.0f;
+    label.text = @"MakeTyme";
+    label.layer.shadowRadius = 6.0f;
     label.layer.shadowColor = [UIColor purpleColor].CGColor;
     [label sizeToFit];
     self.navigationItem.titleView = label;

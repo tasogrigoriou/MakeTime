@@ -11,6 +11,5 @@
 @interface EventTextFieldTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
-@property (weak, nonatomic) IBOutlet UILabel *detailLabel;
 
 @end

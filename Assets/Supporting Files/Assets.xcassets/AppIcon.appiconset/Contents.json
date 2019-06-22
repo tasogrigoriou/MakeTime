@@ -15,12 +15,6 @@
     {
       "size" : "29x29",
       "idiom" : "iphone",
-      "filename" : "AppIcon-29px-29pt@1x.png",
-      "scale" : "1x"
-    },
-    {
-      "size" : "29x29",
-      "idiom" : "iphone",
       "filename" : "AppIcon-58px-29pt@2x.png",
       "scale" : "2x"
     },
@@ -55,38 +49,64 @@
       "scale" : "3x"
     },
     {
-      "size" : "1024x1024",
-      "idiom" : "ios-marketing",
-      "filename" : "AppIcon-1024px.png",
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
+      "size" : "20x20",
+      "idiom" : "ipad",
       "filename" : "AppIcon-20px-20pt@1x.png",
       "scale" : "1x"
     },
     {
-      "idiom" : "universal",
+      "size" : "20x20",
+      "idiom" : "ipad",
+      "filename" : "AppIcon-40px-20pt@2x-1.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "AppIcon-29px-29pt@1x.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "29x29",
+      "idiom" : "ipad",
+      "filename" : "AppIcon-58px-29pt@2x-1.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "AppIcon-40px-40pt@1x.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "40x40",
+      "idiom" : "ipad",
+      "filename" : "AppIcon-80px-40pt@2x-1.png",
+      "scale" : "2x"
+    },
+    {
+      "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "AppIcon-76px-76pt@1x.png",
+      "scale" : "1x"
+    },
+    {
+      "size" : "76x76",
+      "idiom" : "ipad",
       "filename" : "AppIcon-152px-76pt@2x.png",
       "scale" : "2x"
     },
     {
-      "idiom" : "universal",
-      "filename" : "AppIcon-40px-40pt@1x.png",
-      "unassigned" : true,
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
-      "filename" : "AppIcon-76px-76pt@1x.png",
-      "unassigned" : true,
-      "scale" : "1x"
-    },
-    {
-      "idiom" : "universal",
+      "size" : "83.5x83.5",
+      "idiom" : "ipad",
       "filename" : "AppIcon-167px-83.5pt@2x.png",
-      "unassigned" : true,
       "scale" : "2x"
+    },
+    {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "AppIcon-1024px.png",
+      "scale" : "1x"
     }
   ],
   "info" : {
