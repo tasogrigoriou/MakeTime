@@ -12,6 +12,9 @@ class PieChartViewController: UIViewController {
     
     @IBOutlet weak var pieChartView: PieChart!
     @IBOutlet weak var segmentedControl: BetterSegmentedControl!
+    @IBOutlet weak var pieChartWidthConstraint: NSLayoutConstraint!
+    @IBOutlet weak var pieChartHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var controlTopConstraint: NSLayoutConstraint!
     
     let eventManager = EventManager.sharedManager() as! EventManager
     
@@ -20,16 +23,13 @@ class PieChartViewController: UIViewController {
     var startDate = Date()
     var endDate: Date?
     
-    var dateRange = DateRange.week {
+    var dateRange: DateRange = .week {
         didSet {
             var comps = DateComponents()
             switch dateRange {
-            case .week:
-                comps.weekOfYear = 1
-            case .month:
-                comps.month = 1
-            case .year:
-                comps.year = 1
+            case .week: comps.weekOfYear = 1
+            case .month: comps.month = 1
+            case .year: comps.year = 1
             }
             endDate = Calendar.current.date(byAdding: comps, to: startDate)
             
@@ -37,22 +37,46 @@ class PieChartViewController: UIViewController {
             loadPieChartData()
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupNavBarTitle()
         setupSegmentedControl()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if pieChartView != nil {
+            if UIApplication.shared.statusBarOrientation.isLandscape {
+                pieChartWidthConstraint.constant = 200
+                pieChartHeightConstraint.constant = 200
+                controlTopConstraint.constant = 5
+            } else {
+                pieChartWidthConstraint.constant = 325
+                pieChartHeightConstraint.constant = 325
+                controlTopConstraint.constant = 30
+            }
+        }
+        clearAllData()
         loadPieChartData()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        clearAllData()
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        if pieChartView != nil {
+            if UIApplication.shared.statusBarOrientation.isPortrait {
+                pieChartWidthConstraint.constant = 200
+                pieChartHeightConstraint.constant = 200
+                controlTopConstraint.constant = 5
+            } else {
+                pieChartWidthConstraint.constant = 325
+                pieChartHeightConstraint.constant = 325
+                controlTopConstraint.constant = 30
+            }
+            clearAllData()
+            loadPieChartData()
+            pieChartView.layoutIfNeeded()
+        }
     }
     
     private func clearAllData() {
@@ -67,42 +91,38 @@ class PieChartViewController: UIViewController {
                     self?.convertToPieChartCalendars(calendars)
                 }
             }
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.3) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                 self.setupPieChart()
             }
         }
     }
     
     private func setupSegmentedControl() {
-//        segmentedControl.layer.borderWidth = 2
-//        let purpleColor = UIColor(red: 81/255.0, green: 2/255.0, blue: 161/255.0, alpha: 1.0)
-//        segmentedControl.layer.borderColor = purpleColor.cgColor
+        //        segmentedControl.layer.borderWidth = 2
+        //        let purpleColor = UIColor(red: 81/255.0, green: 2/255.0, blue: 161/255.0, alpha: 1.0)
+        //        segmentedControl.layer.borderColor = purpleColor.cgColor
         segmentedControl.segments = LabelSegment.segments(withTitles: ["Week", "Month", "Year"],
                                                           normalFont: UIFont(name: "AvenirNext-Medium", size: 15.0)!,
                                                           normalTextColor: .darkGray,
                                                           selectedFont: UIFont(name: "AvenirNext-DemiBold", size: 15.0)!,
                                                           selectedTextColor: .white)
-//        segmentedControl.options = [.indicatorViewBorderWidth(2),
-//        .indicatorViewBorderColor(purpleColor)]
+        //        segmentedControl.options = [.indicatorViewBorderWidth(2),
+        //        .indicatorViewBorderColor(purpleColor)]
         segmentedControl.addTarget(self, action: #selector(controlValueChanged(_:)), for: .valueChanged)
     }
     
     @objc func controlValueChanged(_ sender: BetterSegmentedControl) {
         switch sender.index {
-        case 0:
-            dateRange = .week
-        case 1:
-            dateRange = .month
-        case 2:
-            dateRange = .year
-        default:
-            break
+        case 0: dateRange = .week
+        case 1: dateRange = .month
+        case 2: dateRange = .year
+        default: break
         }
     }
     
     private func setupNavBarTitle() {
-        let label = UILabel(frame: CGRect.zero)
-        label.backgroundColor = UIColor.clear
+        let label = UILabel(frame: .zero)
+        label.backgroundColor = .clear
         if let font = UIFont(name: "AvenirNextCondensed-DemiBold", size: 20.0) {
             label.font = font
         }
@@ -112,7 +132,7 @@ class PieChartViewController: UIViewController {
         label.sizeToFit()
         navigationItem.titleView = label
     }
-
+    
     
     private func convertToPieChartCalendars(_ calendars: [EKCalendar]) {
         if endDate == nil {
@@ -134,11 +154,11 @@ class PieChartViewController: UIViewController {
         pieChartView.layers = [createPlainTextLayer()]
         pieChartView.models = createPieChartModels()
     }
-            
+    
     private func createPlainTextLayer() -> PiePlainTextLayer {
         let textLayerSettings = PiePlainTextLayerSettings()
-        textLayerSettings.viewRadius = pieChartView.frame.size.width / 6
-        textLayerSettings.hideOnOverflow = true
+        //        textLayerSettings.viewRadius = pieChartView.frame.size.width / 6
+        textLayerSettings.hideOnOverflow = false
         textLayerSettings.label.font = UIFont(name: "AvenirNext-Medium", size: 13)!
         
         
@@ -186,7 +206,7 @@ class PieChartViewController: UIViewController {
         }
         return pieSliceModels
     }
-
+    
 }
 
 class PieChartCalendar {

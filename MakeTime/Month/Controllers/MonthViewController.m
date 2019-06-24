@@ -27,6 +27,7 @@
 
 @property (weak, nonatomic) IBOutlet FSCalendar *calendar;
 @property (weak, nonatomic) IBOutlet UITableView *eventsTableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *calendarHeightConstraint;
 
 @property (strong, nonatomic) EventsModel *eventsModel;
 
@@ -37,6 +38,8 @@
 @property (strong, nonatomic) NSDateFormatter *cellDateFormatter;
 
 @property (nonatomic) BOOL isFirstTimeLoadingData;
+
+@property (nonatomic) BOOL orientationChanged;
 
 @end
 
@@ -52,17 +55,57 @@
     
     [self configureViewAndCalendarView];
     [self setTableViewContentInset];
-    
+
     [self loadData];
     
     [self addTabBarNotificationObserver];
     [self addDataDidChangeNotificationObserver];
+    [self addOrientationChangeObserver];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.clipsToBounds = YES;
-//    self.calendar.placeholderType = FSCalendarPlaceholderTypeNone;
+    if (self.orientationChanged) {
+        self.isFirstTimeLoadingData = YES;
+        [self.calendar setHidden:YES duration:0.0 completion:nil];
+        [self loadData];
+        self.orientationChanged = NO;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.calendar reloadData];
+            [self.view layoutIfNeeded];
+            [self scrollToToday];
+            [self.calendar setCurrentPage:[NSDate date]];
+            [self.calendar selectDate:[NSDate date] scrollToDate:YES];
+            [self.calendar deselectDate:[NSDate date]];
+        });
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+        [self.calendar setScope:FSCalendarScopeWeek];
+        [self scrollToToday];
+    } else {
+        [self.calendar setScope:FSCalendarScopeMonth];
+        self.calendarHeightConstraint.constant = 300;
+    }
+}
+
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+            [self.calendar setScope:FSCalendarScopeWeek];
+            self.calendarHeightConstraint.constant = 120;
+        } else {
+            [self.calendar setScope:FSCalendarScopeMonth];
+            self.calendarHeightConstraint.constant = 300;
+        }
+    });
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"orientationChanged" object:self userInfo:nil];
 }
 
 
@@ -454,16 +497,34 @@
 
 
 - (IBAction)leftButtonTouched:(id)sender {
-    [self updateMonthByValue:-1];
+    if (self.calendar.scope == FSCalendarScopeMonth) {
+        [self updateMonthByValue:-1];
+    } else {
+        [self updateWeekByValue:-1];
+    }
 }
 
 - (IBAction)rightButtonTouched:(id)sender {
-    [self updateMonthByValue:1];
+    if (self.calendar.scope == FSCalendarScopeMonth) {
+        [self updateMonthByValue:1];
+    } else {
+        [self updateWeekByValue:1];
+    }
 }
 
 - (void)updateMonthByValue:(NSInteger)value {
     NSDateComponents *valueComponents = [NSDateComponents new];
     valueComponents.month = value;
+    
+    NSDate *updatedMonthDate = [[NSCalendar currentCalendar] dateByAddingComponents:valueComponents
+                                                                             toDate:self.calendar.currentPage
+                                                                            options:0];
+    [self.calendar setCurrentPage:updatedMonthDate animated:YES];
+}
+
+- (void)updateWeekByValue:(NSInteger)value {
+    NSDateComponents *valueComponents = [NSDateComponents new];
+    valueComponents.weekOfYear = value;
     
     NSDate *updatedMonthDate = [[NSCalendar currentCalendar] dateByAddingComponents:valueComponents
                                                                              toDate:self.calendar.currentPage
@@ -522,8 +583,20 @@
                                                object:nil];
 }
 
+- (void)addOrientationChangeObserver {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orientationDidChange)
+                                                 name:@"orientationChanged"
+                                               object:nil];
+}
+
 - (void)dataDidChange {
     [self loadData];
+}
+
+- (void)orientationDidChange {
+    self.orientationChanged = YES;
+    self.isFirstTimeLoadingData = YES;
 }
 
 

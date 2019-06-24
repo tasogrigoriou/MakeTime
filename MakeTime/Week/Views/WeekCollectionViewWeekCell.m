@@ -53,8 +53,8 @@
     return self;
 }
 
-- (void)didSetSelectedDate {
-    [self addWeekdayLineImageSubview];
+- (void)didSetSelectedDateWithFrame:(CGRect)frame {
+    [self addWeekdayLineImageSubview:frame];
     [self loadEventData];
 }
 
@@ -74,21 +74,22 @@
     [self.collectionView setHidden:NO duration:0.3 completion:nil];
 }
 
-- (void)addWeekdayLineImageSubview {
+- (void)addWeekdayLineImageSubview:(CGRect)frame {
+    self.collectionView.frame = self.bounds;
     for (UIView *view in self.subviews) {
         if ([view isKindOfClass:[UIImageView class]]) {
             [view removeFromSuperview];
         }
     }
     MakeTimeCache *makeTimeCache = [MakeTimeCache sharedManager];
-    WeekDayLineView *weekDayLineView = [[WeekDayLineView alloc] initWithFrame:self.collectionView.frame];
+    WeekDayLineView *weekDayLineView = [[WeekDayLineView alloc] initWithFrame:frame];
     weekDayLineView.backgroundColor = [UIColor clearColor];
     
-    if (makeTimeCache.weekDayLineImage == nil) {
+//    if (makeTimeCache.weekDayLineImage == nil) {
         [weekDayLineView initWeekdayLinesWithCollectionView:self.collectionView
-                                   sizeForSupplementaryView:self.sizeForSupplementaryView];
+                                   sizeForSupplementaryView:self.heightForSupplementaryView];
         makeTimeCache.weekDayLineImage = [UIImage imageWithView:weekDayLineView size:self.bounds.size];
-    }
+//    }
     
     UIImageView *weekDayLineImageView = [[UIImageView alloc] initWithImage:makeTimeCache.weekDayLineImage];
     weekDayLineImageView.frame = self.bounds;
@@ -148,10 +149,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     WeekCollectionViewCell *cell = (WeekCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"WeekCollectionViewCell" forIndexPath:indexPath];
-    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-    
-    cell.calLabel.text = @"";
-    cell.backgroundColor = [UIColor colorWithCGColor:eventComponent.calendar.CGColor];
+    if (indexPath.item < self.convertedEventComponentsArray.count) {
+        EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
+        
+        cell.calLabel.text = @"";
+        cell.backgroundColor = [UIColor colorWithCGColor:eventComponent.calendar.CGColor];
+    }
     
     return cell;
 }
@@ -174,11 +177,13 @@
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-    for (EKEvent *ekEvent in self.customEvents) {
-        if ([ekEvent.eventIdentifier isEqualToString:eventComponent.identifier]) {
-            [self.delegate weekCell:self didSelectEvent:ekEvent];
-            break;
+    if (indexPath.item < self.convertedEventComponentsArray.count) {
+        EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
+        for (EKEvent *ekEvent in self.customEvents) {
+            if ([ekEvent.eventIdentifier isEqualToString:eventComponent.identifier]) {
+                [self.delegate weekCell:self didSelectEvent:ekEvent];
+                break;
+            }
         }
     }
 }
@@ -187,8 +192,10 @@
     WeekCollectionViewCell *cell = (WeekCollectionViewCell *)[collectionView cellForItemAtIndexPath:indexPath];
     cell.backgroundColor = [UIColor clearColor];
     
-    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-    cell.backgroundColor = [UIColor colorWithCGColor:eventComponent.calendar.CGColor];
+    if (indexPath.item < self.convertedEventComponentsArray.count) {
+        EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
+        cell.backgroundColor = [UIColor colorWithCGColor:eventComponent.calendar.CGColor];
+    }
 }
 
 
@@ -197,20 +204,29 @@
 
 - (NSRange)weekViewLayout:(WeekCollectionViewLayout *)layout
 timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
-    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-    return [self getTimespanForEvent:eventComponent];
+    if (indexPath.item < self.convertedEventComponentsArray.count) {
+        EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
+        return [self getTimespanForEvent:eventComponent];
+    }
+    return NSMakeRange(0, 0);
 }
 
 - (NSUInteger)weekViewLayout:(WeekCollectionViewLayout *)layout
    weekdayForCellAtIndexPath:(NSIndexPath *)indexPath {
-    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-    return [self getWeekdayForEvent:eventComponent];
+    if (indexPath.item < self.convertedEventComponentsArray.count) {
+        EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
+        return [self getWeekdayForEvent:eventComponent];
+    }
+    return 0;
 }
 
 - (CGFloat)sizeForSupplementaryView {
     return [self.delegate sizeForSupplementaryView];
 }
 
+- (CGFloat)heightForSupplementaryView {
+    return [self.delegate heightForSupplementaryView];
+}
 
 #pragma mark - EventComponents Methods
 

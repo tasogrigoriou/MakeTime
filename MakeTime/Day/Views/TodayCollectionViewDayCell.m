@@ -62,8 +62,8 @@
     return self;
 }
 
-- (void)didSetSelectedDate {
-    [self addTodayDayImageSubview];
+- (void)didSetSelectedDateWithFrame:(CGRect)frame {
+    [self addTodayDayImageSubview:frame];
     [self loadEventData];
 }
 
@@ -82,21 +82,22 @@
     }
 }
 
-- (void)addTodayDayImageSubview {
+- (void)addTodayDayImageSubview:(CGRect)frame {
+    self.collectionView.frame = self.bounds;
     for (UIView *view in self.subviews) {
         if ([view isKindOfClass:[UIImageView class]]) {
             [view removeFromSuperview];
         }
     }
     MakeTimeCache *makeTimeCache = [MakeTimeCache sharedManager];
-    TodayDayView *todayDayView = [[TodayDayView alloc] initWithFrame:self.collectionView.frame];
+    TodayDayView *todayDayView = [[TodayDayView alloc] initWithFrame:frame];
     CGFloat size = [self.delegate sizeForSupplementaryView];
     todayDayView.backgroundColor = [UIColor clearColor];
     
-    if (makeTimeCache.todayDayImage == nil) {
+//    if (makeTimeCache.todayDayImage == nil) {
         [todayDayView initHourLabelsWithCollectionView:self.collectionView sizeForView:size];
         makeTimeCache.todayDayImage = [UIImage imageWithView:todayDayView size:self.bounds.size];
-    }
+//    }
     
     UIImageView *todayDayImageView = [[UIImageView alloc] initWithImage:makeTimeCache.todayDayImage];
     todayDayImageView.frame = self.bounds;
@@ -132,10 +133,12 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     TodayCollectionViewCell *cell = (TodayCollectionViewCell *)[collectionView dequeueReusableCellWithReuseIdentifier:@"TodayCell" forIndexPath:indexPath];
-    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-    
-    cell.eventLabel.text = @"";
-    cell.backgroundColor = [UIColor colorWithCGColor:eventComponent.calendar.CGColor];
+    if (indexPath.item < self.convertedEventComponentsArray.count) {
+        EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
+        
+        cell.eventLabel.text = @"";
+        cell.backgroundColor = [UIColor colorWithCGColor:eventComponent.calendar.CGColor];
+    }
     
     return cell;
 }
@@ -145,12 +148,14 @@
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-    
-    for (EKEvent *ekEvent in self.customEvents) {
-        if ([ekEvent.eventIdentifier isEqualToString:eventComponent.identifier]) {
-            NSLog(@"did select event with date = %@ --- %@", ekEvent.startDate, ekEvent.endDate);
-            [self.delegate dayCell:self didSelectEvent:ekEvent];
+    if (indexPath.item < self.convertedEventComponentsArray.count) {
+        EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
+        
+        for (EKEvent *ekEvent in self.customEvents) {
+            if ([ekEvent.eventIdentifier isEqualToString:eventComponent.identifier]) {
+                NSLog(@"did select event with date = %@ --- %@", ekEvent.startDate, ekEvent.endDate);
+                [self.delegate dayCell:self didSelectEvent:ekEvent];
+            }
         }
     }
 }
@@ -161,10 +166,14 @@
 
 - (NSRange)calendarViewLayout:(TodayCollectionViewLayout *)layout
    timespanForCellAtIndexPath:(NSIndexPath *)indexPath {
-    EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
-    NSRange timespan = [self getTimespanForEventComponent:eventComponent];
-    
-    return timespan;
+    NSLog(@"indexpath.item = %li", indexPath.item);
+    if (indexPath.item < self.convertedEventComponentsArray.count) {
+        EventComponents *eventComponent = self.convertedEventComponentsArray[indexPath.item];
+        NSRange timespan = [self getTimespanForEventComponent:eventComponent];
+        
+        return timespan;
+    }
+    return NSMakeRange(0, 0);
 }
 
 - (NSInteger)calendarViewLayout:(TodayCollectionViewLayout *)layout

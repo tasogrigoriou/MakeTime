@@ -28,7 +28,7 @@
 
 @property (weak, nonatomic) id<WeekCollectionViewWeekCellDelegate> delegate;
 
-- (void)didSetSelectedDate;
+- (void)didSetSelectedDateWithFrame:(CGRect)frame;
 
 @end
 
@@ -37,5 +37,6 @@
 
 - (void)weekCell:(WeekCollectionViewWeekCell *)cell didSelectEvent:(EKEvent *)ekEvent;
 - (CGFloat)sizeForSupplementaryView;
+- (CGFloat)heightForSupplementaryView;
 
 @end

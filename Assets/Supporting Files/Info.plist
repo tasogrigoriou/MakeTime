@@ -25,9 +25,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Use Calendar App</string>
+	<string>To be able to show your calendars and events, MakeTyme needs to access your calendars</string>
 	<key>NSRemindersUsageDescription</key>
-	<string>Use Reminders</string>
+	<string>To be able to show your reminders and create new ones, MakeTyme needs to access your reminders</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen2</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -40,6 +40,8 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 </dict>
 </plist>

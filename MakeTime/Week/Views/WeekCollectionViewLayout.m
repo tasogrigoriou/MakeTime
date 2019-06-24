@@ -19,6 +19,7 @@ static const CGFloat TWENTY_FOUR_HOURS_HEIGHT = 24.0f * 60.0f; // mins in a day 
 @property (strong, nonatomic) NSMutableArray *dayAttributes;
 
 @property (assign, nonatomic) CGFloat sizeForSupplementaryView;
+@property (assign, nonatomic) CGFloat heightForSupplementaryView;
 
 @end
 
@@ -42,7 +43,8 @@ static const CGFloat TWENTY_FOUR_HOURS_HEIGHT = 24.0f * 60.0f; // mins in a day 
         id <WeekCollectionViewLayoutDelegate> weekCollectionViewLayoutDelegate = (id <WeekCollectionViewLayoutDelegate>)self.collectionView.delegate;
         
         self.sizeForSupplementaryView = [weekCollectionViewLayoutDelegate sizeForSupplementaryView];
-        CGFloat DAY_VIEW_SIZE = self.sizeForSupplementaryView;
+        self.heightForSupplementaryView = [weekCollectionViewLayoutDelegate heightForSupplementaryView];
+        CGFloat DAY_VIEW_SIZE = self.heightForSupplementaryView;
         
         // Compute every WeekCollectionViewCell layoutAttributes
         for (NSInteger i = 0; i < [self.collectionView numberOfSections]; i++) {
@@ -82,7 +84,7 @@ static const CGFloat TWENTY_FOUR_HOURS_HEIGHT = 24.0f * 60.0f; // mins in a day 
             UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:@"WeekCollectionReusableView" withIndexPath:[NSIndexPath indexPathForItem:i inSection:0]];
             
             CGRect attributesFrame = CGRectZero;
-            attributesFrame.size = CGSizeMake(self.sizeForSupplementaryView, self.sizeForSupplementaryView);
+            attributesFrame.size = CGSizeMake(self.sizeForSupplementaryView, self.heightForSupplementaryView);
             attributesFrame.origin = CGPointMake(i * self.sizeForSupplementaryView, 0);
             
             attributes.frame = attributesFrame;

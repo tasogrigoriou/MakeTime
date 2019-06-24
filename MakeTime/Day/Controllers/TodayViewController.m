@@ -56,6 +56,8 @@
 @property (nonatomic) BOOL isFirstTimeLoadingView;
 @property (nonatomic) BOOL selectedLastViewController;
 
+@property (nonatomic) BOOL orientationChanged;
+
 @end
 
 
@@ -73,6 +75,7 @@
     
     [self addTabBarNotificationObserver];
     [self addDataDidChangeNotificationObserver];
+    [self addOrientationChangeObserver];
     
     [self setupLoadedDayCellCount];
 }
@@ -84,19 +87,30 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [super updateAuthorizationStatusToAccessEventStore];
+    if (self.orientationChanged) {
+        [self reloadDataAndLayout];
+        self.orientationChanged = NO;
+    }
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{;
-//        [self setDayDisplayed:self.selectedDate animated:NO];
-//    });
-//    [((UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout) invalidateLayout];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"orientationChanged" object:self userInfo:nil];
+    [self reloadDataAndLayout];
+}
 
-    //    NSLog(@"self.currentIndexPath = %li", self.currentIndexPath.item);
-//    TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:self.currentIndexPath];
-//    [dayCell.collectionView.collectionViewLayout invalidateLayout];
+- (void)reloadDataAndLayout {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.collectionView layoutIfNeeded];
+        [self.collectionView reloadData];
+        
+        TodayCollectionViewDayCell *dayCell = (TodayCollectionViewDayCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([TodayCollectionViewDayCell class]) forIndexPath:self.currentIndexPath];
+        [dayCell.collectionView layoutIfNeeded];
+        [dayCell.collectionView reloadData];
+        
+        [self setDayDisplayed:self.selectedDate animated:NO];
+    });
 }
 
 
@@ -122,7 +136,7 @@
     dayCell.selectedDate = [self.calendar dateByAddingComponents:self.dayComponents
                                                           toDate:self.startDateCache
                                                          options:0];
-    [dayCell didSetSelectedDate];
+    [dayCell didSetSelectedDateWithFrame:self.collectionView.frame];
     [self customizeDayLabelText];
     
     return dayCell;
@@ -155,6 +169,7 @@
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     TodayCollectionViewDayCell *dayCell = self.collectionView.visibleCells.firstObject;
     self.todayLabel.text = [self.dateFormatter stringFromDate:dayCell.selectedDate];
+    self.selectedDate = dayCell.selectedDate;
     [[NSUserDefaults standardUserDefaults] setObject:dayCell.selectedDate forKey:@"dayDisplayed"];
 }
 
@@ -332,8 +347,19 @@
                                                object:nil];
 }
 
+- (void)addOrientationChangeObserver {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orientationDidChange)
+                                                 name:@"orientationChanged"
+                                               object:nil];
+}
+
 - (void)dataDidChange {
     [self.collectionView reloadData];
+}
+
+- (void)orientationDidChange {
+    self.orientationChanged = YES;
 }
 
 

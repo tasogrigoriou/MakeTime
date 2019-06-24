@@ -47,6 +47,8 @@
 @property (nonatomic) BOOL isFirstTimeLoadingView;
 @property (nonatomic) BOOL selectedLastViewController;
 
+@property (nonatomic) BOOL orientationChanged;
+
 @end
 
 
@@ -71,35 +73,42 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
     
     [self addTabBarNotificationObserver];
     [self addDataDidChangeNotificationObserver];
+    [self addOrientationChangeObserver];
     
     [self setupLoadedWeekCellCount];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.orientationChanged) {
+        [self reloadDataAndLayout];
+        self.orientationChanged = NO;
+    }
 }
 
 - (void)setupLoadedWeekCellCount {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInteger:1] forKey:@"loadedWeekCellCount"];
 }
 
-//- (void)viewWillTransitionToSize:(CGSize)size
-//       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-//    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-//
-//    NSLog(@"transition cellDisplayedIndex = %li", self.cellDisplayedIndex);
-//    [self.collectionView setContentOffset:CGPointMake((self.cellDisplayedIndex + 1) * self.view.bounds.size.height, 0) animated:YES];
-//    [self.collectionView.collectionViewLayout invalidateLayout];
-//    [self.collectionView setContentOffset:CGPointMake((self.cellDisplayedIndex) * self.view.bounds.size.height, 0) animated:YES];
-//    [self customizeWeekLabelText];
-//
-////       [self updateCollectionViewLayoutWithSize:size];
-//}
-//
-//- (void)updateCollectionViewLayoutWithSize:(CGSize)size {
-//    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout *)self.collectionView.collectionViewLayout;
-//    CGSize itemSizeForPortraitMode = CGSizeMake(self.view.bounds.size.width, 80.0f * 7);
-//    CGSize itemSizeForLandscapeMode = CGSizeMake(20, 20);
-//
-//    layout.itemSize = (size.width < size.height) ? itemSizeForPortraitMode : itemSizeForLandscapeMode;
-//    [layout invalidateLayout];
-//}
+- (void)viewWillTransitionToSize:(CGSize)size
+       withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"orientationChanged" object:self userInfo:nil];
+    [self reloadDataAndLayout];
+}
+
+- (void)reloadDataAndLayout {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.collectionView layoutIfNeeded];
+        [self.collectionView reloadData];
+        
+        WeekCollectionViewWeekCell *weekCell = (WeekCollectionViewWeekCell *)[self.collectionView dequeueReusableCellWithReuseIdentifier:NSStringFromClass([WeekCollectionViewWeekCell class]) forIndexPath:self.currentIndexPath];
+        [weekCell.collectionView layoutIfNeeded];
+        [weekCell.collectionView reloadData];
+        
+        [self setWeekDisplayed:self.selectedDate animated:NO];
+    });
+}
 
 
 #pragma mark - UICollectionViewDataSource
@@ -125,7 +134,7 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
     weekCell.selectedDate = [self.calendar dateByAddingComponents:self.offsetComponents
                                                            toDate:self.startDateCache
                                                           options:0];
-    [weekCell didSetSelectedDate];
+    [weekCell didSetSelectedDateWithFrame:self.collectionView.frame];
     [self customizeWeekLabelText];
     
     return weekCell;
@@ -152,6 +161,14 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
 
 - (CGFloat)sizeForSupplementaryView {
     return self.collectionView.frame.size.width / 7;
+}
+
+- (CGFloat)heightForSupplementaryView {
+    if (UIInterfaceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])) {
+        return self.collectionView.frame.size.width / 7;
+    } else {
+        return 45;
+    }
 }
 
 
@@ -183,6 +200,7 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     WeekCollectionViewWeekCell *weekCell = self.collectionView.visibleCells.firstObject;
     self.weekLabel.text = [self.dateFormatter stringFromDate:weekCell.selectedDate];
+    self.selectedDate = weekCell.selectedDate;
     [[NSUserDefaults standardUserDefaults] setObject:weekCell.selectedDate forKey:@"weekDisplayed"];
 }
 
@@ -340,8 +358,19 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
                                                object:nil];
 }
 
+- (void)addOrientationChangeObserver {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orientationDidChange)
+                                                 name:@"orientationChanged"
+                                               object:nil];
+}
+
 - (void)dataDidChange {
     [self.collectionView reloadData];
+}
+
+- (void)orientationDidChange {
+    self.orientationChanged = YES;
 }
 
 
