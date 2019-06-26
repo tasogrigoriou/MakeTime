@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WeekViewController">
             <connections>
+                <outlet property="activityIndicator" destination="CAL-Mz-Bf4" id="ndG-Y4-QbU"/>
                 <outlet property="collectionView" destination="zfk-65-v5o" id="Y6H-yg-dnv"/>
                 <outlet property="leftButton" destination="yFn-L9-YdU" id="fqj-wd-Psr"/>
                 <outlet property="rightButton" destination="KmB-SO-CJU" id="BfD-fi-nu6"/>
@@ -51,7 +53,7 @@
                         <action selector="rightButtonTouched:" destination="-1" eventType="touchUpInside" id="ogp-yr-Gzi"/>
                     </connections>
                 </button>
-                <collectionView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="zfk-65-v5o">
+                <collectionView clipsSubviews="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" contentInsetAdjustmentBehavior="never" delaysContentTouches="NO" canCancelContentTouches="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="zfk-65-v5o">
                     <rect key="frame" x="0.0" y="48" width="375" height="619"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Bgj-89-dIk">
@@ -65,12 +67,17 @@
                         <outlet property="delegate" destination="-1" id="so6-8h-qAa"/>
                     </connections>
                 </collectionView>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="CAL-Mz-Bf4">
+                    <rect key="frame" x="177.5" y="52" width="20" height="20"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="KmB-SO-CJU" secondAttribute="trailing" id="1Xm-ay-4KP"/>
                 <constraint firstAttribute="trailing" secondItem="zfk-65-v5o" secondAttribute="trailing" id="3Gd-ZZ-D5C"/>
+                <constraint firstItem="CAL-Mz-Bf4" firstAttribute="top" secondItem="KmB-SO-CJU" secondAttribute="bottom" constant="8" id="G4W-oi-GbX"/>
                 <constraint firstItem="zfk-65-v5o" firstAttribute="leading" secondItem="qq1-QO-SnP" secondAttribute="leading" id="HMI-Uc-JHy"/>
+                <constraint firstItem="CAL-Mz-Bf4" firstAttribute="centerX" secondItem="qq1-QO-SnP" secondAttribute="centerX" id="Oea-2e-zPD"/>
                 <constraint firstItem="GT0-Cl-vzh" firstAttribute="bottom" secondItem="KmB-SO-CJU" secondAttribute="bottom" id="Ovg-bS-MLl"/>
                 <constraint firstItem="yFn-L9-YdU" firstAttribute="top" secondItem="8fB-ns-qiY" secondAttribute="top" id="Ryv-mu-Ab7"/>
                 <constraint firstItem="zfk-65-v5o" firstAttribute="bottom" secondItem="8fB-ns-qiY" secondAttribute="bottom" id="VEr-hx-MSS"/>

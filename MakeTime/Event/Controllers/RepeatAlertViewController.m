@@ -42,9 +42,21 @@
    [self.delegate didPushRepeatAlertViewController:YES];
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.view layoutIfNeeded];
+        [self.repeatAlertTableView layoutIfNeeded];
+        [self.repeatAlertTableView reloadData];
+    });
+}
+
 
 #pragma mark - UITableViewDataSource
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 3;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
    if ([self.repeatOrAlarm isEqualToString:@"Repeat"]) {
@@ -97,6 +109,25 @@
    [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    // recast your view as a UITableViewHeaderFooterView
+//    UITableViewHeaderFooterView *header = [[UITableViewHeaderFooterView alloc] initWithFrame:CGRectMake(0, 0, tableView.frame.size.width, 10)];
+    UITableViewHeaderFooterView *header = [[UITableViewHeaderFooterView alloc] initWithFrame:CGRectZero];
+//    header.backgroundColor = [UIColor whiteColor];
+//    header.backgroundView.backgroundColor = [UIColor whiteColor];
+//    header.contentView.backgroundColor = [UIColor whiteColor];
+    header.textLabel.textColor = [UIColor blackColor];
+//    [header.textLabel setFont:[UIFont fontWithName:@"Rubik-Regular" size:10.0]];
+//    UIView *separator = [[UIView alloc] initWithFrame:CGRectMake(0, header.frame.size.height, header.frame.size.width, 0.5)];
+//    [separator setBackgroundColor:[UIColor lightGrayColor]];
+//    [header addSubview:separator];
+    return header;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 20;
+}
+
 
 #pragma mark - Selectors
 
@@ -121,7 +152,7 @@
    self.repeatAlertTableView.backgroundColor = [UIColor clearColor];
    
    // Insert a dummy footer view which will only show amount of cells you returned in tableView:numberOfRowsInSection:
-   self.repeatAlertTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+//   self.repeatAlertTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
    
    // Do NOT modify the content area of the scroll view using the safe area insets
    if (@available(iOS 11.0, *)) {

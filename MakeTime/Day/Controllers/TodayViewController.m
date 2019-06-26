@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *todayLabel;
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (assign, nonatomic) BOOL isAccessToEventStoreGranted;
 
@@ -57,6 +58,8 @@
 @property (nonatomic) BOOL selectedLastViewController;
 
 @property (nonatomic) BOOL orientationChanged;
+
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -167,10 +170,24 @@
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    TodayCollectionViewDayCell *dayCell = self.collectionView.visibleCells.firstObject;
-    self.todayLabel.text = [self.dateFormatter stringFromDate:dayCell.selectedDate];
-    self.selectedDate = dayCell.selectedDate;
-    [[NSUserDefaults standardUserDefaults] setObject:dayCell.selectedDate forKey:@"dayDisplayed"];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        TodayCollectionViewDayCell *dayCell = self.collectionView.visibleCells.firstObject;
+        self.todayLabel.text = [self.dateFormatter stringFromDate:dayCell.selectedDate];
+        self.selectedDate = dayCell.selectedDate;
+        [[NSUserDefaults standardUserDefaults] setObject:dayCell.selectedDate forKey:@"dayDisplayed"];
+    });
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView.contentOffset.y < -25 && self.activityIndicator.isHidden) {
+        self.activityIndicator.hidden = NO;
+        [self.activityIndicator startAnimating];
+        [[self currentDayCell].collectionView reloadData];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.activityIndicator stopAnimating];
+            self.activityIndicator.hidden = YES;
+        });
+    }
 }
 
 
@@ -271,6 +288,15 @@
     
     [self.view addSubview:self.collectionView];
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = [UIColor purpleColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshData)
+                  forControlEvents:UIControlEventValueChanged];
+    self.collectionView.refreshControl = self.refreshControl;
+    
+    self.activityIndicator.hidden = YES;
+    
     self.definesPresentationContext = YES;
     self.isFirstTimeLoadingView = YES;
     self.collectionView.prefetchDataSource = self;
@@ -335,8 +361,9 @@
     NSDate *today = [NSDate date];
     [self setDayDisplayed:today animated:YES];
     self.selectedLastViewController = YES;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.todayLabel.text = [self.dateFormatter stringFromDate:today];
+        [[self currentDayCell].collectionView reloadData];
     });
 }
 
@@ -360,6 +387,11 @@
 
 - (void)orientationDidChange {
     self.orientationChanged = YES;
+}
+
+- (void)refreshData {
+    [self.collectionView reloadData];
+    [self.refreshControl endRefreshing];
 }
 
 

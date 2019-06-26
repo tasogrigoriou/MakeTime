@@ -47,7 +47,12 @@ class PieChartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if pieChartView != nil {
-            if UIApplication.shared.statusBarOrientation.isLandscape {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                pieChartWidthConstraint.constant = 800
+                pieChartHeightConstraint.constant = 800
+                controlTopConstraint.constant = 50
+            }
+            else if UIApplication.shared.statusBarOrientation.isLandscape {
                 pieChartWidthConstraint.constant = 200
                 pieChartHeightConstraint.constant = 200
                 controlTopConstraint.constant = 5
@@ -64,11 +69,17 @@ class PieChartViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         if pieChartView != nil {
-            if UIApplication.shared.statusBarOrientation.isPortrait {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                pieChartWidthConstraint.constant = 800
+                pieChartHeightConstraint.constant = 800
+                controlTopConstraint.constant = 50
+            }
+            else if UIApplication.shared.statusBarOrientation.isPortrait {
                 pieChartWidthConstraint.constant = 200
                 pieChartHeightConstraint.constant = 200
                 controlTopConstraint.constant = 5
-            } else {
+            }
+            else {
                 pieChartWidthConstraint.constant = 325
                 pieChartHeightConstraint.constant = 325
                 controlTopConstraint.constant = 30
@@ -158,7 +169,7 @@ class PieChartViewController: UIViewController {
     private func createPlainTextLayer() -> PiePlainTextLayer {
         let textLayerSettings = PiePlainTextLayerSettings()
         //        textLayerSettings.viewRadius = pieChartView.frame.size.width / 6
-        textLayerSettings.hideOnOverflow = false
+        textLayerSettings.hideOnOverflow = true
         textLayerSettings.label.font = UIFont(name: "AvenirNext-Medium", size: 13)!
         
         

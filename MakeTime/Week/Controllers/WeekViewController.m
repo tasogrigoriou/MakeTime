@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *weekLabel;
 @property (weak, nonatomic) IBOutlet UIButton *leftButton;
 @property (weak, nonatomic) IBOutlet UIButton *rightButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (strong, nonatomic) NSCalendar *calendar;
 @property (strong, nonatomic) NSDateFormatter *dateFormatter;
@@ -48,6 +49,8 @@
 @property (nonatomic) BOOL selectedLastViewController;
 
 @property (nonatomic) BOOL orientationChanged;
+
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -194,14 +197,25 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
 }
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        WeekCollectionViewWeekCell *weekCell = self.collectionView.visibleCells.firstObject;
+        self.weekLabel.text = [self.dateFormatter stringFromDate:weekCell.selectedDate];
+        self.selectedDate = weekCell.selectedDate;
+        [[NSUserDefaults standardUserDefaults] setObject:weekCell.selectedDate forKey:@"weekDisplayed"];
+    });
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    WeekCollectionViewWeekCell *weekCell = self.collectionView.visibleCells.firstObject;
-    self.weekLabel.text = [self.dateFormatter stringFromDate:weekCell.selectedDate];
-    self.selectedDate = weekCell.selectedDate;
-    [[NSUserDefaults standardUserDefaults] setObject:weekCell.selectedDate forKey:@"weekDisplayed"];
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView.contentOffset.y < -25 && self.activityIndicator.isHidden) {
+        self.activityIndicator.hidden = NO;
+        [self.activityIndicator startAnimating];
+        [[self currentWeekCell].collectionView reloadData];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self.activityIndicator stopAnimating];
+            self.activityIndicator.hidden = YES;
+        });
+    }
 }
 
 
@@ -280,6 +294,15 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
     
     [self.view addSubview:self.collectionView];
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.tintColor = [UIColor purpleColor];
+    [self.refreshControl addTarget:self
+                            action:@selector(refreshData)
+                  forControlEvents:UIControlEventValueChanged];
+    self.collectionView.refreshControl = self.refreshControl;
+    
+    self.activityIndicator.hidden = YES;
+    
     self.definesPresentationContext = YES;
     self.isFirstTimeLoadingView = YES;
 }
@@ -348,6 +371,7 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
     self.selectedLastViewController = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         self.weekLabel.text = [self.dateFormatter stringFromDate:[self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0]];
+        [[self currentWeekCell].collectionView reloadData];
     });
 }
 
@@ -371,6 +395,11 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
 
 - (void)orientationDidChange {
     self.orientationChanged = YES;
+}
+
+- (void)refreshData {
+    [self.collectionView reloadData];
+    [self.refreshControl endRefreshing];
 }
 
 

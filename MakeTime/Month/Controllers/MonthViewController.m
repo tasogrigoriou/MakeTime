@@ -170,7 +170,11 @@
                                                                     animated:YES];
                             }
                         }
-                        completion:nil];
+                        completion:^(BOOL success) {
+                            if (UIInterfaceOrientationIsLandscape([[UIApplication sharedApplication] statusBarOrientation])) {
+                                self.calendarHeightConstraint.constant = 120;
+                            }
+                        }];
     });
 }
 

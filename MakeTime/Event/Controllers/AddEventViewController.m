@@ -243,12 +243,17 @@
         default: interval = 0; frequency = EKRecurrenceFrequencyDaily; break;
     }
     
+//    let friday = EKRecurrenceDayOfWeek(.Friday)
+//    let saturday = EKRecurrenceDayOfWeek(.Saturday)
+//
+//    EKRecurrenceRule(recurrenceWithFrequency: .Weekly, interval: 1, daysOfTheWeek: [friday, saturday], daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: nil)
+    
     // Create a rule and assign it to the reminder object if the interval is greater than 0.
     if (interval > 0) {
-        EKRecurrenceEnd *recurrenceEnd = [EKRecurrenceEnd recurrenceEndWithOccurrenceCount:53];
+//        EKRecurrenceRule *r = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:<#(EKRecurrenceFrequency)#> interval:<#(NSInteger)#> daysOfTheWeek:<#(nullable NSArray<EKRecurrenceDayOfWeek *> *)#> daysOfTheMonth:<#(nullable NSArray<NSNumber *> *)#> monthsOfTheYear:<#(nullable NSArray<NSNumber *> *)#> weeksOfTheYear:<#(nullable NSArray<NSNumber *> *)#> daysOfTheYear:<#(nullable NSArray<NSNumber *> *)#> setPositions:<#(nullable NSArray<NSNumber *> *)#> end:<#(nullable EKRecurrenceEnd *)#>
         EKRecurrenceRule *rule = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:frequency
                                                                               interval:interval
-                                                                                   end:recurrenceEnd];
+                                                                                   end:nil];
         event.recurrenceRules = @[rule];
     } else {
         event.recurrenceRules = nil;
