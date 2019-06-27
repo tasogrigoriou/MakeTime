@@ -15,15 +15,17 @@
 
 - (void)didPushRepeatAlertViewController:(BOOL)boolean;
 
-- (void)didSelectRepeatOption:(NSInteger)index;
+- (void)didSelectRepeatOptions:(NSMutableArray<NSMutableArray *> *)indexPaths;
 - (void)didSelectAlarmOption:(NSInteger)index;
 
 @end
 
 @interface RepeatAlertViewController : UIViewController
 
+- (instancetype)initWithIndexPaths:(NSMutableArray<NSMutableArray *> *)indexPaths;
+
 @property (strong, nonatomic) NSString *repeatOrAlarm;
-@property (assign, nonatomic) NSInteger checkedRowForRepeat;
+@property (strong, nonatomic) NSIndexPath *checkedIndexPathForRepeat;
 @property (assign, nonatomic) NSInteger checkedRowForAlarm;
 
 @property (weak, nonatomic) id<RepeatAlertViewControllerDelegate> delegate;

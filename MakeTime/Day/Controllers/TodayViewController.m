@@ -293,7 +293,7 @@
     [self.refreshControl addTarget:self
                             action:@selector(refreshData)
                   forControlEvents:UIControlEventValueChanged];
-    self.collectionView.refreshControl = self.refreshControl;
+//    self.collectionView.refreshControl = self.refreshControl;
     
     self.activityIndicator.hidden = YES;
     

@@ -30,8 +30,11 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSArray *customCalendars;
 
-@property (strong, nonatomic) NSArray *repeatOptions;
+//@property (strong, nonatomic) NSArray *repeatOptions;
+@property (strong, nonatomic) NSArray<NSArray *> *repeatOptions;
 @property (strong, nonatomic) NSArray *alarmOptions;
+
+@property (strong, nonatomic) NSArray<NSArray *> *repeat;
 
 @property (strong, nonatomic) NSString *textFieldTitle;
 
@@ -51,6 +54,8 @@
 @property (strong, nonatomic) UITextField *textField;
 
 @property (strong, nonatomic) NSString *eventNotes;
+
+@property (strong, nonatomic) NSMutableArray<NSMutableArray *> *indexPaths;
 
 @end
 
@@ -113,8 +118,8 @@
 // Use this method to implement any custom behavior when return is tapped (MUST make sure delegate is set in XIB).
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField.text.length != 0) {
-//        self.textFieldHasTitle = YES;
-//        self.textFieldTitle = textField.text;
+        //        self.textFieldHasTitle = YES;
+        //        self.textFieldTitle = textField.text;
     }
     [textField resignFirstResponder];
     [self.eventTableView reloadData];
@@ -124,8 +129,8 @@
 
 - (void)textFieldDidEndEditing:(UITextField *)textField reason:(UITextFieldDidEndEditingReason)reason {
     if (textField.text.length != 0) {
-//        self.textFieldHasTitle = YES;
-//        self.textFieldTitle = textField.text;
+        //        self.textFieldHasTitle = YES;
+        //        self.textFieldTitle = textField.text;
     }
     [self.eventTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
 }
@@ -135,10 +140,10 @@
     self.isTextFieldTapped = YES;
     self.didPushRepeatAlertVC = NO;
     
-//    if (self.textFieldHasTitle) {
-//        self.textFieldHasTitle = NO;
-//        [self.eventTableView reloadData];
-//    }
+    //    if (self.textFieldHasTitle) {
+    //        self.textFieldHasTitle = NO;
+    //        [self.eventTableView reloadData];
+    //    }
     
     [self.eventTableView beginUpdates];
     if (self.datePickerIndexPath) {
@@ -152,7 +157,7 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-//    textField.text = self.textFieldTitle;
+    //    textField.text = self.textFieldTitle;
 }
 
 //- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
@@ -218,11 +223,6 @@
     EventManager *eventManager = [EventManager sharedManager];
     
     EKEvent *event = [EKEvent eventWithEventStore:eventManager.eventStore];
-//    if (self.eventTitle.length != 0) {
-//        event.title = self.eventTitle;
-//    } else if (self.textField.text.length != 0) {
-//        event.title = self.textField.text;
-//    }
     event.title = self.eventTitle;
     event.startDate = self.eventStartDate;
     event.endDate = self.eventEndDate;
@@ -231,32 +231,91 @@
         event.notes = self.eventNotes;
     }
     
-    // Specify the recurrence frequency and interval values based on the repeat index in the tableview
-    EKRecurrenceFrequency frequency;
-    NSInteger interval;
-    
-    switch (self.repeatIndex) {
-        case 1: interval = 1; frequency = EKRecurrenceFrequencyDaily; break;
-        case 2: interval = 1; frequency = EKRecurrenceFrequencyWeekly; break;
-        case 3: interval = 1; frequency = EKRecurrenceFrequencyMonthly; break;
-        case 4: interval = 1; frequency = EKRecurrenceFrequencyYearly; break;
-        default: interval = 0; frequency = EKRecurrenceFrequencyDaily; break;
+    NSMutableArray<EKRecurrenceDayOfWeek *> *reccurenceDays = [NSMutableArray array];
+    if (self.indexPaths != nil) {
+        for (int i = 0; i < self.indexPaths.count; i++) {
+            for (int j = 0; j < self.indexPaths[i].count; j++) {
+                if ([self.indexPaths[i][j] isEqual:[NSNumber numberWithInteger:1]]) {
+                    switch (i) {
+                        case 0:
+                            switch (j) {
+                                case 0: {
+                                    break;
+                                }
+                                case 1: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:nil]];
+                                    break;
+                                }
+                                case 2: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:nil]];
+                                    break;
+                                }
+                                case 3: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyMonthly interval:1 end:nil]];
+                                    break;
+                                }
+                                case 4: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:nil]];
+                                    break;
+                                }
+                            }
+                            break;
+                        case 1:
+                            switch (j) {
+                                case 0: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:2 end:nil]];
+                                    break;
+                                }
+                                case 1: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:2 end:nil]];
+                                    break;
+                                }
+                                case 2: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyMonthly interval:2 end:nil]];
+                                    break;
+                                }
+                            }
+                            break;
+                        case 2:
+                            switch (j) {
+                                case 0: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdayMonday weekNumber:0]];
+                                    break;
+                                }
+                                case 1: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdayTuesday weekNumber:0]];
+                                    break;
+                                }
+                                case 2: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdayWednesday weekNumber:0]];
+                                    break;
+                                }
+                                case 3: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdayThursday weekNumber:0]];
+                                    break;
+                                }
+                                case 4: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdayFriday weekNumber:0]];
+                                    break;
+                                }
+                                case 5: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdaySaturday weekNumber:0]];
+                                    break;
+                                }
+                                case 6: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdaySunday weekNumber:0]];
+                                    break;
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+        }
     }
     
-//    let friday = EKRecurrenceDayOfWeek(.Friday)
-//    let saturday = EKRecurrenceDayOfWeek(.Saturday)
-//
-//    EKRecurrenceRule(recurrenceWithFrequency: .Weekly, interval: 1, daysOfTheWeek: [friday, saturday], daysOfTheMonth: nil, monthsOfTheYear: nil, weeksOfTheYear: nil, daysOfTheYear: nil, setPositions: nil, end: nil)
-    
-    // Create a rule and assign it to the reminder object if the interval is greater than 0.
-    if (interval > 0) {
-//        EKRecurrenceRule *r = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:<#(EKRecurrenceFrequency)#> interval:<#(NSInteger)#> daysOfTheWeek:<#(nullable NSArray<EKRecurrenceDayOfWeek *> *)#> daysOfTheMonth:<#(nullable NSArray<NSNumber *> *)#> monthsOfTheYear:<#(nullable NSArray<NSNumber *> *)#> weeksOfTheYear:<#(nullable NSArray<NSNumber *> *)#> daysOfTheYear:<#(nullable NSArray<NSNumber *> *)#> setPositions:<#(nullable NSArray<NSNumber *> *)#> end:<#(nullable EKRecurrenceEnd *)#>
-        EKRecurrenceRule *rule = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:frequency
-                                                                              interval:interval
-                                                                                   end:nil];
-        event.recurrenceRules = @[rule];
-    } else {
-        event.recurrenceRules = nil;
+    if (reccurenceDays.count > 0) {
+        [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 daysOfTheWeek:reccurenceDays daysOfTheMonth:nil monthsOfTheYear:nil weeksOfTheYear:nil daysOfTheYear:nil setPositions:nil end:nil]];
     }
     
     // Create a time interval and offset values based on our alarm options array
@@ -328,13 +387,13 @@
             // Simply read in the event title which was saved from earlier.
             if (self.eventTitle) {
                 eventTextFieldCell.titleTextField.text = self.eventTitle;
-//                eventTextFieldCell.titleTextField.text = @"Title";
+                //                eventTextFieldCell.titleTextField.text = @"Title";
             } else if (self.textFieldHasTitle) {
-//                eventTextFieldCell.detailLabel.text = self.textFieldTitle;
-//                eventTextFieldCell.titleTextField.text = @"Title";
-//                self.eventTitle = eventTextFieldCell.detailLabel.text;
+                //                eventTextFieldCell.detailLabel.text = self.textFieldTitle;
+                //                eventTextFieldCell.titleTextField.text = @"Title";
+                //                self.eventTitle = eventTextFieldCell.detailLabel.text;
             } else {
-//                eventTextFieldCell.detailLabel.text = @"";
+                //                eventTextFieldCell.detailLabel.text = @"";
             }
             return eventTextFieldCell;
             
@@ -389,7 +448,7 @@
             
             if (indexPath.row == 0) {
                 eventCell.textLabel.text = @"Repeat";
-                if (self.eventHasRepeat) {
+                if (self.repeatString) {
                     eventCell.detailTextLabel.text = self.repeatString;
                 } else {
                     eventCell.detailTextLabel.text = @"Never";
@@ -452,12 +511,12 @@
     if (indexPath.section == 2) {
         
         if (indexPath.row != 2) {
-            RepeatAlertViewController *repeatVC = [RepeatAlertViewController new];
+            RepeatAlertViewController *repeatVC = [[RepeatAlertViewController alloc] initWithIndexPaths:self.indexPaths];
             repeatVC.delegate = self;
             
             if (indexPath.row == 0) {
                 repeatVC.repeatOrAlarm = @"Repeat";
-                repeatVC.checkedRowForRepeat = self.repeatIndex;
+                repeatVC.checkedIndexPathForRepeat = self.repeatIndexPath;
             } else if (indexPath.row == 1) {
                 repeatVC.repeatOrAlarm = @"Alarm";
                 repeatVC.checkedRowForAlarm = self.alarmIndex;
@@ -478,17 +537,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat rowHeight = tableView.rowHeight;
-
+    
     // If we have a date picker shown at the corresponding index path, make sure the height is what is set as in IB.
     if (self.datePickerIndexPath && self.datePickerIndexPath == indexPath) {
         DatePickerTableViewCell *datePickerCell = (DatePickerTableViewCell *)[tableView dequeueReusableCellWithIdentifier:@"DatePickerTableViewCell"];
         rowHeight = datePickerCell.frame.size.height;
     }
-
+    
     if (indexPath.section == 2 && indexPath.row == 2) {
         return self.rowHeight;
     }
-
+    
     return rowHeight;
 }
 
@@ -548,9 +607,27 @@
     self.didPushRepeatAlertVC = boolean;
 }
 
-- (void)didSelectRepeatOption:(NSInteger)index {
-    self.repeatIndex = index;
-    self.repeatString = self.repeatOptions[index];
+- (void)didSelectRepeatOptions:(NSMutableArray<NSMutableArray *> *)indexPaths {
+    self.indexPaths = indexPaths;
+    self.repeatString = nil;
+    NSString *temp = @"";
+    for (int i = 0; i < indexPaths.count; i++) {
+        for (int j = 0; j < indexPaths[i].count; j++) {
+            if ([indexPaths[i][j] isEqual:[NSNumber numberWithInteger:1]]) {
+                temp = [temp stringByAppendingString:self.repeatOptions[i][j]];
+                temp = [temp stringByAppendingString:@", "];
+            }
+        }
+    }
+    if (![temp isEqualToString:@""]) {
+        temp = [temp substringToIndex:temp.length - 2];
+        self.repeatString = temp;
+    }
+}
+
+- (void)didSelectRepeatOption:(NSIndexPath *)indexPath {
+    self.repeatIndexPath = indexPath;
+    self.repeatString = self.repeatOptions[indexPath.section][indexPath.row];
 }
 
 - (void)didSelectAlarmOption:(NSInteger)index {
@@ -616,7 +693,7 @@
     // Insert a dummy footer view to limit number of cells displayed in table view
     self.eventTableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
     
-//    self.eventTableView.rowHeight = UITableViewAutomaticDimension;
+    //    self.eventTableView.rowHeight = UITableViewAutomaticDimension;
     self.rowHeight = 44;
     self.eventTableView.estimatedRowHeight = 200;
     
@@ -679,7 +756,11 @@
     NSTimeInterval endSeconds = ceil([hourAheadDate timeIntervalSinceReferenceDate] / 300.0) * 300.0;
     self.eventEndDate = [NSDate dateWithTimeIntervalSinceReferenceDate:endSeconds];
     
-    self.repeatOptions = @[@"Never", @"Daily", @"Weekly", @"Monthly", @"Yearly"];
+    self.repeatOptions = @[
+                           @[@"Never", @"Daily", @"Weekly", @"Monthly", @"Yearly"],
+                           @[@"Every other day", @"Every other week", @"Every other month"],
+                           @[@"Every Monday", @"Every Tuesday", @"Every Wednesday", @"Every Thursday", @"Every Friday", @"Every Saturday", @"Every Sunday"]
+                           ];
     self.alarmOptions = @[@"None", @"At time of event", @"5 minutes before", @"10 minutes before", @"30 minutes before", @"1 hour before", @"1 day before"];
 }
 

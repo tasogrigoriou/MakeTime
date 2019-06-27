@@ -20,7 +20,7 @@
 @property (strong, nonatomic) NSDate *eventStartDate;
 @property (strong, nonatomic) NSDate *eventEndDate;
 
-@property (assign, nonatomic) NSInteger repeatIndex;
+@property (strong, nonatomic) NSIndexPath *repeatIndexPath;
 @property (strong, nonatomic) NSString *repeatString;
 @property (assign, nonatomic) NSInteger alarmIndex;
 @property (strong, nonatomic) NSString *alarmString;

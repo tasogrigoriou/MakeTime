@@ -31,7 +31,7 @@
 @property (strong, nonatomic) AppDelegate *appDelegate;
 @property (strong, nonatomic) NSArray *customCalendars;
 
-@property (strong, nonatomic) NSArray *repeatOptions;
+@property (strong, nonatomic) NSArray<NSArray *> *repeatOptions;
 @property (strong, nonatomic) NSArray *alarmOptions;
 
 @property (strong, nonatomic) NSString *textFieldTitle;
@@ -52,6 +52,8 @@
 @property (strong, nonatomic) UITextField *textField;
 
 @property (strong, nonatomic) NSString *eventNotes;
+
+@property (strong, nonatomic) NSMutableArray<NSMutableArray *> *indexPaths;
 
 @end
 
@@ -79,27 +81,83 @@
         self.textFieldHasTitle = YES;
         self.textFieldTitle = event.title;
         
+        self.indexPaths = [NSMutableArray array];
+        self.indexPaths[0] = [NSMutableArray arrayWithObjects:@0, @0, @0, @0, @0, nil];
+        self.indexPaths[1] = [NSMutableArray arrayWithObjects:@0, @0, @0, nil];
+        self.indexPaths[2] = [NSMutableArray arrayWithObjects:@0, @0, @0, @0, @0, @0, @0, nil];
+        self.repeatOptions = @[
+                               @[@"Never", @"Daily", @"Weekly", @"Monthly", @"Yearly"],
+                               @[@"Every other day", @"Every other week", @"Every other month"],
+                               @[@"Every Monday", @"Every Tuesday", @"Every Wednesday", @"Every Thursday", @"Every Friday", @"Every Saturday", @"Every Sunday"]
+                               ];
+        
         if (event.hasRecurrenceRules) {
             self.eventHasRepeat = YES;
-            
             for (EKRecurrenceRule *rule in event.recurrenceRules) {
-                if (rule.frequency == EKRecurrenceFrequencyDaily) {
-                    self.repeatString = @"Every day";
-                    self.repeatIndex = 1;
+                if (rule.frequency == EKRecurrenceFrequencyDaily && rule.interval == 1) {
+                    self.indexPaths[0][1] = @1;
                 }
-                else if (rule.frequency == EKRecurrenceFrequencyWeekly) {
-                    self.repeatString = @"Every week";
-                    self.repeatIndex = 2;
+                else if (rule.frequency == EKRecurrenceFrequencyDaily && rule.interval == 2) {
+                    self.indexPaths[1][0] = @1;
                 }
-                else if (rule.frequency == EKRecurrenceFrequencyMonthly) {
-                    self.repeatString = @"Every month";
-                    self.repeatIndex = 3;
+                else if (rule.frequency == EKRecurrenceFrequencyWeekly && rule.interval == 1 && rule.daysOfTheWeek == nil) {
+                    self.indexPaths[0][2] = @1;
                 }
-                else if (rule.frequency == EKRecurrenceFrequencyYearly) {
-                    self.repeatString = @"Every year";
-                    self.repeatIndex = 4;
+                else if (rule.frequency == EKRecurrenceFrequencyWeekly && rule.interval == 1 && rule.daysOfTheWeek != nil) {
+                    for (EKRecurrenceDayOfWeek *day in rule.daysOfTheWeek) {
+                        if (day.dayOfTheWeek == EKWeekdayMonday) {
+                            self.indexPaths[2][0] = @1;
+                        }
+                        else if (day.dayOfTheWeek == EKWeekdayTuesday) {
+                            self.indexPaths[2][1] = @1;
+                        }
+                        else if (day.dayOfTheWeek == EKWeekdayWednesday) {
+                            self.indexPaths[2][2] = @1;
+                        }
+                        else if (day.dayOfTheWeek == EKWeekdayThursday) {
+                            self.indexPaths[2][3] = @1;
+                        }
+                        else if (day.dayOfTheWeek == EKWeekdayFriday) {
+                            self.indexPaths[2][4] = @1;
+                        }
+                        else if (day.dayOfTheWeek == EKWeekdaySaturday) {
+                            self.indexPaths[2][5] = @1;
+                        }
+                        else if (day.dayOfTheWeek == EKWeekdaySunday) {
+                            self.indexPaths[2][6] = @1;
+                        }
+                    }
+                }
+                else if (rule.frequency == EKRecurrenceFrequencyWeekly && rule.interval == 2) {
+                    self.indexPaths[1][1] = @1;
+                }
+                else if (rule.frequency == EKRecurrenceFrequencyMonthly && rule.interval == 1) {
+                    self.indexPaths[0][3] = @1;
+                }
+                else if (rule.frequency == EKRecurrenceFrequencyMonthly && rule.interval == 2) {
+                    self.indexPaths[1][2] = @1;
+                }
+                else if (rule.frequency == EKRecurrenceFrequencyYearly && rule.interval == 1) {
+                    self.indexPaths[0][4] = @1;
+                }
+                else if (rule.frequency == EKRecurrenceFrequencyYearly && rule.interval == 1) {
+                    self.indexPaths[0][4] = @1;
                 }
             }
+        }
+        self.repeatString = nil;
+        NSString *temp = @"";
+        for (int i = 0; i < self.indexPaths.count; i++) {
+            for (int j = 0; j < self.indexPaths[i].count; j++) {
+                if ([self.indexPaths[i][j] isEqual:[NSNumber numberWithInteger:1]]) {
+                    temp = [temp stringByAppendingString:self.repeatOptions[i][j]];
+                    temp = [temp stringByAppendingString:@", "];
+                }
+            }
+        }
+        if (![temp isEqualToString:@""]) {
+            temp = [temp substringToIndex:temp.length - 2];
+            self.repeatString = temp;
         }
         
         if (event.hasAlarms) {
@@ -274,7 +332,8 @@
                                                                              message:@"Are you sure?"
                                                                       preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No" style:UIAlertActionStyleDestructive
+    UIAlertAction *noAction = [UIAlertAction actionWithTitle:@"No"
+                                                       style:UIAlertActionStyleDestructive
                                                      handler:^(UIAlertAction *action) {
                                                          [alertController dismissViewControllerAnimated:YES completion:nil];
                                                      }];
@@ -311,11 +370,6 @@
     
     // To create an EKEvent, we need a title, start date, end date, and a calendar
     EKEvent *event = [EKEvent eventWithEventStore:eventManager.eventStore];
-//    if (self.textField.text.length != 0) {
-//        event.title = self.textField.text;
-//    } else if (self.eventTitle.length != 0) {
-//        event.title = self.eventTitle;
-//    }
     event.title = self.eventTitle;
     event.startDate = self.eventStartDate;
     event.endDate = self.eventEndDate;
@@ -324,27 +378,91 @@
         event.notes = self.eventNotes;
     }
     
-    // Specify the recurrence frequency and interval values based on the repeat index in the tableview
-    EKRecurrenceFrequency frequency;
-    NSInteger interval;
-    
-    switch (self.repeatIndex) {
-        case 1: interval = 1; frequency = EKRecurrenceFrequencyDaily; break;
-        case 2: interval = 1; frequency = EKRecurrenceFrequencyWeekly; break;
-        case 3: interval = 1; frequency = EKRecurrenceFrequencyMonthly; break;
-        case 4: interval = 1; frequency = EKRecurrenceFrequencyYearly; break;
-        default: interval = 0; frequency = EKRecurrenceFrequencyDaily; break;
+    NSMutableArray<EKRecurrenceDayOfWeek *> *reccurenceDays = [NSMutableArray array];
+    if (self.indexPaths != nil) {
+        for (int i = 0; i < self.indexPaths.count; i++) {
+            for (int j = 0; j < self.indexPaths[i].count; j++) {
+                if ([self.indexPaths[i][j] isEqual:[NSNumber numberWithInteger:1]]) {
+                    switch (i) {
+                        case 0:
+                            switch (j) {
+                                case 0: {
+                                    break;
+                                }
+                                case 1: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:1 end:nil]];
+                                    break;
+                                }
+                                case 2: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 end:nil]];
+                                    break;
+                                }
+                                case 3: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyMonthly interval:1 end:nil]];
+                                    break;
+                                }
+                                case 4: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyYearly interval:1 end:nil]];
+                                    break;
+                                }
+                            }
+                            break;
+                        case 1:
+                            switch (j) {
+                                case 0: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyDaily interval:2 end:nil]];
+                                    break;
+                                }
+                                case 1: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:2 end:nil]];
+                                    break;
+                                }
+                                case 2: {
+                                    [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyMonthly interval:2 end:nil]];
+                                    break;
+                                }
+                            }
+                            break;
+                        case 2:
+                            switch (j) {
+                                case 0: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdayMonday weekNumber:0]];
+                                    break;
+                                }
+                                case 1: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdayTuesday weekNumber:0]];
+                                    break;
+                                }
+                                case 2: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdayWednesday weekNumber:0]];
+                                    break;
+                                }
+                                case 3: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdayThursday weekNumber:0]];
+                                    break;
+                                }
+                                case 4: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdayFriday weekNumber:0]];
+                                    break;
+                                }
+                                case 5: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdaySaturday weekNumber:0]];
+                                    break;
+                                }
+                                case 6: {
+                                    [reccurenceDays addObject:[[EKRecurrenceDayOfWeek alloc] initWithDayOfTheWeek:EKWeekdaySunday weekNumber:0]];
+                                    break;
+                                }
+                            }
+                            break;
+                    }
+                }
+            }
+        }
     }
     
-    // Create a rule and assign it to the reminder object if the interval is greater than 0.
-    if (interval > 0) {
-        EKRecurrenceEnd *recurrenceEnd = [EKRecurrenceEnd recurrenceEndWithOccurrenceCount:53];
-        EKRecurrenceRule *rule = [[EKRecurrenceRule alloc] initRecurrenceWithFrequency:frequency
-                                                                              interval:interval
-                                                                                   end:recurrenceEnd];
-        event.recurrenceRules = @[rule];
-    } else {
-        event.recurrenceRules = nil;
+    if (reccurenceDays.count > 0) {
+        [event addRecurrenceRule:[[EKRecurrenceRule alloc] initRecurrenceWithFrequency:EKRecurrenceFrequencyWeekly interval:1 daysOfTheWeek:reccurenceDays daysOfTheMonth:nil monthsOfTheYear:nil weeksOfTheYear:nil daysOfTheYear:nil setPositions:nil end:nil]];
     }
     
     // Create a time interval and offset values based on our alarm options array
@@ -485,7 +603,7 @@
             
             if (indexPath.row == 0) {
                 eventCell.textLabel.text = @"Repeat";
-                if (self.eventHasRepeat) {
+                if (self.repeatString) {
                     eventCell.detailTextLabel.text = self.repeatString;
                 } else {
                     eventCell.detailTextLabel.text = @"Never";
@@ -553,12 +671,12 @@
     if (indexPath.section == 2) {
         
         if (indexPath.row != 2) {
-            RepeatAlertViewController *repeatVC = [RepeatAlertViewController new];
+            RepeatAlertViewController *repeatVC = [[RepeatAlertViewController alloc] initWithIndexPaths:self.indexPaths];
             repeatVC.delegate = self;
             
             if (indexPath.row == 0) {
                 repeatVC.repeatOrAlarm = @"Repeat";
-                repeatVC.checkedRowForRepeat = self.repeatIndex;
+                repeatVC.checkedIndexPathForRepeat = self.repeatIndexPath;
             } else if (indexPath.row == 1) {
                 repeatVC.repeatOrAlarm = @"Alarm";
                 repeatVC.checkedRowForAlarm = self.alarmIndex;
@@ -648,9 +766,22 @@
     self.didPushRepeatAlertVC = boolean;
 }
 
-- (void)didSelectRepeatOption:(NSInteger)index {
-    self.repeatIndex = index;
-    self.repeatString = self.repeatOptions[index];
+- (void)didSelectRepeatOptions:(NSMutableArray<NSMutableArray *> *)indexPaths {
+    self.indexPaths = indexPaths;
+    self.repeatString = nil;
+    NSString *temp = @"";
+    for (int i = 0; i < indexPaths.count; i++) {
+        for (int j = 0; j < indexPaths[i].count; j++) {
+            if ([indexPaths[i][j] isEqual:[NSNumber numberWithInteger:1]]) {
+                temp = [temp stringByAppendingString:self.repeatOptions[i][j]];
+                temp = [temp stringByAppendingString:@", "];
+            }
+        }
+    }
+    if (![temp isEqualToString:@""]) {
+        temp = [temp substringToIndex:temp.length - 2];
+        self.repeatString = temp;
+    }
 }
 
 - (void)didSelectAlarmOption:(NSInteger)index {
@@ -770,7 +901,11 @@
     self.dateFormatter.dateStyle = NSDateFormatterShortStyle;
     self.dateFormatter.timeStyle = NSDateFormatterShortStyle;
     
-    self.repeatOptions = @[@"Never", @"Daily", @"Weekly", @"Monthly", @"Yearly"];
+    self.repeatOptions = @[
+                           @[@"Never", @"Daily", @"Weekly", @"Monthly", @"Yearly"],
+                           @[@"Every other day", @"Every other week", @"Every other month"],
+                           @[@"Every Monday", @"Every Tuesday", @"Every Wednesday", @"Every Thursday", @"Every Friday", @"Every Saturday", @"Every Sunday"]
+                           ];
     self.alarmOptions = @[@"None", @"At time of event", @"5 minutes before", @"10 minutes before", @"30 minutes before", @"1 hour before"];
 }
 
