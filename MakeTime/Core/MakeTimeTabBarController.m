@@ -77,16 +77,8 @@
     UINavigationController *todayNavigationController = [[UINavigationController alloc] initWithRootViewController:todayViewController];
 
     WeekViewController *weekViewController = [WeekViewController new];
-    NSDateComponents *comps2 = [NSDateComponents new];
-    comps2.day = 2;
-    
-    NSDateComponents *testComps = [NSDateComponents new];
-    testComps.day = 0;
-    NSDate *testDate = [[NSCalendar currentCalendar] dateByAddingComponents:testComps toDate:[NSDate date] options:0];
-    weekViewController.selectedDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps2 toDate:testDate options:0];
-    
-    
-//    weekViewController.selectedDate = [[NSCalendar currentCalendar] dateByAddingComponents:comps2 toDate:[NSDate date] options:0];
+    weekViewController.selectedDate = [NSDate date];
+
     UINavigationController *weekNavigationController = [[UINavigationController alloc] initWithRootViewController:weekViewController];
 
     MonthViewController *monthViewController = [MonthViewController new];

@@ -259,8 +259,8 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
             self.selectedLastViewController = NO;
             
         } else if (self.selectedDate) {
-            self.weekDisplayed = self.selectedDate;
-            
+            self.weekDisplayed = [self.calendar dateByAddingComponents:comps toDate:self.selectedDate options:0];
+
         } else if (currentWeekDisplayed && ![initialScroll boolValue]) {
             self.weekDisplayed = [self.calendar dateByAddingComponents:comps toDate:currentWeekDisplayed options:0];
             
@@ -310,7 +310,7 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
 - (void)calculateStartAndEndDateCaches {
     NSDateComponents *comps = [NSDateComponents new];
     NSDate *today = [NSDate date];
-    comps.day = -1;
+    comps.day = -2;
     comps.year = -10;
     self.startDateCache = [self.calendar dateByAddingComponents:comps toDate:today options:0];
     
@@ -326,7 +326,7 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
 }
 
 - (NSUInteger)cellDisplayedIndex {
-    return (NSUInteger)(self.collectionView.contentOffset.x / self.collectionView.frame.size.width);
+    return (ceil)(self.collectionView.contentOffset.x / self.collectionView.frame.size.width);
 }
 
 - (NSDate *)weekDisplayed {
@@ -366,7 +366,7 @@ typedef NS_ENUM(NSInteger, LoadedWeekCellState) {
 
 - (void)scrollToToday {
     NSDateComponents *comps = [NSDateComponents new];
-    comps.day = 2;
+    comps.day = 1;
     [self setWeekDisplayed:[self.calendar dateByAddingComponents:comps toDate:[NSDate date] options:0] animated:YES];
     self.selectedLastViewController = YES;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
