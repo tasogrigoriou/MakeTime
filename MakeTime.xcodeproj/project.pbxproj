@@ -129,6 +129,11 @@
 		9F7B6C142150E379000C024A /* IconSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6C0C2150E379000C024A /* IconSegment.swift */; };
 		9F7B6C152150E379000C024A /* LabelSegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7B6C0D2150E379000C024A /* LabelSegment.swift */; };
 		9F7B6C162150E379000C024A /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = 9F7B6C0F2150E379000C024A /* .gitkeep */; };
+		9F81BC3D2A7C412D00130C82 /* CategoriesSelectableTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F81BC3B2A7C412D00130C82 /* CategoriesSelectableTableViewCell.m */; };
+		9F81BC402A7C418600130C82 /* CategoriesSelectableTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F81BC3F2A7C418600130C82 /* CategoriesSelectableTableViewCell.xib */; };
+		9F81BC442A7C4A4F00130C82 /* CategoriesSelectableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F81BC422A7C4A4F00130C82 /* CategoriesSelectableViewController.m */; };
+		9F81BC452A7C4A4F00130C82 /* CategoriesSelectableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F81BC432A7C4A4F00130C82 /* CategoriesSelectableViewController.xib */; };
+		9F81BC472A7C52E900130C82 /* check-mark-black-outline.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F81BC462A7C52E900130C82 /* check-mark-black-outline.png */; };
 		9F8532FE214468B0007B55CA /* WeekDayLineView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F8532FD214468B0007B55CA /* WeekDayLineView.xib */; };
 		9F853301214468C0007B55CA /* WeekDayLineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F853300214468C0007B55CA /* WeekDayLineView.m */; };
 		9F9B426C2138770100B8C2B8 /* ReusableViewCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9B426B2138770100B8C2B8 /* ReusableViewCache.m */; };
@@ -405,6 +410,13 @@
 		9F7B6C0C2150E379000C024A /* IconSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconSegment.swift; sourceTree = "<group>"; };
 		9F7B6C0D2150E379000C024A /* LabelSegment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LabelSegment.swift; sourceTree = "<group>"; };
 		9F7B6C0F2150E379000C024A /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		9F81BC3A2A7C412D00130C82 /* CategoriesSelectableTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoriesSelectableTableViewCell.h; sourceTree = "<group>"; };
+		9F81BC3B2A7C412D00130C82 /* CategoriesSelectableTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategoriesSelectableTableViewCell.m; sourceTree = "<group>"; };
+		9F81BC3F2A7C418600130C82 /* CategoriesSelectableTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoriesSelectableTableViewCell.xib; sourceTree = "<group>"; };
+		9F81BC412A7C4A4F00130C82 /* CategoriesSelectableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CategoriesSelectableViewController.h; sourceTree = "<group>"; };
+		9F81BC422A7C4A4F00130C82 /* CategoriesSelectableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CategoriesSelectableViewController.m; sourceTree = "<group>"; };
+		9F81BC432A7C4A4F00130C82 /* CategoriesSelectableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CategoriesSelectableViewController.xib; sourceTree = "<group>"; };
+		9F81BC462A7C52E900130C82 /* check-mark-black-outline.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check-mark-black-outline.png"; sourceTree = "<group>"; };
 		9F8532FD214468B0007B55CA /* WeekDayLineView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WeekDayLineView.xib; sourceTree = "<group>"; };
 		9F8532FF214468C0007B55CA /* WeekDayLineView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WeekDayLineView.h; sourceTree = "<group>"; };
 		9F853300214468C0007B55CA /* WeekDayLineView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WeekDayLineView.m; sourceTree = "<group>"; };
@@ -1326,6 +1338,7 @@
 				9FF7442B1E1307A400816F8D /* UIColor+RBExtras.h */,
 				9FF7442C1E1307A400816F8D /* UIColor+RBExtras.m */,
 				9F4035B81F1365A000EA1B16 /* checkmark.png */,
+				9F81BC462A7C52E900130C82 /* check-mark-black-outline.png */,
 				9F21FD081E188A3D00BBE626 /* clock.png */,
 				9FE19E8B1E14D2AC00CB8439 /* home.png */,
 				9F17EC851E39B78700019CDC /* jadecolor.jpg */,
@@ -1399,6 +1412,9 @@
 				9FB96CFF1EF342CC00BDC3BA /* CategoriesViewController.h */,
 				9FB96D001EF342CC00BDC3BA /* CategoriesViewController.m */,
 				9FB96D011EF342CC00BDC3BA /* CategoriesViewController.xib */,
+				9F81BC412A7C4A4F00130C82 /* CategoriesSelectableViewController.h */,
+				9F81BC422A7C4A4F00130C82 /* CategoriesSelectableViewController.m */,
+				9F81BC432A7C4A4F00130C82 /* CategoriesSelectableViewController.xib */,
 				9F4035AE1F11F4C200EA1B16 /* EditCategoriesViewController.h */,
 				9F4035AF1F11F4C200EA1B16 /* EditCategoriesViewController.m */,
 				9F4035B01F11F4C200EA1B16 /* EditCategoriesViewController.xib */,
@@ -1415,6 +1431,9 @@
 				9FB96D041EF3497800BDC3BA /* CategoriesTableViewCell.h */,
 				9FB96D051EF3497800BDC3BA /* CategoriesTableViewCell.m */,
 				9FB96D061EF3497800BDC3BA /* CategoriesTableViewCell.xib */,
+				9F81BC3A2A7C412D00130C82 /* CategoriesSelectableTableViewCell.h */,
+				9F81BC3B2A7C412D00130C82 /* CategoriesSelectableTableViewCell.m */,
+				9F81BC3F2A7C418600130C82 /* CategoriesSelectableTableViewCell.xib */,
 				9F4035B31F13577C00EA1B16 /* EditCategoriesTableViewCell.h */,
 				9F4035B41F13577C00EA1B16 /* EditCategoriesTableViewCell.m */,
 				9F4035B51F13577C00EA1B16 /* EditCategoriesTableViewCell.xib */,
@@ -1579,14 +1598,17 @@
 				9F71EF3D1E21A22C00CD23DA /* TodayCollectionViewCell.xib in Resources */,
 				9F4D5C1E212BE485008E047E /* EventPopUpViewController.xib in Resources */,
 				9FBA79431DCC5CF1000AE696 /* Assets.xcassets in Resources */,
+				9F81BC472A7C52E900130C82 /* check-mark-black-outline.png in Resources */,
 				9F4035B71F13577C00EA1B16 /* EditCategoriesTableViewCell.xib in Resources */,
 				9F1ED88F1FF8B06E006FF015 /* EditEventViewController.xib in Resources */,
 				9F76F4821E5FCEB100641875 /* Info2.plist in Resources */,
 				9FAE9A7A1EE84997002F247F /* AddEventViewController.xib in Resources */,
 				9F7B6C132150E379000C024A /* 1.gitkeep in Resources */,
+				9F81BC402A7C418600130C82 /* CategoriesSelectableTableViewCell.xib in Resources */,
 				9FE8892E215F37C70095F9D5 /* MakeTime_Gradient_Background.png in Resources */,
 				9FBC52FA1EFE13C4001BF4CD /* AddCalendarViewController.xib in Resources */,
 				9FB385881DE41D9700A6F1E4 /* Default-568h@2x.png in Resources */,
+				9F81BC452A7C4A4F00130C82 /* CategoriesSelectableViewController.xib in Resources */,
 				9F21FD071E18893100BBE626 /* pen-point-tip.png in Resources */,
 				9F0930821E1EF319007A33F6 /* menu@3x.png in Resources */,
 				9F441768213D9D0E009FD17D /* TodayDayView.xib in Resources */,
@@ -1682,6 +1704,7 @@
 				9F76F47E1E5FCEB100641875 /* FSCalendarScopeHandle.m in Sources */,
 				9FBC52F91EFE13C4001BF4CD /* AddCalendarViewController.m in Sources */,
 				9F594E2F214CF65500FB5949 /* Globals.swift in Sources */,
+				9F81BC442A7C4A4F00130C82 /* CategoriesSelectableViewController.m in Sources */,
 				9FBA79411DCC5CF1000AE696 /* MakeTime.xcdatamodeld in Sources */,
 				9F594E33214CF65500FB5949 /* CGPoint.swift in Sources */,
 				9FCA3309214B3E5B0062ABCF /* Task+CoreDataClass.m in Sources */,
@@ -1732,6 +1755,7 @@
 				9F1C8E5F1F1CB37300268023 /* EventTableViewCell.m in Sources */,
 				9FEDC0262148DF130016B39D /* EventsTableViewCell.m in Sources */,
 				9F1C8E641F1CB38B00268023 /* DatePickerTableViewCell.m in Sources */,
+				9F81BC3D2A7C412D00130C82 /* CategoriesSelectableTableViewCell.m in Sources */,
 				9F9B426C2138770100B8C2B8 /* ReusableViewCache.m in Sources */,
 				9F76F4721E5FCEB100641875 /* FSCalendar+Deprecated.m in Sources */,
 				9F594E38214CF65500FB5949 /* PieLineTextLayer.swift in Sources */,

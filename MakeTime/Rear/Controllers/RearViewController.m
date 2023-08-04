@@ -143,7 +143,6 @@ didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 //      [revealController setFrontViewPosition:FrontViewPositionLeft animated:YES];
 //      [collectionView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 //   } completion:nil];
-   
 }
 
 - (void)collectionView:(UICollectionView *)collectionView

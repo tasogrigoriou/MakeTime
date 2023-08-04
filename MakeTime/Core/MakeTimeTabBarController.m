@@ -11,6 +11,7 @@
 #import "WeekViewController.h"
 #import "MonthViewController.h"
 #import "CategoriesViewController.h"
+#import "CategoriesSelectableViewController.h"
 #import "CalendarViewController.h"
 #import "ToDoListViewController.h"
 #import "MakeTime-Swift.h"
@@ -84,7 +85,7 @@
     MonthViewController *monthViewController = [MonthViewController new];
     UINavigationController *monthNavigationController = [[UINavigationController alloc] initWithRootViewController:monthViewController];
 
-    CategoriesViewController *categoriesViewController = [[CategoriesViewController alloc] init];
+    CategoriesSelectableViewController *categoriesViewController = [[CategoriesSelectableViewController alloc] init];
     UINavigationController *categoriesNavigationController = [[UINavigationController alloc]
                                                               initWithRootViewController:categoriesViewController];
     
